@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\alexa\.Rider2019.2\system\extResources" t="IncludeRecursive" />
@@ -17,6 +17,16 @@
       <e p="Program.cs" t="Include" />
       <e p="PurpleStyrofoam.csproj" t="IncludeRecursive" />
       <e p="PurpleStyrofoam.sln" t="IncludeFlat" />
+      <e p="Resources" t="Include">
+        <e p="bon.jpg" t="Include" />
+      </e>
+      <e p="Shaders" t="Include">
+        <e p="fragment_shader.glsl" t="Include" />
+        <e p="vertex_shader.glsl" t="Include" />
+      </e>
+      <e p="Utility" t="Include">
+        <e p="FileReader.cs" t="Include" />
+      </e>
     </e>
   </component>
 </project>
