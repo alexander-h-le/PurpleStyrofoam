@@ -1,0 +1,11 @@
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\bin\Debug\netcoreapp2.2\PurpleStyrofoam.deps.json
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\bin\Debug\netcoreapp2.2\PurpleStyrofoam.runtimeconfig.json
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\bin\Debug\netcoreapp2.2\PurpleStyrofoam.runtimeconfig.dev.json
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\bin\Debug\netcoreapp2.2\PurpleStyrofoam.dll
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\bin\Debug\netcoreapp2.2\PurpleStyrofoam.pdb
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.csprojAssemblyReference.cache
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.csproj.CoreCompileInputs.cache
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.AssemblyInfoInputs.cache
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.AssemblyInfo.cs
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.dll
+C:\Users\alexa\Programming Projects\PurpleStyrofoam\obj\Debug\netcoreapp2.2\PurpleStyrofoam.pdb
