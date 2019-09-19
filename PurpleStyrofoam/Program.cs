@@ -13,6 +13,7 @@ namespace PurpleStyrofoam
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Test");
             using (var game = new Game1())
                 game.Run();
         }
