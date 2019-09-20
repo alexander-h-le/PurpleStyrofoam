@@ -1,0 +1,138 @@
+﻿||||||||||||||||||||||||||          Warrior / Knight / Engener         |||||||||||||||||||||||||
+	Aerial combat? Chain attacks by throwing enemies up and attacking them in air
+Weapons: Sword (Quick), Polearm (Moderate), Axe (Slow)
+Q Ability
+	Sword -
+		Spin attack? Press ability to spin2win
+		Charge? Short dash that increases damage proportional to enemies hit.
+		Warcry? Call your inner chad and increase damage greatly for a short time.
+	Polearm - Stab. Press the ability to thrust the polearm forward dealing damage to all enemies in a straight line and stunning them for a short period.
+	Axe - Crash? Press ability to slam axe into ground dealing major damage to one target and minor shockwave damage to nearby enemies.
+E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into an enemy or solid object. Press ability again to pull yourself to hook position.
+
+
+||||||||||||||||||||||||||       Mage / Caster / Sorcerer / Warlock / Wizard           ||||||||||||||||||||||||||
+	Left click to shoot out selected element. Right click to change element
+		Fire, Ice, Wind, Earth
+		Fire + Ice = Boom
+		Fire + Wind = Fire tornado
+		Fire + Earth = Magma. High damaging burn debuff?
+		Ice + Wind = Blizzard
+		Ice + Earth = Icy Rock
+		Wind + Earth = Sandstorm
+
+		Fire + Fire = Dwarf Star
+		Ice + Ice = Snowmen???? (ice rumblers)
+		Wind + Wind = Zephyr. BIG WIND
+		Earth + Earth = Rumblers
+Weapons: Wands (Quick), Staff (Moderate), Tomes (Slow)
+Q Ability
+	Wand - Prestadignation? Press the ability to cast an orb, attracting enemies attention. Unique weapons will modify that ability to attack enemies or do other abilities.
+	Staff - CONTROL THE ELEMENTS. shoot element-based bolt or ball.
+	Tomes - Incantation. Press the ability to reduce movement greatly and focus your abilities into casting a large spell. Unique weapons for example will cast a meteor storm (almost) wiping out
+		all enemies afflicted.
+E Ability: Go into ground and reappear farther in direction of cursor depending on how long you hold the ability
+
+
+||||||||||||||||||||||||           Rogue / Assassin / Mercenary / Thief                 ||||||||||||||||||||||||||
+Weapons: Throwing (Very quick), Dagger (Quick), Rapier (Moderate-fast)
+Q Ability
+	Throwing - Flurry of attacks with throwing weapon?
+		Short Q cooldown. Every successful attack adds a damage stack that increases damage for basic attack and dash by __% (0.1 per stack?) for __ seconds until stack cools off
+		Every successful Q Ability (all attacks must hit) will reset cooldown on E ability
+	Dagger - Backstab? Large damage to one enemy. If kill, apply Fear to nearby enemies decreasing Def by __% (25?)
+		Blade dance? For the next __ seconds, E ability has no cooldown
+	Rapier - Finesseeeee? Attack super duper speed (buff)
+E Ability: Shadow dash. Join with the shadows and dash towards cursor and through enemies dealing damage to any that are hit. 
+	You are impervious to projectiles and attacks during this period, but cannot cancel dash.
+
+
+
+
+||||||||||||||||||||||||                       Game Progression                      |||||||||||||||||||||||||
+
+40 hour game, 4 hours per map to complete. 10 maps
+
+1) Cathedral Ruins 
+	Quester - John (M), Knight's Squire
+	Shops
+		Altar of creation (Create random items by scrapping dungeon items)
+		Blacksmith (Weapons)
+		Armorer
+		Alchemist
+		Traveling merchant (Misc. inventory items)
+	Dungeons
+		CR - Entrance
+		CR - First Floor
+		CR - Second Floor
+		CR - Cemetary
+		CR - Bell Tower (Secret) Drops broken skeleton key
+
+2) Jungle
+	Quester - Lonren, Tribal Dryad 
+	Shops
+		Altar of life (Gain more health points by giving up rare items)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling merchant
+	Dungeon
+		J - Entrance
+		J - Outer
+		J - Inner
+		J - Wetlands
+		J - World tree's root (Secret) Drops skeleton key repair item (1/10)
+
+3) Underground
+	Quester - Geralt, the Lost Miner
+	Shops
+		Altar of Earth (Give up rare items to permanently boost life regen)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling merchant
+	Dungeon
+		U - Entrance
+		U - Shaft 1
+		U - Shaft 2
+		U - Shaft 3
+		U - Deep
+		U - A new light
+4) Desert
+5) Snow 
+6) Mountains (deltas off a mountian. lava too?)
+7) Crystal Caverns
+8) Plains
+9) Dead Zone (Dangerous cult has corrupted nearby land)
+10) Planar Rupture
+	Quester - John (M), True Knight
+	Shops
+		Altar of reality (Fabricate items that can survive going through the rupture)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling merchant
+	Dungeons
+		PR - Outskirts
+		PR - Outer
+		PR - Inner
+		PR - Ground zero
+		PR - Planar Rupture
+		PR - Planar Rupture [Minor] (Secret) Drops Skeleton key magic
+
+Secret) Bredland - Only skeleton key to access
+	Quester - Young bread
+	Shops
+		Bread bakery (Gives bread from the heavens. Literally gives the player immortality)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling merchant
+	Dungeon - Lair of the laser sharks.
+		BL - Entrance
+		BL - Scouting ships
+		BL - Battleship
+		BL - Mothership outer
+		BL - Mothership inner
+		BL - Mothership's core
+		BL - Literally a map with nothing but bred NPCs
