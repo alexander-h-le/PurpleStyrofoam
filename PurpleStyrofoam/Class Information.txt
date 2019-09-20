@@ -1,4 +1,4 @@
-﻿||||||||||||||||||||||||||          Warrior / Knight / Engener         |||||||||||||||||||||||||
+||||||||||||||||||||||||||          Warrior / Knight / Engener         |||||||||||||||||||||||||
 	Aerial combat? Chain attacks by throwing enemies up and attacking them in air
 Weapons: Sword (Quick), Polearm (Moderate), Axe (Slow)
 Q Ability
@@ -54,7 +54,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 40 hour game, 4 hours per map to complete. 10 maps
 
 1) Cathedral Ruins 
-	Quester - John (M), Knight's Squire
+	Quester - John-M, Knight's Squire
 	Shops
 		Altar of creation (Create random items by scrapping dungeon items)
 		Blacksmith (Weapons)
@@ -69,7 +69,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		CR - Bell Tower (Secret) Drops broken skeleton key
 
 2) Jungle
-	Quester - Lonren, Tribal Dryad 
+	Quester - Lonren-F, Tribal Dryad 
 	Shops
 		Altar of life (Gain more health points by giving up rare items)
 		Blacksmith
@@ -84,7 +84,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		J - World tree's root (Secret) Drops skeleton key repair item (1/10)
 
 3) Underground
-	Quester - Geralt, the Lost Miner
+	Quester - Geralt-M, the Lost Miner
 	Shops
 		Altar of Earth (Give up rare items to permanently boost life regen)
 		Blacksmith
@@ -99,7 +99,32 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		U - Deep
 		U - A new light
 4) Desert
+	Quester - Livia-F, Caller of Snakes
+	Shops
+		Altar of Dust (Increase movement speed by giving up a sacrifice)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling Merchant
+	Dungeon
+		D - Entrance
+		D - Ruins
+		D - Ruins Inner
+		D - Mirage
+		D - Snakekin Tribe
+		D - Snakekin Shrine
 5) Snow 
+	Quester - Ziv-M, Silent Merchant
+	Shops
+		Shrine of Maxima (Increase a stat by giving up certain items)
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling Merchant
+	Dungeon
+		S - Base
+		S - Blizzard
+		S - Crevice
 6) Mountains (deltas off a mountian. lava too?)
 7) Crystal Caverns
 8) Plains
