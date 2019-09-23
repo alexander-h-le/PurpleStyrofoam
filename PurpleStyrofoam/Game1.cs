@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PurpleStyrofoam.Items;
+using PurpleStyrofoam.Items.Weapons.Melee.Polearms;
+using System.Diagnostics;
 
 namespace PurpleStyrofoam
 {
@@ -27,7 +30,7 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            InventoryHandler.Inventory.Add(new Ichival());
             base.Initialize();
         }
 
@@ -63,7 +66,10 @@ namespace PurpleStyrofoam
                 Exit();
 
             // TODO: Add your update logic here
-
+            foreach (Item item in InventoryHandler.Inventory)
+            {
+                Debug.WriteLine($"ID: {item.ID}\nName: {item.Name}\n Description: {item.Description}\nRarity:{item.Rarity}");
+            }
             base.Update(gameTime);
         }
 

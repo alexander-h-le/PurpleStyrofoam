@@ -1,3 +1,13 @@
+Name: Dungeon!
+
+Secret collectables? Yes
+Change dungeon area by doing something special in dungeon to unlock an extra area or make it harder to increase drop table
+Rescue NPCs for companions? Hopefully yes
+Lives system. When you run out, get kicked out of the dungeon.
+Random set maps like Warframe does.
+
+Wall Jumps?
+
 ||||||||||||||||||||||||||          Warrior / Knight / Engener         |||||||||||||||||||||||||
 	Aerial combat? Chain attacks by throwing enemies up and attacking them in air
 Weapons: Sword (Quick), Polearm (Moderate), Axe (Slow)
@@ -22,13 +32,13 @@ E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into 
 		Wind + Earth = Sandstorm
 
 		Fire + Fire = Dwarf Star
-		Ice + Ice = Snowmen???? (ice rumblers)
+		Ice + Ice = Freeze enemies and give them ice thorns dealing damage ot enemies that come into contact.
 		Wind + Wind = Zephyr. BIG WIND
 		Earth + Earth = Rumblers
 Weapons: Wands (Quick), Staff (Moderate), Tomes (Slow)
 Q Ability
 	Wand - Prestadignation? Press the ability to cast an orb, attracting enemies attention. Unique weapons will modify that ability to attack enemies or do other abilities.
-	Staff - CONTROL THE ELEMENTS. shoot element-based bolt or ball.
+	Staff - CONTROL THE ELEMENTS.  COntinuous beam
 	Tomes - Incantation. Press the ability to reduce movement greatly and focus your abilities into casting a large spell. Unique weapons for example will cast a meteor storm (almost) wiping out
 		all enemies afflicted.
 E Ability: Go into ground and reappear farther in direction of cursor depending on how long you hold the ability
@@ -52,6 +62,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 ||||||||||||||||||||||||                       Game Progression                      |||||||||||||||||||||||||
 
 40 hour game, 4 hours per map to complete. 10 maps
+Dungeons are progressive.
 
 1) Cathedral Ruins 
 	Quester - John-M, Knight's Squire
@@ -63,9 +74,13 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling merchant (Misc. inventory items)
 	Dungeons
 		CR - Entrance
+			Boss - 
 		CR - First Floor
+			Boss - 
 		CR - Second Floor
-		CR - Cemetary
+			Boss - 
+		CR - Cemetary (Raise the dead to unlock an undead companion?)
+			Boss - 
 		CR - Bell Tower (Secret) Drops broken skeleton key
 
 2) Jungle
@@ -78,9 +93,13 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling merchant
 	Dungeon
 		J - Entrance
+			Boss - 
 		J - Outer
+			Boss - 
 		J - Inner
+			Boss - 
 		J - Wetlands
+			Boss - 
 		J - World tree's root (Secret) Drops skeleton key repair item (1/10)
 
 3) Underground
@@ -93,10 +112,15 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling merchant
 	Dungeon
 		U - Entrance
+			Boss - 
 		U - Shaft 1
+			Boss - 
 		U - Shaft 2
+			Boss - 
 		U - Shaft 3
+			Boss - 
 		U - Deep
+			Boss - 
 		U - A new light
 4) Desert
 	Quester - Livia-F, Caller of Snakes
@@ -108,11 +132,17 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling Merchant
 	Dungeon
 		D - Entrance
+			Boss - 
 		D - Ruins
+			Boss - 
 		D - Ruins Inner
+			Boss - 
 		D - Mirage
+			Boss - 
 		D - Snakekin Tribe
+			Boss - 
 		D - Snakekin Shrine
+			Boss - 
 5) Snow 
 	Quester - Ziv-M, Silent Merchant
 	Shops
@@ -123,8 +153,11 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling Merchant
 	Dungeon
 		S - Base
+			Boss - 
 		S - Blizzard
+			Boss - 
 		S - Crevice
+			Boss - 
 6) Mountains (deltas off a mountian. lava too?)
 7) Crystal Caverns
 8) Plains
@@ -139,10 +172,15 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 		Traveling merchant
 	Dungeons
 		PR - Outskirts
+			Boss - 
 		PR - Outer
+			Boss - 
 		PR - Inner
+			Boss - 
 		PR - Ground zero
+			Boss - 
 		PR - Planar Rupture
+			Boss - 
 		PR - Planar Rupture [Minor] (Secret) Drops Skeleton key magic
 
 Secret) Bredland - Only skeleton key to access
@@ -155,9 +193,31 @@ Secret) Bredland - Only skeleton key to access
 		Traveling merchant
 	Dungeon - Lair of the laser sharks.
 		BL - Entrance
+			Boss - 
 		BL - Scouting ships
+			Boss - 
 		BL - Battleship
+			Boss - 
 		BL - Mothership outer
+			Boss - 
 		BL - Mothership inner
+			Boss - 
 		BL - Mothership's core
+			Boss - 
 		BL - Literally a map with nothing but bred NPCs
+
+Secret) Carson's Area - Only skeleton key to access
+	Quester - PH
+	Shops
+		Nope
+		Blacksmith
+		Armorer
+		Alchemist
+		Traveling merchant
+	Dungeon
+		CA - 1
+		CA - 2
+		CA - 3
+		CA - 4
+		CA - 5
+		CA - 6
