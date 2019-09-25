@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items
 {
@@ -13,10 +14,10 @@ namespace PurpleStyrofoam.Items
         public abstract void OnInventoryUse(); // What happens when player will right click item in the inventory.
         public abstract string Description { get;  } // What will be displayed in the UI for item.
         public abstract RARITY Rarity { get; } // Get the item's rarity
+        public abstract ImageHandler image { get; set; }
         /**
          * TODO
          *  - add way to get display process
-         *  - add way to get image information
          **/
     }
 

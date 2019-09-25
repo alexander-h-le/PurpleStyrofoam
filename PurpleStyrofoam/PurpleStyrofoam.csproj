@@ -48,13 +48,17 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Materials\Material.cs" />
     <Compile Include="Items\Potions\Potion.cs" />
+    <Compile Include="Items\Weapons\Melee\Axes\Erot.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\Fortz.cs" />
     <Compile Include="Items\Weapons\Melee\Polearms\Ichival.cs" />
+    <Compile Include="Items\Weapons\Melee\Rapiers\Lithiel.cs" />
+    <Compile Include="Items\Weapons\Melee\Swords\Flight.cs" />
     <Compile Include="Items\Weapons\Weapon.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />
     <Compile Include="Maps\Hubs\Hub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\ImageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -116,15 +120,13 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Class Information.txt" />
+    <Content Include="Game info\Class Information.txt" />
+    <Content Include="Game info\Items and IDs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Armors\Heavy\" />
     <Folder Include="Items\Armors\Light\" />
     <Folder Include="Items\Miscellaneous Items\" />
-    <Folder Include="Items\Weapons\Melee\Axes\" />
-    <Folder Include="Items\Weapons\Melee\Rapiers\" />
-    <Folder Include="Items\Weapons\Melee\Swords\" />
     <Folder Include="Items\Weapons\Ranged\Staves\" />
     <Folder Include="Items\Weapons\Ranged\Throwing\" />
     <Folder Include="Items\Weapons\Ranged\Tomes\" />

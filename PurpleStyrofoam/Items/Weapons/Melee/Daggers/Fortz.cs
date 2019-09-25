@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 {
     class Fortz : Weapon
     {
-        private int dmg;
-        private ATTACKSPEED atkspd;
-        private string name;
-        private string desc;
-        public override int Damage => dmg;
+        public override int Damage => 100;
 
-        public override ATTACKSPEED AttackSpeed { get => atkspd; set => atkspd = value; }
-        public override string Name { get => name; set => name = value; }
+        public override ATTACKSPEED AttackSpeed { get; set; }
+        public override string Name { get; set; }
 
         public override int ID => 002;
 
-        public override string Description => desc;
+        public override string Description => "One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight.";
 
         public override RARITY Rarity => RARITY.LEGENDARY;
 
+        public override ImageHandler image { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public Fortz()
         {
-            dmg = 100;
-            atkspd = ATTACKSPEED.FAST;
-            name = "Fortz";
+            AttackSpeed = ATTACKSPEED.FAST;
+            Name = "Fortz";
         }
 
         public override void OnInventoryUse()
