@@ -12,10 +12,7 @@ Wall Jumps?
 	Aerial combat? Chain attacks by throwing enemies up and attacking them in air
 Weapons: Sword (Quick), Polearm (Moderate), Axe (Slow)
 Q Ability
-	Sword -
-		Spin attack? Press ability to spin2win
-		Charge? Short dash that increases damage proportional to enemies hit.
-		Warcry? Call your inner chad and increase damage greatly for a short time.
+	Sword - Warcry? Call your inner chad and increase damage greatly for a short time.
 	Polearm - Stab. Press the ability to thrust the polearm forward dealing damage to all enemies in a straight line and stunning them for a short period.
 	Axe - Crash? Press ability to slam axe into ground dealing major damage to one target and minor shockwave damage to nearby enemies.
 E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into an enemy or solid object. Press ability again to pull yourself to hook position.
@@ -24,6 +21,12 @@ E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into 
 ||||||||||||||||||||||||||       Mage / Caster / Sorcerer / Warlock / Wizard           ||||||||||||||||||||||||||
 	Left click to shoot out selected element. Right click to change element
 		Fire, Ice, Wind, Earth
+
+		Fire = Small damage DOT
+		Ice = Major slow
+		Wind = Large knock back into air
+		Earth = Pierces defense
+
 		Fire + Ice = Boom
 		Fire + Wind = Fire tornado
 		Fire + Earth = Magma. High damaging burn debuff?
@@ -50,11 +53,12 @@ Q Ability
 	Throwing - Flurry of attacks with throwing weapon?
 		Short Q cooldown. Every successful attack adds a damage stack that increases damage for basic attack and dash by __% (0.1 per stack?) for __ seconds until stack cools off
 		Every successful Q Ability (all attacks must hit) will reset cooldown on E ability
-	Dagger - Backstab? Large damage to one enemy. If kill, apply Fear to nearby enemies decreasing Def by __% (25?)
-		Blade dance? For the next __ seconds, E ability has no cooldown
+	Dagger - Blade dance? For the next __ seconds, E ability has no cooldown
 	Rapier - Finesseeeee? Attack super duper speed (buff)
 E Ability: Shadow dash. Join with the shadows and dash towards cursor and through enemies dealing damage to any that are hit. 
 	You are impervious to projectiles and attacks during this period, but cannot cancel dash.
+
+|||||||||||||||||||||||                 Pet Wrangler / Summoner 			||||||||||||||||||||||||||||
 
 
 

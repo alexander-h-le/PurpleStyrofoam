@@ -1,6 +1,165 @@
-﻿001 Ichival
-002 Fortz
-003 Flight
-004 Lithiel
-005 Erot
-006
+Weapons
+Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5, Tome - 5, Wand - 5
+
+001 Ichival // Polearm 
+	// A legendary spear, wielded by countless heroes of the past. With its attunement to lightning, it strikes down its foes with a current strong enough to ionize the very air around it. 
+	// Thrust out spear to hurt enemies. Any enemies beyond the tip in a small area that the spear didn't hit get electrocuted.
+
+002 Fortz // Dagger 
+	// One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight. 
+	// Blade dance, but enemies a frozen by fear and screen gets darker.
+
+003 Flight // Sword 
+	// Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself. 
+	// Increase attack speed and attacks during this period throw an extra slash of wind that pierce infinitely and travels until it hits a wall/floor.
+
+004 Lithiel // Rapier 
+	// Although it is considered a failed imitation of the legendary sword, Flight, its power is not to be pitied. Wielders of this powerful rapier have been known to finish fights faster 		than they started. 
+	// Attacks have no cool-down speed. I.E insanely fast speed. Also ignores defense.
+
+005 Erot // Axe 
+	// A forgotten weapon, lost to the tides of time. Wielding it gives you power strong enough to tear through the veils of reality
+	// Send the axe crashing down into the ground, summoning a black hole that sucks enemies into it. After X seconds it explodes, instantly killing anything in it.
+
+006 Logoros' beacon // Staff
+	// One of the last beacons to call upon the god of endings. While you are able to send mana through it, its use lies within its ability to call Logoros.
+	// Activate the staff to shoot out a beam of Logoros' power. This beam 1-shots enemies but enemies don't drop anything.
+
+007 Ventis' bone shard // Throwing
+	// While seemingly disgusting, these shards are more powerful than they seem. Coming from the Ventis, the last Giant, these shards are strong enough to pierce bedrock.
+	// Rapidly shoot out bone shards which pierce infinitely and have no knock back.
+
+008 Falavol's last wish // Tome
+	// Falavol, a warlock, once known for being the first mage to be, wrote these notes, days before his death. Reading it gives you knowledge of magic you cannot even begin to comprehend.
+	// Summon a crystal above you that shoots out crystals in all directions. The crystals stick into walls and explode after 2 seconds. Enemies killed have their souls absorbed into the 		crystal which heals you once the spell is over.
+
+009 Iythil's Wand // Wand
+	// Iythil, one of the best mages to ever exist, created this wand for his descendants. Unfortunately, his descendants no longer own this weapon, and now you own it.
+	// Summon an orb that floats around attracting enemies attention. Clicking on this orb will teleport the player to it. Enemies that come too close to the crystal take a lot of damage.
+
+010 Shuricane // Throwing
+	// The shuricane, wielded by assassins of the past, was created to improve efficiency, and reduce the need to retrieve or recreate thrown shuriken.
+	// Shoots out shurikens that come back to you to do double damage.
+
+011 Demon's fang // Dagger
+	// A crude, grotesque, yet powerful weapon. It is no more complex than simply being a fang from a demon, but it is sharper than any conventional weapon.
+	// Blade dance inflicts hellfire, a high damage fire debuff.
+
+012 Halberd // Polearm
+	// A standard halberd, able to cut enemies down from afar with forces stronger than your average spear. It has difficulty thrusting, however.
+	// Standard thrust that does reduced damage.
+
+013 Spear // Polearm
+	// A standard spear, able to strikes enemies down before they can ever reach you.
+	// Standard thrust
+
+014 Tervyl's Spear // Polearm
+	// While appearing simple, it is actually a spear made from oak, tipped with a tooth from Tervyl, a long dead dragon.
+	// Able to call forth Tervyl, a dragon of old, it thrusts forth spouting fire from its end.
+
+015 Tetis throwing spear // Throwing
+	// Nicknamed "The Penetrator" from the Tetis guards that used it, it is designed with aerodynamics and puncturing power at is forefront.
+	// Throws a spear that pins enemies to ground for 10 seconds.
+
+016 Jungle's calling // Wand
+	// A wand gifted to you from the jungle itself, it is able to call forth creatures of the jungle to help in your journey.
+	// Cast an orb that summons jungle mobs.
+
+017 Myth's shine // Wand
+	// This mysterious wand you found in a dungeon has shines a light that simply cannot ignore.
+	// Summon an orb that attracts mobs' attention
+
+018 Trident // Throwing
+	// I mean more pointy bits means more damage, right?
+	// Instead of a flurry, it throws a trident with low damage but very high knock back.
+
+019 Royal rapier // Rapier
+	// A rapier used only by princes, it is intricately designed with many rare gems, so much so that you begin to doubt its use in combat...
+	// Decreases damage in exchange for majorly increased speed.
+
+020 Razor leaf // Throwing
+	// Coming from the razor bush, the leaf is unnaturally sharp, and is the perfect shape to be thrown. While its cuts aren't deep, it causes enemies to bleed an unbelievable amount.
+	// Thrown attacks bleed enemy.
+
+021 Bo staff // Polearm
+	// A simple weapon that tends to knock enemies out over outright killing them.
+	// A thrust that does no damage but has insane knock back.
+
+022 Mythril Staff // Staff
+	// A magical staff made from a magical metal. Its natural attunement to magic makes it exceptionally more powerful than primitive sticks.
+	// Shoots out a beam of the currently selected element.
+
+023 Collapse wand // Wand
+	// Many people connect this wand to Logoros, but there seems to be no connection.
+	// Summons an orb that sucks in all enemies after 5 seconds and explodes.
+
+024 Hilt // Sword (dud)
+	// A broken sword hilt. It seems to be beyond repair.
+	// No buffs, but you can still use ability.
+
+025 Steel dagger // Dagger
+	// The quintessential dagger to any assassin.
+	// Basic ability
+
+026 Dagger of shocking // Dagger
+	// A dagger enchanted by a mage with the power to shock your opponents.
+	// when dash hits, electrocute enemy. Electrocuted enemies will shock nearby enemies.
+
+027 Duntoh's penetrator// Dagger
+	// While Duntoh was no revered person from across the lands, the people that do know him, however, know very will about his dagger. Many claim that his dagger was so powerful that many 		of Duntoh's feats were due to how well it was crafted.
+	// Blade dance but after every dash there is another shadow dash following the player with a few second delay.
+
+028 Tetis broadsword // Sword
+	// An ordinary sword built for Tetis soldiers on the battlefield.
+	// Warcry but if wearing heavy armor, it lasts longer.
+
+029 Steel sword // Sword
+	// The quintessential sword for any warrior
+	// Basic ability
+
+030 Watermelon slicer // Sword
+	// Built to slice watermelons, and heads. Yes, heads.
+	// Warcry but it does unnaturally high amounts of damage.
+
+031 Steel rapier // Rapier
+	// A simple rapier for warriors looking for a little more finesse
+	// Basic ability
+
+031 Nissilan piercer // Rapier
+	// An old rapier, used by soldiers of the long since destroyed kingdom of Nissila.
+	// Finesse but hit enemies are slowed.
+
+032 Mythril rapier // Rapier
+	// A strange rapier crafted from mythril. Although mythril is naturally a weak metal, its attunement to magic oddly gives it powerful properties.
+	// Finesse but players release magic bolts that go up and fly down to an enemy.
+
+033 Steel axe // Axe
+	// A simple axe for warriors looking to literally crush their enemies.
+	// Basic ability
+
+034 // Axe
+035 // Axe
+036 // Axe
+037 Long stick // Staff
+	// While simple it manages to conduct magic.
+	// Basic ability.
+
+038 // Staff
+039 // Staff
+040 Fireball // Tome
+	// One of the first spells a mage will ever learn.
+	// Shoots out a fireball. Short incantation.
+
+041 Thunderstorm // Tome
+	// An advanced spell that summons a cloud that shocks your opponents.
+	// Summons a thundercloud that shoots lightning down at random locations under the cloud.
+
+042 Jeff's Book of Flames // Tome
+	// Sends out a large fireball at your opponents.
+	// Fireball but very, very big.
+
+043 // Tome
+044 // Wand
+045 Kunai // Throwing
+	// A simple throwing weapon that most assassins pick up when they first start their career.
+	// Basic ability
