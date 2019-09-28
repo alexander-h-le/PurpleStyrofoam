@@ -7,27 +7,27 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 002 Fortz // Dagger 
 	// One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight. 
-	// Blade dance, but enemies a frozen by fear and screen gets darker.
+	// Blade dance, but hit enemies are intimidated and will run away after the ability ends.REWORK
 
 003 Flight // Sword 
 	// Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself. 
-	// Increase attack speed and attacks during this period throw an extra slash of wind that pierce infinitely and travels until it hits a wall/floor.
+	// Increase attack speed and attacks during this period throw an extra slash of wind that pierces 3 enemies or travels until it hits a wall/floor. 
 
 004 Lithiel // Rapier 
 	// Although it is considered a failed imitation of the legendary sword, Flight, its power is not to be pitied. Wielders of this powerful rapier have been known to finish fights faster 		than they started. 
-	// Attacks have no cool-down speed. I.E insanely fast speed. Also ignores defense.
+	// Attacks have no cool-down speed. I.E insanely fast speed. Also partially ignores defense.
 
 005 Erot // Axe 
 	// A forgotten weapon, lost to the tides of time. Wielding it gives you power strong enough to tear through the veils of reality
-	// Send the axe crashing down into the ground, summoning a black hole that sucks enemies into it. After X seconds it explodes, instantly killing anything in it.
+	// Send the axe crashing down into the ground, summoning a black hole that sucks enemies into it. After X seconds it explodes, dealing big damage to anything in it. 
 
 006 Logoros' beacon // Staff
 	// One of the last beacons to call upon the god of endings. While you are able to send mana through it, its use lies within its ability to call Logoros.
-	// Activate the staff to shoot out a beam of Logoros' power. This beam 1-shots enemies but enemies don't drop anything.
+	// Activate the staff to shoot out a beam of Logoros' power. This beam does high damage. Damage dealt permanently removes that much health.
 
 007 Ventis' bone shard // Throwing
-	// While seemingly disgusting, these shards are more powerful than they seem. Coming from the Ventis, the last Giant, these shards are strong enough to pierce bedrock.
-	// Rapidly shoot out bone shards which pierce infinitely and have no knock back.
+	// While seemingly disgusting, these shards are more powerful than they seem. Coming from Ventis, the last Giant, these shards are strong enough to pierce bedrock.
+	// Rapidly shoot out bone shards which pierce infinitely and bleeds enemies.
 
 008 Falavol's last wish // Tome
 	// Falavol, a warlock, once known for being the first mage to be, wrote these notes, days before his death. Reading it gives you knowledge of magic you cannot even begin to comprehend.
@@ -35,10 +35,10 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 009 Iythil's Wand // Wand
 	// Iythil, one of the best mages to ever exist, created this wand for his descendants. Unfortunately, his descendants no longer own this weapon, and now you own it.
-	// Summon an orb that floats around attracting enemies attention. Clicking on this orb will teleport the player to it. Enemies that come too close to the crystal take a lot of damage.
+	// Summon an orb that floats around attracting enemies attention. Attacks that go through the orb's area of effect have their damage increased. Enemies that come too close to the crystal take a lot of damage.
 
-010 Shuricane // Throwing
-	// The shuricane, wielded by assassins of the past, was created to improve efficiency, and reduce the need to retrieve or recreate thrown shuriken.
+010 Shurricane // Throwing
+	// The shurricane, wielded by assassins of the past, was created to improve efficiency, and reduce the need to retrieve or recreate thrown shuriken.
 	// Shoots out shurikens that come back to you to do double damage.
 
 011 Demon's fang // Dagger
@@ -66,11 +66,11 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 	// Cast an orb that summons jungle mobs.
 
 017 Myth's shine // Wand
-	// This mysterious wand you found in a dungeon has shines a light that simply cannot ignore.
+	// This mysterious wand you found in a dungeon shines a light that simply cannot be ignored.
 	// Summon an orb that attracts mobs' attention
 
 018 Trident // Throwing
-	// I mean more pointy bits means more damage, right?
+	// I mean, more pointy bits means more damage, right?
 	// Instead of a flurry, it throws a trident with low damage but very high knock back.
 
 019 Royal rapier // Rapier
@@ -83,10 +83,10 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 021 Bo staff // Polearm
 	// A simple weapon that tends to knock enemies out over outright killing them.
-	// A thrust that does no damage but has insane knock back.
+	// A thrust that does no damage but has insane knock back. 
 
 022 Mythril Staff // Staff
-	// A magical staff made from a magical metal. Its natural attunement to magic makes it exceptionally more powerful than primitive sticks.
+	// Its natural attunement to magic gives it a far greater magical affinity than standard, primitive sticks
 	// Shoots out a beam of the currently selected element.
 
 023 Collapse wand // Wand
@@ -95,7 +95,7 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 024 Hilt // Sword (dud)
 	// A broken sword hilt. It seems to be beyond repair.
-	// No buffs, but you can still use ability.
+	// No buffs, but you can still use the ability.
 
 025 Steel dagger // Dagger
 	// The quintessential dagger to any assassin.
@@ -111,15 +111,13 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 028 Tetis broadsword // Sword
 	// An ordinary sword built for Tetis soldiers on the battlefield.
-	// Warcry but if wearing heavy armor, it lasts longer.
+	// The duration of Warcry changes with armor weight
 
 029 Steel sword // Sword
 	// The quintessential sword for any warrior
 	// Basic ability
 
-030 Watermelon slicer // Sword
-	// Built to slice watermelons, and heads. Yes, heads.
-	// Warcry but it does unnaturally high amounts of damage.
+030  // Sword
 
 031 Steel rapier // Rapier
 	// A simple rapier for warriors looking for a little more finesse
@@ -137,15 +135,30 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 	// A simple axe for warriors looking to literally crush their enemies.
 	// Basic ability
 
-034 // Axe
-035 // Axe
-036 // Axe
+034 Mythril Axe // Axe
+	// Originally enchanted to cut trees, it has been re-enchanted to for combat.
+	// Minor shockwaves do more damage at the cost of major shockwaves doing less damage. For the next X seconds, the axe keeps emitting shockwaves.
+
+035 Shatterer // Axe
+	// From afar it looks like a simple axe, but when you pick it up you can immediately tell that the weight is extremely lop-sided, dangerously so.
+	// Very slow ability but increases base shockwave damage. Minor shockwaves deal full damage
+
+036 Frozen Axe // Axe
+	// A relatively weak axe that is naturally imbued with magic.
+	// Very low damage ability but inflicts all enemies hit with an ice effect.
+
 037 Long stick // Staff
 	// While simple it manages to conduct magic.
-	// Basic ability.
+	// Basic ability. Shoots out current selected element.
 
-038 // Staff
-039 // Staff
+038 Large spider leg // Staff
+	// A leg from a giant spider. While it is very hard to send magic through it, any magic that gets sent through it is amplified.
+	// Short range burst that greatly slows enemies that get hit.
+
+039 Desert's storm // Staff
+	// A crystal formed from the desert sands, it is able to bring forth the power of the desert storms.
+	// Summons a sandstorm that has really short range, but has the bonus of hitting behind and above you. (Summons a sandstorm in front of you)
+
 040 Fireball // Tome
 	// One of the first spells a mage will ever learn.
 	// Shoots out a fireball. Short incantation.
@@ -155,11 +168,17 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 	// Summons a thundercloud that shoots lightning down at random locations under the cloud.
 
 042 Jeff's Book of Flames // Tome
-	// Sends out a large fireball at your opponents.
+	// Sends out a large fireball at your opponents. The legends say his name was Jeff
 	// Fireball but very, very big.
 
-043 // Tome
-044 // Wand
+043 Necronomicon // Tome
+	// A book with spells so evil that you feel yourself lose hope in humanity.
+	// Summon 3 zombies to attack for you that last 1 minute or until they die. They have 75% of your health.
+
+044 Stick of truth // Wand
+	// A common magical item used by royal detectives, it reveals the truth of something for a topic. For combat, these spells reveal the weaknesses of the target.
+	// Summons orb that lowers nearby defense of enemies.
+
 045 Kunai // Throwing
 	// A simple throwing weapon that most assassins pick up when they first start their career.
 	// Basic ability
