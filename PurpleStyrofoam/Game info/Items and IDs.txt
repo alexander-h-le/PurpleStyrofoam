@@ -117,7 +117,9 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 	// The quintessential sword for any warrior
 	// Basic ability
 
-030  // Sword
+030 Catana // Sword
+	// To find a katana in the jungle... Where could it have originated?
+	// Activate the ability to call forth your feline powers and increase movement speed along with attack speed. Hits on enemies mark them as your targets and cause them to take more damage from all sources when ability ends.
 
 031 Steel rapier // Rapier
 	// A simple rapier for warriors looking for a little more finesse
@@ -145,7 +147,7 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 
 036 Frozen Axe // Axe
 	// A relatively weak axe that is naturally imbued with magic.
-	// Very low damage ability but inflicts all enemies hit with an ice effect.
+	// Hitting the ground summons a large icicle that explodes after 5 seconds, sending out shards of ice. When a shard hits the ground, it sends out shockwaves that deal 50% of the ability's damage.
 
 037 Long stick // Staff
 	// While simple it manages to conduct magic.

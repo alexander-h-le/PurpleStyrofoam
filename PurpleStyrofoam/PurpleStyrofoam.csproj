@@ -42,11 +42,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Items\Armors\Armor.cs" />
     <Compile Include="Items\InventoryHandler.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Materials\Material.cs" />
+    <Compile Include="Items\Miscellaneous Items\Companions\Companion.cs" />
     <Compile Include="Items\Potions\Potion.cs" />
     <Compile Include="Items\Weapons\Melee\Axes\Erot.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\Fortz.cs" />
@@ -54,11 +56,17 @@
     <Compile Include="Items\Weapons\Melee\Rapiers\Lithiel.cs" />
     <Compile Include="Items\Weapons\Melee\Swords\Flight.cs" />
     <Compile Include="Items\Weapons\Weapon.cs" />
+    <Compile Include="Maps\BaseMap.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />
     <Compile Include="Maps\Hubs\Hub.cs" />
+    <Compile Include="Maps\TestMap.cs" />
+    <Compile Include="Rendering\AnimatedSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\ImageHandler.cs" />
+    <Compile Include="Rendering\ItemSprite.cs" />
+    <Compile Include="Rendering\MapObject.cs" />
+    <Compile Include="Rendering\RenderHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -126,7 +134,6 @@
   <ItemGroup>
     <Folder Include="Items\Armors\Heavy\" />
     <Folder Include="Items\Armors\Light\" />
-    <Folder Include="Items\Miscellaneous Items\" />
     <Folder Include="Items\Weapons\Ranged\Staves\" />
     <Folder Include="Items\Weapons\Ranged\Throwing\" />
     <Folder Include="Items\Weapons\Ranged\Tomes\" />

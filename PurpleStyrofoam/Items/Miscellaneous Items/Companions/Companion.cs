@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PurpleStyrofoam.Maps
+namespace PurpleStyrofoam.Items.Miscellaneous_Items.Companions
 {
-    abstract class Hub : BaseMap
+    abstract class Companion
     {
     }
 }

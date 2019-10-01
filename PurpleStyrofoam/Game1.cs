@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using PurpleStyrofoam.Items;
-using PurpleStyrofoam.Items.Weapons.Melee.Polearms;
+using PurpleStyrofoam.Rendering;
+using PurpleStyrofoam.Maps;
 using System.Diagnostics;
+using PurpleStyrofoam.AiController;
 
 namespace PurpleStyrofoam
 {
@@ -14,6 +15,11 @@ namespace PurpleStyrofoam
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D testIMG;
+        ItemSprite rotationSprite;
+        SpriteFont font;
+        private PlayerController player;
+        TestMap tM;
         
         public Game1()
         {
@@ -30,7 +36,7 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            InventoryHandler.Inventory.Add(new Ichival());
+            RenderHandler.Initialize();
             base.Initialize();
         }
 
@@ -41,8 +47,22 @@ namespace PurpleStyrofoam
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            Debug.WriteLine("Loading Objects...");
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            testIMG = Content.Load<Texture2D>("testIMG");
+            font = Content.Load<SpriteFont>("test");
+            //Texture2D playerIMG = Content.Load<Texture2D>("SmileyWalk");
+            player = new PlayerController(this.Content);
+            tM = new TestMap(this.Content);
+            RenderHandler.selectedMap = tM;
+            rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240);
+            rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
+            Debug.WriteLine("Objects Loaded");
+            Debug.WriteLine("Adding objects to RenderHandler...");
+            RenderHandler.Add(rotationSprite);
+            RenderHandler.Add(player);
+            Debug.WriteLine("Finished adding objects to RenderHandler");
             // TODO: use this.Content to load your game content here
         }
 
@@ -52,6 +72,7 @@ namespace PurpleStyrofoam
         /// </summary>
         protected override void UnloadContent()
         {
+            Content.Unload();
             // TODO: Unload any non ContentManager content here
         }
 
@@ -66,10 +87,8 @@ namespace PurpleStyrofoam
                 Exit();
 
             // TODO: Add your update logic here
-            foreach (Item item in InventoryHandler.Inventory)
-            {
-                Debug.WriteLine($"ID: {item.ID}\nName: {item.Name}\n Description: {item.Description}\nRarity:{item.Rarity}");
-            }
+            player.Update();
+            rotationSprite.Angle += 0.01f;
             base.Update(gameTime);
         }
 
@@ -82,6 +101,19 @@ namespace PurpleStyrofoam
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            if (RenderHandler.selectedMap != null) RenderHandler.selectedMap.Draw(spriteBatch);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "Get dunked on", new Vector2(100, 100), Color.Black);
+            spriteBatch.End();
+            foreach (AnimatedSprite item in RenderHandler.allCharacterSprites)
+            {
+                item.Draw(spriteBatch);
+            }
+            foreach (ItemSprite item in RenderHandler.allItemSprites)
+            {
+                item.Draw(spriteBatch);
+            }
+            if (RenderHandler.selectedMap != null) RenderHandler.selectedMap.DrawForeground(spriteBatch);
 
             base.Draw(gameTime);
         }
