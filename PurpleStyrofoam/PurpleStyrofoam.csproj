@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AiController\MouseHandler.cs" />
     <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Items\Armors\Armor.cs" />

@@ -37,6 +37,7 @@ namespace PurpleStyrofoam
         {
             // TODO: Add your initialization logic here
             RenderHandler.Initialize();
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -88,7 +89,8 @@ namespace PurpleStyrofoam
 
             // TODO: Add your update logic here
             player.Update();
-            rotationSprite.Angle += 0.01f;
+            MouseHandler.Update();
+            //rotationSprite.Angle += 0.01f;
             base.Update(gameTime);
         }
 

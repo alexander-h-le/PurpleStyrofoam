@@ -50,12 +50,14 @@ namespace PurpleStyrofoam.AiController
             this.Rows= rowsIn;
             this.Columns = columnsIn;
         }
-
+        private KeyboardState oldState;
+        private KeyboardState newState;
         public void CheckKeys()
         {
+            newState = Keyboard.GetState();
             int moveX = 0;
             int moveY = 0;
-           if (Keyboard.GetState().IsKeyDown(Keys.A))
+           if (newState.IsKeyDown(Keys.A))
             {
                 moveX -= 10;
                 if (!InAir)
@@ -63,7 +65,7 @@ namespace PurpleStyrofoam.AiController
                     SwitchSprite(movingPlayerSprite,1,1);
                 }
             }
-           if (Keyboard.GetState().IsKeyDown(Keys.D))
+           if (newState.IsKeyDown(Keys.D))
             {
                 moveX += 10;
                 if (!InAir)
@@ -71,7 +73,7 @@ namespace PurpleStyrofoam.AiController
                     SwitchSprite(movingPlayerSprite, 1, 1);
                 }
             } 
-           if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
+           if (newState.IsKeyDown(Keys.Space)) {
                 moveY -= 10;
                 if (!InAir)
                 {
@@ -80,16 +82,16 @@ namespace PurpleStyrofoam.AiController
                     SwitchSprite(jumpingDPlayerSprite,1,1);
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (newState.IsKeyDown(Keys.S))
             {
                 moveY += 10;
                 InAir = false;
             }
-           if (Keyboard.GetState().IsKeyDown(Keys.Q))
+           if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q))
             {
 
             }
-           if (Keyboard.GetState().IsKeyDown(Keys.E))
+           if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
 
             }
@@ -97,6 +99,7 @@ namespace PurpleStyrofoam.AiController
             if (moveX == 0) SwitchSprite(basePlayerSpriteName);
             this.X += moveX;
             this.Y += moveY;
+            oldState = newState;
         }
     }
 }
