@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace PurpleStyrofoam.Maps
         public abstract MapObject[] BackgroundLayer { get; set; }
         public abstract MapObject[] ActiveLayer { get; set; }
         public abstract MapObject[] ForegroundLayer { get; set; }
+
         public void Draw(SpriteBatch sp)
         {
             foreach (MapObject item in BackgroundLayer)

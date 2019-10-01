@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Axes
@@ -13,7 +15,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Axes
         public override int ID => 005;
 
         public override string Description => "A forgotten weapon, lost to the tides of time. Wielding it gives you power strong enough to tear through the veils of reality";
-        public Erot(ContentManager content) : base("Erot", 100, ATTACKSPEED.SLOW, RARITY.LEGENDARY, new ImageHandler(content, "Erot"))
+        public Erot(ContentManager content) : base("Erot", 100, ATTACKSPEED.SLOW, RARITY.LEGENDARY, new ItemSprite(content.Load<Texture2D>("Erot"), new Vector2(0, 0)))
         {
 
         }

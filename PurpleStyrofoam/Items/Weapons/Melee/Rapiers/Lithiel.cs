@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
@@ -14,7 +16,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
 
         public override string Description => "Although it is considered a failed imitation of the legendary sword, Flight, its power is not to be pitied. Wielders of this powerful rapier have been known to finish fights faster than they started.";
 
-        public Lithiel(ContentManager content) : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ImageHandler(content, "Lithiel")) {  }
+        public Lithiel(ContentManager content) : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ItemSprite(content.Load<Texture2D>("Lithiel"), new Vector2(0, 0))) {  }
 
         public override void OnInventoryUse()
         {

@@ -64,7 +64,6 @@
     <Compile Include="Rendering\AnimatedSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\ImageHandler.cs" />
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />
     <Compile Include="Rendering\RenderHandler.cs" />

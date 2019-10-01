@@ -14,12 +14,12 @@ namespace PurpleStyrofoam.Items
         public abstract void OnInventoryUse(); // What happens when player will right click item in the inventory.
         public abstract string Description { get;  } // What will be displayed in the UI for item.
         public RARITY Rarity { get; } // Get the item's rarity
-        public ImageHandler image { get; set; }
-        protected Item(string nameIn, RARITY levelIn, ImageHandler imageIn)
+        public ItemSprite sprite { get; set; }
+        protected Item(string nameIn, RARITY levelIn, ItemSprite imageIn)
         {
             Name = nameIn;
             Rarity = levelIn;
-            image = imageIn;
+            sprite = imageIn;
         }
         /**
          * TODO

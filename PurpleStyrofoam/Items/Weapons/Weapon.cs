@@ -9,7 +9,7 @@ namespace PurpleStyrofoam.Items.Weapons
 {
     abstract class Weapon : Item
     {
-        protected Weapon(string nameIn, int damage, ATTACKSPEED atkspd, RARITY levelIn, ImageHandler imageIn) : base(nameIn, levelIn, imageIn)
+        protected Weapon(string nameIn, int damage, ATTACKSPEED atkspd, RARITY levelIn, ItemSprite imageIn) : base(nameIn, levelIn, imageIn)
         {
             Damage = damage;
             AttackSpeed = atkspd;

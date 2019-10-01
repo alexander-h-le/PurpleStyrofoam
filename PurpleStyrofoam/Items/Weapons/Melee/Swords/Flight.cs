@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
@@ -13,7 +15,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
         public override int ID => 003;
 
         public override string Description => "Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself.";
-        public Flight(ContentManager content) : base("Flight", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ImageHandler(content, "Flight")) { }
+        public Flight(ContentManager content) : base("Flight", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ItemSprite(content.Load<Texture2D>("Flight"), new Vector2(0,0))) { }
 
         public override void OnInventoryUse()
         {
