@@ -56,13 +56,12 @@ namespace PurpleStyrofoam
             //Texture2D playerIMG = Content.Load<Texture2D>("SmileyWalk");
             player = new PlayerController(this.Content);
             tM = new TestMap(this.Content);
-            RenderHandler.selectedMap = tM;
-            rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240);
+            rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240, scale: 0.5f);
             rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
             Debug.WriteLine("Objects Loaded");
             Debug.WriteLine("Adding objects to RenderHandler...");
+            RenderHandler.InitiateChange(tM, player);
             RenderHandler.Add(rotationSprite);
-            RenderHandler.Add(player);
             Debug.WriteLine("Finished adding objects to RenderHandler");
             // TODO: use this.Content to load your game content here
         }
@@ -89,6 +88,7 @@ namespace PurpleStyrofoam
 
             // TODO: Add your update logic here
             player.Update();
+            RenderHandler.Update();
             MouseHandler.Update();
             //rotationSprite.Angle += 0.01f;
             base.Update(gameTime);
@@ -101,22 +101,11 @@ namespace PurpleStyrofoam
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
-            if (RenderHandler.selectedMap != null) RenderHandler.selectedMap.Draw(spriteBatch);
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Get dunked on", new Vector2(100, 100), Color.Black);
             spriteBatch.End();
-            foreach (AnimatedSprite item in RenderHandler.allCharacterSprites)
-            {
-                item.Draw(spriteBatch);
-            }
-            foreach (ItemSprite item in RenderHandler.allItemSprites)
-            {
-                item.Draw(spriteBatch);
-            }
-            if (RenderHandler.selectedMap != null) RenderHandler.selectedMap.DrawForeground(spriteBatch);
-
+            RenderHandler.Draw(spriteBatch);
             base.Draw(gameTime);
         }
     }

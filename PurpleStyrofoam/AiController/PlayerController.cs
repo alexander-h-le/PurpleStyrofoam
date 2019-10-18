@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using PurpleStyrofoam.Rendering;
+using PurpleStyrofoam.Items.Weapons;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -21,82 +22,96 @@ namespace PurpleStyrofoam.AiController
         private const string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
         public bool InAir { get; private set; }
         private ContentManager Content;
-        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0) : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn)
+        public Weapon HeldWeapon { get; set; }
+        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null) : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn)
         {
             PlayerSprite = content.Load<Texture2D>(basePlayerSpriteName);
             Content = content;
+            HeldWeapon = weapIn;
         }
 
         public override void Update()
         {
             CheckKeys();
-            this.currentFrame++;
-            if (this.currentFrame == this.totalFrames)
+            currentFrame++;
+            if (currentFrame >= totalFrames)
             {
                 if (!InAir)
                 {
-                    this.currentFrame = 0;
+                    currentFrame = 0;
+                } else if (currentSprite == jumpingDPlayerSprite)
+                {
+                    SwitchSprite(jumpingSPlayerSprite);
+                    currentFrame = 0;
                 } else
                 {
-                    SwitchSprite(jumpingSPlayerSprite,1,1);
-                    this.currentFrame = 0;
+                    currentFrame = 0;
                 }
             }
         }
 
+        private string currentSprite;
         public void SwitchSprite(string nameOfFile, int rowsIn = 1, int columnsIn = 1)
         {
-            this.Texture = Content.Load<Texture2D>(nameOfFile);
-            this.Rows= rowsIn;
-            this.Columns = columnsIn;
+            //Debug.WriteLine(nameOfFile + " " + !nameOfFile.Equals(currentSprite) + " " + currentSprite);
+             if (!nameOfFile.Equals(currentSprite))
+            {
+                Rows = rowsIn;
+                Columns = columnsIn;
+                totalFrames = Rows * Columns;
+                Texture = Content.Load<Texture2D>(nameOfFile);
+                currentSprite = nameOfFile;
+            }
         }
         private KeyboardState oldState;
         private KeyboardState newState;
+        private const int moveSpeed = 5;
         public void CheckKeys()
         {
             newState = Keyboard.GetState();
             int moveX = 0;
             int moveY = 0;
-           if (newState.IsKeyDown(Keys.A))
+           if (!RenderHandler.IsLoading)
             {
-                moveX -= 10;
-                if (!InAir)
+                if (newState.IsKeyDown(Keys.A))
                 {
-                    SwitchSprite(movingPlayerSprite,1,1);
+                    moveX -= moveSpeed;
+                    if (!InAir && oldState.IsKeyUp(Keys.A))
+                    {
+                        SwitchSprite(movingPlayerSprite, 4, 4);
+                    }
+                }
+                if (newState.IsKeyDown(Keys.D))
+                {
+                    moveX += moveSpeed;
+                    if (!InAir && oldState.IsKeyUp(Keys.D))
+                    {
+                        SwitchSprite(movingPlayerSprite, 4, 4);
+                    }
+                }
+                if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                {
+                    moveY -= moveSpeed*2;
+                    if (!InAir)
+                    {
+                        InAir = true;
+                        moveY -= 10;
+                        SwitchSprite(jumpingDPlayerSprite, 1, 1);
+                    }
+                }
+                if (newState.IsKeyDown(Keys.S))
+                {
+                    moveY += moveSpeed;
+                    InAir = false;
+                }
+                if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q))
+                {
+                }
+                if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+                {
                 }
             }
-           if (newState.IsKeyDown(Keys.D))
-            {
-                moveX += 10;
-                if (!InAir)
-                {
-                    SwitchSprite(movingPlayerSprite, 1, 1);
-                }
-            } 
-           if (newState.IsKeyDown(Keys.Space)) {
-                moveY -= 10;
-                if (!InAir)
-                {
-                    InAir = true;
-                    moveY -= 10;
-                    SwitchSprite(jumpingDPlayerSprite,1,1);
-                }
-            }
-            if (newState.IsKeyDown(Keys.S))
-            {
-                moveY += 10;
-                InAir = false;
-            }
-           if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q))
-            {
-
-            }
-           if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
-            {
-
-            }
-            //Debug.WriteLine(moveX);
-            if (moveX == 0) SwitchSprite(basePlayerSpriteName);
+            if (moveX == 0 && !InAir) SwitchSprite(basePlayerSpriteName,10,10);
             this.X += moveX;
             this.Y += moveY;
             oldState = newState;

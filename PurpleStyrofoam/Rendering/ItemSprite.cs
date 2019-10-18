@@ -16,18 +16,20 @@ namespace PurpleStyrofoam.Rendering
         public int Y { get; set; }
         public float Angle { get; set; }
         public Vector2 Origin { get; set; }
-        public ItemSprite(Texture2D textIn, Vector2 origIn, int xIn = 0, int yIn = 0, float angleIn = 0.0f)
+        public float Scale { get; set; }
+        public ItemSprite(Texture2D textIn, Vector2 origIn, int xIn = 0, int yIn = 0, float angleIn = 0.0f, float scale = 1.0f)
         {
             Texture = textIn;
             X = xIn;
             Y = yIn;
             Origin = origIn;
+            Scale = scale;
         }
 
-        public void Draw(SpriteBatch sp, float scale = 1.0f)
+        public void Draw(SpriteBatch sp)
         {
             sp.Begin();
-            sp.Draw(Texture, new Vector2(X,Y), new Rectangle(0,0, Texture.Width, Texture.Height), Color.White, Angle, Origin, scale, SpriteEffects.None, 1.0f);
+            sp.Draw(Texture, new Vector2(X,Y), new Rectangle(0,0, Texture.Width, Texture.Height), Color.White, Angle, Origin, Scale, SpriteEffects.None, 1.0f);
             sp.End();
         }
     }
