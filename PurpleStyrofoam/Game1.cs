@@ -15,16 +15,20 @@ namespace PurpleStyrofoam
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D testIMG;
-        ItemSprite rotationSprite;
-        SpriteFont font;
         private PlayerController player;
         TestMap tM;
+        public static double GameTimeMilliseconds;
+        public static double GameTimeSeconds;
+        public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
         
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = (int) ScreenSize.X;
+            graphics.PreferredBackBufferHeight = (int) ScreenSize.Y;
+            //graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -50,18 +54,15 @@ namespace PurpleStyrofoam
             // Create a new SpriteBatch, which can be used to draw textures.
             Debug.WriteLine("Loading Objects...");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            testIMG = Content.Load<Texture2D>("testIMG");
-            font = Content.Load<SpriteFont>("test");
             //Texture2D playerIMG = Content.Load<Texture2D>("SmileyWalk");
             player = new PlayerController(this.Content);
             tM = new TestMap(this.Content);
-            rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240, scale: 0.5f);
-            rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
+            //rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240, scale: 0.5f);
+            //rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
             Debug.WriteLine("Objects Loaded");
             Debug.WriteLine("Adding objects to RenderHandler...");
             RenderHandler.InitiateChange(tM, player);
-            RenderHandler.Add(rotationSprite);
+            //RenderHandler.Add(rotationSprite);
             Debug.WriteLine("Finished adding objects to RenderHandler");
             // TODO: use this.Content to load your game content here
         }
@@ -87,9 +88,11 @@ namespace PurpleStyrofoam
                 Exit();
 
             // TODO: Add your update logic here
-            player.Update();
+            player.DetectCollision();
             RenderHandler.Update();
             MouseHandler.Update();
+            GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
+            GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             //rotationSprite.Angle += 0.01f;
             base.Update(gameTime);
         }
@@ -100,11 +103,11 @@ namespace PurpleStyrofoam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Get dunked on", new Vector2(100, 100), Color.Black);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //spriteBatch.DrawString(font, "Get dunked on", new Vector2(100, 100), Color.Black);
+            //spriteBatch.End();
             RenderHandler.Draw(spriteBatch);
             base.Draw(gameTime);
         }

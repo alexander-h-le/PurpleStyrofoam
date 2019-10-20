@@ -18,11 +18,11 @@ namespace PurpleStyrofoam.AiController
             newState = Mouse.GetState();
             if (newState.RightButton == ButtonState.Pressed)
             {
-                RenderHandler.allItemSprites.ForEach(item => item.Angle += 0.02f);
+                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = newState.X;
+                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = newState.Y;
             }
             if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
             {
-                RenderHandler.allItemSprites.ForEach(item => item.Angle = RenderHandler.LookAtSprite(item, "PlayerController"));
             }
             oldState = newState;
         }

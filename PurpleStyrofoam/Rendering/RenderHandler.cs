@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.AiController;
@@ -14,13 +15,14 @@ namespace PurpleStyrofoam.Rendering
     {
         public static List<AnimatedSprite> allCharacterSprites { get; private set; }
         public static List<ItemSprite> allItemSprites { get; private set; }
-        private static BaseMap selectedMap;
+        public static BaseMap selectedMap;
         public static bool IsLoading { get; set; }
         private static bool FirstTime;
         public static void Initialize()
         {
             allCharacterSprites = new List<AnimatedSprite>();
             allItemSprites = new List<ItemSprite>();
+            ScreenMovement = new Vector2(0, 0);
             IsLoading = false;
             FirstTime = true;
         }
@@ -48,11 +50,15 @@ namespace PurpleStyrofoam.Rendering
         }
         public static void Update()
         {
+            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            {
+                sprite.Update();
+            }
         }
+        public static Vector2 ScreenMovement;
         public static void Draw(SpriteBatch sp)
         {
-            sp.Begin();
-            sp.End();
+            sp.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation(ScreenMovement.X, ScreenMovement.Y, 0));
             if (selectedMap != null) selectedMap.Draw(sp);
             foreach (AnimatedSprite item in allCharacterSprites)
             {
@@ -63,6 +69,7 @@ namespace PurpleStyrofoam.Rendering
                 item.Draw(sp);
             }
             if (selectedMap != null) selectedMap.DrawForeground(sp);
+            sp.End();
             if (FirstTime) IsLoading = false;
         }
         public static void Add(ItemSprite input)

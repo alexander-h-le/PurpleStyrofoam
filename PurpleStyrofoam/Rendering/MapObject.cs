@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PurpleStyrofoam.Rendering
 {
-    class MapObject
+    public class MapObject
     {
         public string name;
         public Texture2D texture;
@@ -17,6 +17,7 @@ namespace PurpleStyrofoam.Rendering
         public Vector2 location;
         public int width;
         public int height;
+        public Rectangle MapRectangle;
 
         public MapObject(string nameIn, ContentManager contentIn, Vector2 locationIn, int wIn, int hIn)
         {
@@ -26,6 +27,7 @@ namespace PurpleStyrofoam.Rendering
             location = locationIn;
             width = wIn;
             height = hIn;
+            MapRectangle = new Rectangle( (int) location.X, (int) location.Y, width, height);
         }
         public MapObject(string nameIn, ContentManager contentIn, string textureName, Vector2 locationIn, int wIn, int hIn)
         {
@@ -35,13 +37,12 @@ namespace PurpleStyrofoam.Rendering
             location = locationIn;
             width = wIn;
             height = hIn;
+            MapRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
         }
 
         public void Draw(SpriteBatch sp)
         {
-            sp.Begin();
             sp.Draw(texture, new Rectangle((int) location.X, (int) location.Y, width, height), Color.White);
-            sp.End();
         }
     }
 }

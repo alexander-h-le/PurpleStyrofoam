@@ -28,9 +28,7 @@ namespace PurpleStyrofoam.Rendering
 
         public void Draw(SpriteBatch sp)
         {
-            sp.Begin();
             sp.Draw(Texture, new Vector2(X,Y), new Rectangle(0,0, Texture.Width, Texture.Height), Color.White, Angle, Origin, Scale, SpriteEffects.None, 1.0f);
-            sp.End();
         }
     }
 }

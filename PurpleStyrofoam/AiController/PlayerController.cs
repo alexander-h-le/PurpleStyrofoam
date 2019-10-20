@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Items.Weapons;
+using System.Timers;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -30,8 +31,11 @@ namespace PurpleStyrofoam.AiController
             HeldWeapon = weapIn;
         }
 
+        private readonly int ScreenMovementMargin = (int) (Game1.ScreenSize.X/5f);
+        private const int ScreenMoveSpeed = 7;
         public override void Update()
         {
+            Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
             CheckKeys();
             currentFrame++;
             if (currentFrame >= totalFrames)
@@ -48,12 +52,27 @@ namespace PurpleStyrofoam.AiController
                     currentFrame = 0;
                 }
             }
+            UpdateVelocity();
+            if (SpriteRectangle.Right > (-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X) - ScreenMovementMargin)
+            {
+                RenderHandler.ScreenMovement.X -= ScreenMoveSpeed;
+            } else if (-SpriteRectangle.Left > RenderHandler.ScreenMovement.X - ScreenMovementMargin)
+            {
+                RenderHandler.ScreenMovement.X += ScreenMoveSpeed;
+            }
+            if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game1.ScreenSize.Y) + ScreenMovementMargin)
+            {
+                RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed;
+            }
+            else if (-SpriteRectangle.Top > RenderHandler.ScreenMovement.Y - ScreenMovementMargin)
+            {
+                RenderHandler.ScreenMovement.Y += ScreenMoveSpeed;
+            }
         }
 
         private string currentSprite;
         public void SwitchSprite(string nameOfFile, int rowsIn = 1, int columnsIn = 1)
         {
-            //Debug.WriteLine(nameOfFile + " " + !nameOfFile.Equals(currentSprite) + " " + currentSprite);
              if (!nameOfFile.Equals(currentSprite))
             {
                 Rows = rowsIn;
@@ -65,55 +84,54 @@ namespace PurpleStyrofoam.AiController
         }
         private KeyboardState oldState;
         private KeyboardState newState;
-        private const int moveSpeed = 5;
+        private const int moveSpeed = 10;
+        private const int jumpSpeed = 500;
         public void CheckKeys()
         {
             newState = Keyboard.GetState();
-            int moveX = 0;
-            int moveY = 0;
-           if (!RenderHandler.IsLoading)
+            if (South)
+            {
+                InAir = false;
+                velocity.Y = 0;
+            }
+            else
+            {
+                velocity.Y += 1;
+            }
+            if (!RenderHandler.IsLoading)
             {
                 if (newState.IsKeyDown(Keys.A))
                 {
-                    moveX -= moveSpeed;
+                    velocity.X = !West ? velocity.X - moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.A))
                     {
-                        SwitchSprite(movingPlayerSprite, 4, 4);
+                        SwitchSprite(movingPlayerSprite, 1, 1);
                     }
                 }
                 if (newState.IsKeyDown(Keys.D))
                 {
-                    moveX += moveSpeed;
+                    velocity.X = !East ? velocity.X + moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.D))
                     {
-                        SwitchSprite(movingPlayerSprite, 4, 4);
+                        SwitchSprite(movingPlayerSprite, 1, 1);
                     }
                 }
                 if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
                 {
-                    moveY -= moveSpeed*2;
                     if (!InAir)
                     {
                         InAir = true;
-                        moveY -= 10;
+                        velocity.Y -= jumpSpeed;
                         SwitchSprite(jumpingDPlayerSprite, 1, 1);
                     }
                 }
-                if (newState.IsKeyDown(Keys.S))
-                {
-                    moveY += moveSpeed;
-                    InAir = false;
-                }
-                if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q))
-                {
-                }
-                if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
-                {
-                }
+                //if (newState.IsKeyDown(Keys.S)) { }
+                //if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){}
+                //if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E)){}
+                
             }
-            if (moveX == 0 && !InAir) SwitchSprite(basePlayerSpriteName,10,10);
-            this.X += moveX;
-            this.Y += moveY;
+            if (North) velocity.Y = -velocity.Y;
+            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
             oldState = newState;
         }
     }
