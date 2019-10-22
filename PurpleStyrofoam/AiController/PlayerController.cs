@@ -32,10 +32,10 @@ namespace PurpleStyrofoam.AiController
         }
 
         private readonly int ScreenMovementMargin = (int) (Game1.ScreenSize.X/5f);
-        private const int ScreenMoveSpeed = 7;
+        private const int ScreenMoveSpeed = 5;
         public override void Update()
         {
-            Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
+            //Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
             CheckKeys();
             currentFrame++;
             if (currentFrame >= totalFrames)
@@ -62,11 +62,11 @@ namespace PurpleStyrofoam.AiController
             }
             if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game1.ScreenSize.Y) + ScreenMovementMargin)
             {
-                RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed;
+                RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed + 5;
             }
             else if (-SpriteRectangle.Top > RenderHandler.ScreenMovement.Y - ScreenMovementMargin)
             {
-                RenderHandler.ScreenMovement.Y += ScreenMoveSpeed;
+                RenderHandler.ScreenMovement.Y += ScreenMoveSpeed + 5;
             }
         }
 
@@ -84,7 +84,7 @@ namespace PurpleStyrofoam.AiController
         }
         private KeyboardState oldState;
         private KeyboardState newState;
-        private const int moveSpeed = 10;
+        private const int moveSpeed = 20;
         private const int jumpSpeed = 500;
         public void CheckKeys()
         {
