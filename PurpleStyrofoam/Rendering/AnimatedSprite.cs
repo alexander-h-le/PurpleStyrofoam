@@ -56,8 +56,8 @@ namespace PurpleStyrofoam
         public bool West { get; private set; }
         protected Vector2 position;
         protected Vector2 velocity;
-        protected const float gravity = -9.8f;
-        protected readonly Vector2 terminalVelocity = new Vector2(300,500);
+        protected const float gravity = -10f;
+        protected readonly Vector2 terminalVelocity = new Vector2(400,700);
 
         public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn)
         {
