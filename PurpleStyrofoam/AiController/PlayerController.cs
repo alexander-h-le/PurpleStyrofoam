@@ -32,10 +32,10 @@ namespace PurpleStyrofoam.AiController
         }
 
         private readonly int ScreenMovementMargin = (int) (Game1.ScreenSize.X/5f);
-        private const int ScreenMoveSpeed = 7;
+        private const int ScreenMoveSpeed = 6;
         public override void Update()
         {
-            Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
+            //Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
             CheckKeys();
             currentFrame++;
             if (currentFrame >= totalFrames)
@@ -56,17 +56,21 @@ namespace PurpleStyrofoam.AiController
             if (SpriteRectangle.Right > (-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X) - ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.X -= ScreenMoveSpeed;
+                RenderHandler.ScreenOffset.X += ScreenMoveSpeed;
             } else if (-SpriteRectangle.Left > RenderHandler.ScreenMovement.X - ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.X += ScreenMoveSpeed;
+                RenderHandler.ScreenOffset.X -= ScreenMoveSpeed;
             }
             if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game1.ScreenSize.Y) + ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed;
+                RenderHandler.ScreenOffset.Y += ScreenMoveSpeed;
             }
             else if (-SpriteRectangle.Top > RenderHandler.ScreenMovement.Y - ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.Y += ScreenMoveSpeed;
+                RenderHandler.ScreenOffset.Y -= ScreenMoveSpeed;
             }
         }
 

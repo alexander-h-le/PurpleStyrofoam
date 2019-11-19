@@ -122,7 +122,6 @@ namespace PurpleStyrofoam
 
         public void UpdateVelocity()
         {
-            //Debug.WriteLine($"VelX: {velocity.X} VelY: {velocity.Y}");
             velocity.Y -= gravity;
             velocity.X -= velocity.X == 0 ? 0 : velocity.X > 0 ? 5 : -5;
             if (velocity.X > terminalVelocity.X) velocity.X = terminalVelocity.X;

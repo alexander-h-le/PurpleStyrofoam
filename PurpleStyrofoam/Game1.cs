@@ -90,7 +90,7 @@ namespace PurpleStyrofoam
             // TODO: Add your update logic here
             player.DetectCollision();
             RenderHandler.Update();
-            MouseHandler.Update();
+            MouseHandler.Update(this.Content);
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             //rotationSprite.Angle += 0.01f;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace PurpleStyrofoam.Rendering
     {
         public static List<AnimatedSprite> allCharacterSprites { get; private set; }
         public static List<ItemSprite> allItemSprites { get; private set; }
+        public static List<Projectile> allProjectiles { get; private set; }
         public static BaseMap selectedMap;
         public static bool IsLoading { get; set; }
         private static bool FirstTime;
@@ -22,6 +24,7 @@ namespace PurpleStyrofoam.Rendering
         {
             allCharacterSprites = new List<AnimatedSprite>();
             allItemSprites = new List<ItemSprite>();
+            allProjectiles = new List<Projectile>();
             ScreenMovement = new Vector2(0, 0);
             IsLoading = false;
             FirstTime = true;
@@ -54,13 +57,23 @@ namespace PurpleStyrofoam.Rendering
             {
                 sprite.Update();
             }
+            foreach (Projectile item in allProjectiles)
+            {
+                item.Update();
+            }
         }
         public static Vector2 ScreenMovement;
+        public static Vector2 ScreenOffset = new Vector2(0, 0);
         public static void Draw(SpriteBatch sp)
         {
+            Debug.WriteLine(ScreenOffset);
             sp.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation(ScreenMovement.X, ScreenMovement.Y, 0));
             if (selectedMap != null) selectedMap.Draw(sp);
             foreach (AnimatedSprite item in allCharacterSprites)
+            {
+                item.Draw(sp);
+            }
+            foreach (Projectile item in allProjectiles)
             {
                 item.Draw(sp);
             }
