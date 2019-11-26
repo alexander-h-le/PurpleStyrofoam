@@ -20,15 +20,18 @@ namespace PurpleStyrofoam.AiController
         public static void Update(ContentManager content)
         {
             newState = Mouse.GetState();
+            Vector2 mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
             if (newState.RightButton == ButtonState.Pressed)
             {
-                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int) RenderHandler.ScreenOffset.X + newState.X;
-                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int) RenderHandler.ScreenOffset.Y + newState.Y;
+                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X =(int) mousePos.X;
+                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y =(int) mousePos.Y;
             }
             if (newState.LeftButton == ButtonState.Pressed)
             {
-                _ = (new TestProjectile((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y, 10, 10, 
-                    new Vector2(), content.Load<Texture2D>("playerSprite")));
+                AnimatedSprite character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
+                _ = (new BaseProjectile(character.X, character.Y, 10, 10,  
+                    BaseProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y), 
+                    content.Load<Texture2D>("playerSprite"), character));
             }
             oldState = newState;
         }

@@ -83,19 +83,15 @@ namespace PurpleStyrofoam
                     //EAST & WEST
                     if (SpriteRectangle.Right >= map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
                     {
-                        //Debug.Write(" at east\n");
                         East = true;
                     } else if (SpriteRectangle.Left <= map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
                     {
-                        //Debug.Write(" at west\n");
                         West = true;
                     } else if (SpriteRectangle.Top <= map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
                     {
-                        //Debug.Write(" at north\n");
                         North = true;
                     } else if (SpriteRectangle.Bottom >= map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
                     {
-                        //Debug.Write(" at south\n");
                         South = true;
                     }
                     //Debug.WriteLine($"CenterX: {CenterX}, CenterY: {CenterY}, Left: {SpriteRectangle.Left}, Right: {SpriteRectangle.Right}, Top: {SpriteRectangle.Top}, Bottom: {SpriteRectangle.Bottom} " +

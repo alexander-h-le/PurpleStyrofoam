@@ -19,6 +19,7 @@ namespace PurpleStyrofoam
         TestMap tM;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
+        //1920 1080
         public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
         
         public Game1()

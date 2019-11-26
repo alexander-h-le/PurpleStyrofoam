@@ -12,7 +12,13 @@ namespace PurpleStyrofoam.Rendering
     {
         public abstract void Draw(SpriteBatch sp);
         public abstract void ProjectileAction(AnimatedSprite source, AnimatedSprite target);
+        public abstract void ProjectileAction(AnimatedSprite source, MapObject target);
         public abstract void DetectCollision();
         public abstract void Update();
+        public void Delete()
+        {
+            RenderHandler.purgeProjectiles.Add(this);
+            
+        }
     }
 }

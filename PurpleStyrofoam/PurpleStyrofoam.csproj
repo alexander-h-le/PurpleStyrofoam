@@ -67,7 +67,7 @@
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />
     <Compile Include="Rendering\Projectiles\Projectile.cs" />
-    <Compile Include="Rendering\Projectiles\TestProjectile.cs" />
+    <Compile Include="Rendering\Projectiles\BaseProjectile.cs" />
     <Compile Include="Rendering\RenderHandler.cs" />
   </ItemGroup>
   <ItemGroup>
