@@ -5,6 +5,11 @@ using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Maps;
 using System.Diagnostics;
 using PurpleStyrofoam.AiController;
+using System.Threading;
+using Microsoft.Xna.Framework.Content;
+using PurpleStyrofoam.Rendering.Menus;
+using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
+using PurpleStyrofoam.AiController.AIs;
 
 namespace PurpleStyrofoam
 {
@@ -16,11 +21,12 @@ namespace PurpleStyrofoam
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private PlayerController player;
+        private AnimatedSprite enemySprite;
         TestMap tM;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
-        //1920 1080
         public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
+        public static ContentManager Contents;
         
         public Game1()
         {
@@ -30,6 +36,7 @@ namespace PurpleStyrofoam
             graphics.PreferredBackBufferHeight = (int) ScreenSize.Y;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
+            Contents = this.Content;
         }
 
         /// <summary>
@@ -41,6 +48,7 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
             this.IsMouseVisible = true;
             base.Initialize();
@@ -52,6 +60,9 @@ namespace PurpleStyrofoam
         /// </summary>
         protected override void LoadContent()
         {
+
+            // -------------------------------------------------------------------------------------------------------------------
+
             // Create a new SpriteBatch, which can be used to draw textures.
             Debug.WriteLine("Loading Objects...");
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -61,11 +72,17 @@ namespace PurpleStyrofoam
             //rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240, scale: 0.5f);
             //rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
             Debug.WriteLine("Objects Loaded");
+
+            // --------------------------------------------------------------------------------------------------------------------
+
             Debug.WriteLine("Adding objects to RenderHandler...");
-            RenderHandler.InitiateChange(tM, player);
+            RenderHandler.InitiateChange(tM, player, newY:300);
             //RenderHandler.Add(rotationSprite);
             Debug.WriteLine("Finished adding objects to RenderHandler");
             // TODO: use this.Content to load your game content here
+
+            // ---------------------------------------------------------------------------------------------------------------------
+
         }
 
         /// <summary>
@@ -85,11 +102,8 @@ namespace PurpleStyrofoam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) Exit();
             // TODO: Add your update logic here
-            player.DetectCollision();
             RenderHandler.Update();
             MouseHandler.Update(this.Content);
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;

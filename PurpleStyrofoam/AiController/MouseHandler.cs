@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using PurpleStyrofoam.Rendering.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using PurpleStyrofoam.Rendering.Menus;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -28,10 +29,21 @@ namespace PurpleStyrofoam.AiController
             }
             if (newState.LeftButton == ButtonState.Pressed)
             {
-                AnimatedSprite character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
-                _ = (new BaseProjectile(character.X, character.Y, 10, 10,  
-                    BaseProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y), 
-                    content.Load<Texture2D>("playerSprite"), character));
+                switch (RenderHandler.CurrentGameState)
+                {
+                    case GAMESTATE.MAINMENU:
+                        MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
+                        break;
+                    case (GAMESTATE.ACTIVE):
+                        AnimatedSprite character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
+                        _ = (new BaseProjectile(character.X, character.Y, 10, 10,
+                            BaseProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y),
+                            RenderHandler.LookAtMouse(new Vector2(character.X,character.Y)),
+                            content.Load<Texture2D>("playerSprite"), character));
+                        break;
+                    default:
+                        break;
+                }
             }
             oldState = newState;
         }

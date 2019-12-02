@@ -15,17 +15,19 @@ namespace PurpleStyrofoam.Maps
         public abstract MapObject[] BackgroundLayer { get; set; }
         public abstract MapObject[] ActiveLayer { get; set; }
         public abstract MapObject[] ForegroundLayer { get; set; }
+        public abstract List<AnimatedSprite> sprites { get; set; }
 
-        public void Draw(SpriteBatch sp)
+        public void DrawBackground(SpriteBatch sp)
         {
             foreach (MapObject item in BackgroundLayer)
             {
-                //Debug.WriteLine($"Drawing {item.name} for {this.GetType().Name}");
                 item.Draw(sp);
             }
+        }
+        public void Draw(SpriteBatch sp)
+        {
             foreach (MapObject item in ActiveLayer)
             {
-                //Debug.WriteLine($"Drawing {item.name} for {this.GetType().Name}");
                 item.Draw(sp);
             }
         }
@@ -33,7 +35,6 @@ namespace PurpleStyrofoam.Maps
         {
             foreach (MapObject item in ForegroundLayer)
             {
-                //Debug.WriteLine($"Drawing {item.name} for {this.GetType().Name}");
                 item.Draw(sp);
             }
         }

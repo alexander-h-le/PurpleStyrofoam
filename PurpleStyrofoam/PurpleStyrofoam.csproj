@@ -42,6 +42,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AiController\AIs\AIBase.cs" />
+    <Compile Include="AiController\AIs\BasicAI.cs" />
+    <Compile Include="AiController\AIs\PlayerControlledAI.cs" />
     <Compile Include="AiController\MouseHandler.cs" />
     <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Game1.cs" />
@@ -66,6 +69,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />
+    <Compile Include="Rendering\Menus\FullScreenMenus\MenuItem.cs" />
+    <Compile Include="Rendering\Menus\FullScreenMenus\Menus\GameStartMenu.cs" />
+    <Compile Include="Rendering\Menus\FullScreenMenus\IFullMenu.cs" />
+    <Compile Include="Rendering\Menus\MenuHandler.cs" />
+    <Compile Include="Rendering\Menus\PopUpMenu\IPopUp.cs" />
     <Compile Include="Rendering\Projectiles\Projectile.cs" />
     <Compile Include="Rendering\Projectiles\BaseProjectile.cs" />
     <Compile Include="Rendering\RenderHandler.cs" />

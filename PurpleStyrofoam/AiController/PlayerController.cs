@@ -11,20 +11,22 @@ using System.Diagnostics;
 using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Items.Weapons;
 using System.Timers;
+using PurpleStyrofoam.AiController.AIs;
 
 namespace PurpleStyrofoam.AiController
 {
     class PlayerController : AnimatedSprite
     {
         public Texture2D PlayerSprite;
-        private const string basePlayerSpriteName = "playerSprite";
-        private const string movingPlayerSprite = "playerSpriteMoving";
+        private const string basePlayerSpriteName = "dog";//"playerSprite";
+        private const string movingPlayerSprite = "dog";//"playerSpriteMoving";
         private const string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
         private const string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
         public bool InAir { get; private set; }
         private ContentManager Content;
         public Weapon HeldWeapon { get; set; }
-        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null) : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn)
+        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null) 
+            : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI())
         {
             PlayerSprite = content.Load<Texture2D>(basePlayerSpriteName);
             Content = content;
@@ -35,7 +37,7 @@ namespace PurpleStyrofoam.AiController
         private const int ScreenMoveSpeed = 6;
         public override void Update()
         {
-            //Debug.WriteLine($"FX: {X + Width} Y : {Y}\nScreenFX: {-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X}, ScreenY: {RenderHandler.ScreenMovement.Y}");
+            base.DetectCollision();
             CheckKeys();
             currentFrame++;
             if (currentFrame >= totalFrames)
@@ -83,6 +85,9 @@ namespace PurpleStyrofoam.AiController
                 Columns = columnsIn;
                 totalFrames = Rows * Columns;
                 Texture = Content.Load<Texture2D>(nameOfFile);
+                currentFrame = 0;
+                Width = Texture.Width / Columns;
+                Height = Texture.Height / Rows;
                 currentSprite = nameOfFile;
             }
         }
@@ -102,14 +107,14 @@ namespace PurpleStyrofoam.AiController
             {
                 velocity.Y += 1;
             }
-            if (!RenderHandler.IsLoading)
+            if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE)
             {
                 if (newState.IsKeyDown(Keys.A))
                 {
                     velocity.X = !West ? velocity.X - moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.A))
                     {
-                        SwitchSprite(movingPlayerSprite, 1, 1);
+                        SwitchSprite(movingPlayerSprite);
                     }
                 }
                 if (newState.IsKeyDown(Keys.D))
@@ -117,7 +122,7 @@ namespace PurpleStyrofoam.AiController
                     velocity.X = !East ? velocity.X + moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.D))
                     {
-                        SwitchSprite(movingPlayerSprite, 1, 1);
+                        SwitchSprite(movingPlayerSprite);
                     }
                 }
                 if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
@@ -135,7 +140,7 @@ namespace PurpleStyrofoam.AiController
                 
             }
             if (North) velocity.Y = -velocity.Y;
-            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
+            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,3,2);
             oldState = newState;
         }
     }

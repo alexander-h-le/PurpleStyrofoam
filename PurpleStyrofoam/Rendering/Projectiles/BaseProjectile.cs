@@ -13,13 +13,15 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         Vector2 TerminalVelocity;
         Texture2D Texture;
         AnimatedSprite SpriteSource;
-        public BaseProjectile(int x, int y, int width, int height, Vector2 velocityIn, Texture2D texture, AnimatedSprite source)
+        readonly int projectiledamage = 10;
+        public BaseProjectile(int x, int y, int width, int height, Vector2 velocityIn, float ang, Texture2D texture, AnimatedSprite source)
         {
             ProjectileRectangle = new Rectangle(x, y, width, height);
             Velocity = velocityIn;
             RenderHandler.allProjectiles.Add(this);
             Texture = texture;
             SpriteSource = source;
+            Angle = ang;
         }
 
         const double ProjectileSpeedModifier = 40;
@@ -35,6 +37,18 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             return new Vector2((float) (xResult), (float) (yTarget > ySource ? yResult : -yResult));
             
         }
+        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target)
+        {
+            double x1 = target.X - source.X;
+            double y1 = target.Y - source.Y;
+            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
+            double angle = Math.Acos(x1 / hypotenuse);
+            double normalizedHypotenuse = ProjectileSpeedModifier;
+            double yResult = Math.Sin(angle) * normalizedHypotenuse;
+            double xResult = Math.Cos(angle) * normalizedHypotenuse;
+            return new Vector2((float)(xResult), (float)(target.Y > source.Y ? yResult : -yResult));
+
+        }
         public override void DetectCollision()
         {
             foreach (MapObject map in RenderHandler.selectedMap.ActiveLayer)
@@ -42,6 +56,15 @@ namespace PurpleStyrofoam.Rendering.Projectiles
                 if (ProjectileRectangle.Intersects(map.MapRectangle))
                 {
                     ProjectileAction(SpriteSource, map);
+                    break;
+                }
+            }
+            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            {
+                Rectangle spriteRect = new Rectangle(sprite.X, sprite.Y, sprite.Texture.Width, sprite.Texture.Height);
+                if (sprite != SpriteSource && ProjectileRectangle.Intersects(spriteRect))
+                {
+                    ProjectileAction(SpriteSource, sprite);
                     break;
                 }
             }
@@ -57,6 +80,8 @@ namespace PurpleStyrofoam.Rendering.Projectiles
 
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)
         {
+            target.AI.AddDamage(-projectiledamage);
+            Delete();
         }
 
         public override void Update()

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering;
 using System.Diagnostics;
+using PurpleStyrofoam.AiController.AIs;
 
 namespace PurpleStyrofoam
 {
@@ -58,8 +59,9 @@ namespace PurpleStyrofoam
         protected Vector2 velocity;
         protected const float gravity = -10f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
+        public AIBase AI;
 
-        public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn)
+        public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai)
         {
             Texture = textIn;
             Rows = rowsIn;
@@ -71,9 +73,14 @@ namespace PurpleStyrofoam
             X = xIn;
             Y = yIn;
             SpriteRectangle = new Rectangle(X, Y, Width, Height);
+            AI = ai;
         }
         public void DetectCollision()
         {
+            East = false;
+            West = false;
+            North = false;
+            South = false;
             foreach (MapObject map in RenderHandler.selectedMap.ActiveLayer)
             {
                 if (SpriteRectangle.Intersects(map.MapRectangle))
@@ -94,15 +101,7 @@ namespace PurpleStyrofoam
                     {
                         South = true;
                     }
-                    //Debug.WriteLine($"CenterX: {CenterX}, CenterY: {CenterY}, Left: {SpriteRectangle.Left}, Right: {SpriteRectangle.Right}, Top: {SpriteRectangle.Top}, Bottom: {SpriteRectangle.Bottom} " +
-                        //$"\nmapLeft: {map.MapRectangle.Left}, mapRight: {map.MapRectangle.Right}, mapTop: {map.MapRectangle.Top}, mapBottom: {map.MapRectangle.Bottom}");
-                    break;
-                } else
-                {
-                    East = false;
-                    West = false;
-                    North = false;
-                    South = false;
+                    if ((East || West) && (North || South)) break;
                 }
             }
         }
@@ -114,6 +113,7 @@ namespace PurpleStyrofoam
                 currentFrame = 0;
             }
             UpdateVelocity();
+            AI.NextMove();
         }
 
         public void UpdateVelocity()
