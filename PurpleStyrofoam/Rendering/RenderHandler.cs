@@ -33,6 +33,7 @@ namespace PurpleStyrofoam.Rendering
         public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0)
         {
             selectedMap = newMap;
+            ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites.Add(player);
             //allCharacterSprites = selectedMap.sprites;
             allItemSprites = new List<ItemSprite>();

@@ -51,13 +51,9 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
         public override void DetectCollision()
         {
-            foreach (MapObject map in RenderHandler.selectedMap.ActiveLayer)
+            if (CollisionDetection.DetectCollisionMap(ProjectileRectangle))
             {
-                if (ProjectileRectangle.Intersects(map.MapRectangle))
-                {
-                    ProjectileAction(SpriteSource, map);
-                    break;
-                }
+                Delete();
             }
             foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
             {

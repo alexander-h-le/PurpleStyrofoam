@@ -18,8 +18,8 @@ namespace PurpleStyrofoam.AiController
     class PlayerController : AnimatedSprite
     {
         public Texture2D PlayerSprite;
-        private const string basePlayerSpriteName = "dog";//"playerSprite";
-        private const string movingPlayerSprite = "dog";//"playerSpriteMoving";
+        private const string basePlayerSpriteName = "playerSprite";
+        private const string movingPlayerSprite = "playerSpriteMoving";
         private const string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
         private const string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
         public bool InAir { get; private set; }
@@ -88,6 +88,8 @@ namespace PurpleStyrofoam.AiController
                 currentFrame = 0;
                 Width = Texture.Width / Columns;
                 Height = Texture.Height / Rows;
+                SpriteRectangle.Width = Texture.Width / Columns;
+                SpriteRectangle.Height = Texture.Height / Rows;
                 currentSprite = nameOfFile;
             }
         }
@@ -140,7 +142,7 @@ namespace PurpleStyrofoam.AiController
                 
             }
             if (North) velocity.Y = -velocity.Y;
-            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,3,2);
+            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
             oldState = newState;
         }
     }

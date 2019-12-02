@@ -77,33 +77,11 @@ namespace PurpleStyrofoam
         }
         public void DetectCollision()
         {
-            East = false;
-            West = false;
-            North = false;
-            South = false;
-            foreach (MapObject map in RenderHandler.selectedMap.ActiveLayer)
-            {
-                if (SpriteRectangle.Intersects(map.MapRectangle))
-                {
-                    //Debug.Write($"{map.name} intersects {this.GetType().Name}");
-
-                    //EAST & WEST
-                    if (SpriteRectangle.Right >= map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
-                    {
-                        East = true;
-                    } else if (SpriteRectangle.Left <= map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
-                    {
-                        West = true;
-                    } else if (SpriteRectangle.Top <= map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
-                    {
-                        North = true;
-                    } else if (SpriteRectangle.Bottom >= map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
-                    {
-                        South = true;
-                    }
-                    if ((East || West) && (North || South)) break;
-                }
-            }
+            bool[] array = CollisionDetection.DetectCollisionArrayMap(SpriteRectangle);
+            North = array[0];
+            South = array[1];
+            East = array[2];
+            West = array[3];
         }
         public virtual void Update()
         {

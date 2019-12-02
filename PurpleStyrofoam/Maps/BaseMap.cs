@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Maps
 {
-    abstract class BaseMap
+    public abstract class BaseMap
     {
         public abstract MapObject[] BackgroundLayer { get; set; }
         public abstract MapObject[] ActiveLayer { get; set; }
