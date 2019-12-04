@@ -11,6 +11,7 @@ using PurpleStyrofoam.Rendering.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering.Menus;
+using PurpleStyrofoam.AiController.AIs;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -22,10 +23,28 @@ namespace PurpleStyrofoam.AiController
         {
             newState = Mouse.GetState();
             Vector2 mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
+            AnimatedSprite character = null;
+            if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE) character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             if (newState.RightButton == ButtonState.Pressed)
             {
                 RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X =(int) mousePos.X;
                 RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y =(int) mousePos.Y;
+
+                switch (RenderHandler.CurrentGameState)
+                {
+                    case GAMESTATE.MAINMENU:
+                        break;
+                    case (GAMESTATE.ACTIVE):
+                        /*
+                        AnimatedSprite testEnemy = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 
+                            1, 1, (int)mousePos.X, (int)mousePos.Y, new BasicAI(character));
+                        testEnemy.AI.SupplyAI(testEnemy);
+                        RenderHandler.Add(testEnemy);
+                        */
+                        break;
+                    default:
+                        break;
+                }
             }
             if (newState.LeftButton == ButtonState.Pressed)
             {
@@ -35,11 +54,10 @@ namespace PurpleStyrofoam.AiController
                         MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        AnimatedSprite character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
-                        _ = (new BaseProjectile(character.X, character.Y, 10, 10,
-                            BaseProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y),
-                            RenderHandler.LookAtMouse(new Vector2(character.X,character.Y)),
-                            content.Load<Texture2D>("playerSprite"), character));
+                        _ = (new BasicProjectile(character.X, character.Y, 10, 10,
+                           BasicProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y),
+                           RenderHandler.LookAtMouse(new Vector2(character.X, character.Y)),
+                           content.Load<Texture2D>("playerSprite"), character));
                         break;
                     default:
                         break;

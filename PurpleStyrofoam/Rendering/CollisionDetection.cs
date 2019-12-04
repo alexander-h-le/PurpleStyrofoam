@@ -43,31 +43,28 @@ namespace PurpleStyrofoam.Rendering
             bool South = false;
             int CenterX = rect.Right - (rect.Width / 2);
             int CenterY = rect.Bottom - (rect.Height / 2);
-            foreach (ObjectMap i in FindObjectMaps(rect))
+            foreach (MapObject map in FindObjectMaps(rect))
             {
-                foreach (MapObject map in i.Bucket)
+                if (rect.Intersects(map.MapRectangle))
                 {
-                    if (rect.Intersects(map.MapRectangle))
+                    //EAST & WEST
+                    if (rect.Right >= map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
                     {
-                        //EAST & WEST
-                        if (rect.Right >= map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
-                        {
-                            East = true;
-                        }
-                        else if (rect.Left <= map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
-                        {
-                            West = true;
-                        }
-                        else if (rect.Top <= map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
-                        {
-                            North = true;
-                        }
-                        else if (rect.Bottom >= map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
-                        {
-                            South = true;
-                        }
-                        if ((East || West) && (North || South)) break;
+                        East = true;
                     }
+                    else if (rect.Left <= map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
+                    {
+                        West = true;
+                    }
+                    else if (rect.Top <= map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
+                    {
+                        North = true;
+                    }
+                    else if (rect.Bottom >= map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
+                    {
+                        South = true;
+                    }
+                    if ((East || West) && (North || South)) break;
                 }
             }
             return new bool[] { North, South, East, West };
@@ -107,21 +104,19 @@ namespace PurpleStyrofoam.Rendering
             }
             return new bool[] { North, South, East, West };
         }
-        public static List<ObjectMap> FindObjectMaps(Rectangle rect)
+        public static List<MapObject> FindObjectMaps(Rectangle rect)
         {
-            Debug.WriteLine("START ---------------------------");
+            List<MapObject> mapObjects = new List<MapObject>();
             List<ObjectMap> maps = ObjectMapper.BucketMap.FindAll(x => rect.Intersects(x.BucketBounds));
-            maps = new HashSet<ObjectMap>(maps).ToList();
-            Debug.WriteLine($"maps: {maps.Count} + all: {RenderHandler.selectedMap.ActiveLayer.Length}");
             foreach (ObjectMap map in maps)
             {
                 foreach (MapObject i in map.Bucket)
                 {
-                    Debug.WriteLine(i.name);
+                    mapObjects.Add(i);
                 }
             }
-            Debug.WriteLine("END ---------------------------");
-            return maps;
+            mapObjects = new HashSet<MapObject>(mapObjects).ToList();
+            return mapObjects;
         }
     }
 }

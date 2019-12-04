@@ -7,7 +7,7 @@ using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons
 {
-    abstract class Weapon : Item
+    public abstract class Weapon : Item
     {
         protected Weapon(string nameIn, int damage, ATTACKSPEED atkspd, RARITY levelIn, ItemSprite imageIn) : base(nameIn, levelIn, imageIn)
         {
@@ -22,7 +22,7 @@ namespace PurpleStyrofoam.Items.Weapons
         public ATTACKSPEED AttackSpeed { get; set; }
     }
 
-    enum ATTACKSPEED
+    public enum ATTACKSPEED
     {
         INSANELY_SLOW, VERY_SLOW, SLOW, MODERATE, FAST, VERY_FAST, INSANELY_FAST
     }

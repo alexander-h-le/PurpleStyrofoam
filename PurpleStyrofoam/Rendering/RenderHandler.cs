@@ -19,6 +19,7 @@ namespace PurpleStyrofoam.Rendering
         public static List<ItemSprite> allItemSprites { get; private set; }
         public static List<Projectile> allProjectiles { get; private set; }
         public static List<Projectile> purgeProjectiles { get; private set; }
+        public static List<AnimatedSprite> purgeSprites { get; private set; }
         public static BaseMap selectedMap;
         public static GAMESTATE CurrentGameState { get; set; }
         public static void Initialize()
@@ -27,6 +28,7 @@ namespace PurpleStyrofoam.Rendering
             allItemSprites = new List<ItemSprite>();
             allProjectiles = new List<Projectile>();
             purgeProjectiles = new List<Projectile>();
+            purgeSprites = new List<AnimatedSprite>();
             ScreenMovement = new Vector2(0, 0);
             CurrentGameState = GAMESTATE.MAINMENU;
         }
@@ -37,15 +39,27 @@ namespace PurpleStyrofoam.Rendering
             allCharacterSprites.Add(player);
             //allCharacterSprites = selectedMap.sprites;
             allItemSprites = new List<ItemSprite>();
-            if (player.HeldWeapon != null) allItemSprites.Add(player.HeldWeapon.sprite);
+            if (player.HeldWeapon != null) allItemSprites.Add(player.HeldWeapon.Sprite);
             player.X = newX;
             player.Y = newY;
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, List<ItemSprite> newItems, int newX = 0, int newY = 0)
         {
             selectedMap = newMap;
+            ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites = newSprites;
+            if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
             allItemSprites = newItems;
+            player.X = newX;
+            player.Y = newY;
+        }
+        public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, int newX = 0, int newY = 0)
+        {
+            selectedMap = newMap;
+            ObjectMapper.MapObjects(selectedMap);
+            allCharacterSprites = newSprites;
+            if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
+            allItemSprites = new List<ItemSprite>();
             player.X = newX;
             player.Y = newY;
         }
@@ -63,6 +77,7 @@ namespace PurpleStyrofoam.Rendering
                         item.Update();
                     }
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
+                    if (purgeSprites.Count != 0) DeleteSprites();
                     break;
                 case GAMESTATE.MAINMENU:
                     break;
@@ -70,7 +85,14 @@ namespace PurpleStyrofoam.Rendering
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
             }
         }
-
+        public static void DeleteSprites()
+        {
+            foreach (AnimatedSprite sprite in purgeSprites)
+            {
+                allCharacterSprites.Remove(sprite);
+            }
+            purgeSprites.Clear();
+        }
         public static void DeleteProjectiles()
         {
             foreach (Projectile proj in purgeProjectiles)

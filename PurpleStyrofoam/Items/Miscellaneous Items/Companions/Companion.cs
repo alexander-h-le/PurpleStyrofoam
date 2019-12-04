@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Items.Miscellaneous_Items.Companions
 {
-    abstract class Companion
+    public abstract class Companion
     {
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace PurpleStyrofoam.Rendering
 {
-    class ItemSprite
+    public class ItemSprite
     {
         public Texture2D Texture { get; private set; }
         public int X { get; set; }

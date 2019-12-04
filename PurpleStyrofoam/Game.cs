@@ -16,19 +16,16 @@ namespace PurpleStyrofoam
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private PlayerController player;
-        private AnimatedSprite enemySprite;
-        TestMap tM;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
         public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
-        public static ContentManager Contents;
+        public static ContentManager GameContent;
         
-        public Game1()
+        public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -36,7 +33,7 @@ namespace PurpleStyrofoam
             graphics.PreferredBackBufferHeight = (int) ScreenSize.Y;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
-            Contents = this.Content;
+            GameContent = this.Content;
         }
 
         /// <summary>
@@ -66,9 +63,6 @@ namespace PurpleStyrofoam
             // Create a new SpriteBatch, which can be used to draw textures.
             Debug.WriteLine("Loading Objects...");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Texture2D playerIMG = Content.Load<Texture2D>("SmileyWalk");
-            player = new PlayerController(this.Content);
-            tM = new TestMap(this.Content);
             //rotationSprite = new ItemSprite(Content.Load<Texture2D>("testIMG"), new Vector2(0,0), 400, 240, scale: 0.5f);
             //rotationSprite.Origin = new Vector2(rotationSprite.Texture.Width / 2, rotationSprite.Texture.Height / 2);
             Debug.WriteLine("Objects Loaded");
@@ -76,8 +70,6 @@ namespace PurpleStyrofoam
             // --------------------------------------------------------------------------------------------------------------------
 
             Debug.WriteLine("Adding objects to RenderHandler...");
-            RenderHandler.InitiateChange(tM, player, newY:300);
-            //RenderHandler.Add(rotationSprite);
             Debug.WriteLine("Finished adding objects to RenderHandler");
             // TODO: use this.Content to load your game content here
 
@@ -109,6 +101,7 @@ namespace PurpleStyrofoam
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             //rotationSprite.Angle += 0.01f;
+            Debug.WriteLine(RenderHandler.allCharacterSprites.Count);
             base.Update(gameTime);
         }
 

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PurpleStyrofoam.Rendering
 {
-    public class MapObject
+    public class MapObject : IEquatable<MapObject>
     {
         public string name;
         public Texture2D texture;
@@ -43,6 +43,17 @@ namespace PurpleStyrofoam.Rendering
         public void Draw(SpriteBatch sp)
         {
             sp.Draw(texture, new Rectangle((int) location.X, (int) location.Y, width, height), Color.White);
+        }
+
+        public bool Equals(MapObject other)
+        {
+            //Check whether the compared object is null. 
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            //Check whether the compared object references the same data. 
+            if (Object.ReferenceEquals(this, other)) return true;
+
+            return name.Equals(other.name);
         }
     }
 }

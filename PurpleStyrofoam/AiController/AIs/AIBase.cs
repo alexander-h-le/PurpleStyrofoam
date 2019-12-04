@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PurpleStyrofoam.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,20 @@ namespace PurpleStyrofoam.AiController.AIs
 {
     public abstract class AIBase
     {
-        public abstract void AddDamage(int amount);
+        protected AnimatedSprite SpriteSource { get; set; }
+        public int Health { get; set; }
+        public virtual void AddDamage(int amount)
+        {
+            Health += amount;
+        }
         public abstract void NextMove();
-        public abstract void SupplyAI(AnimatedSprite source);
+        public virtual void SupplyAI(AnimatedSprite source)
+        {
+            SpriteSource = source;
+        }
+        public virtual void Delete()
+        {
+            RenderHandler.purgeSprites.Add(SpriteSource);
+        }
     }
 }

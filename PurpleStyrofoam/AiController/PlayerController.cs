@@ -15,7 +15,7 @@ using PurpleStyrofoam.AiController.AIs;
 
 namespace PurpleStyrofoam.AiController
 {
-    class PlayerController : AnimatedSprite
+    public class PlayerController : AnimatedSprite
     {
         public Texture2D PlayerSprite;
         private const string basePlayerSpriteName = "playerSprite";
@@ -33,7 +33,7 @@ namespace PurpleStyrofoam.AiController
             HeldWeapon = weapIn;
         }
 
-        private readonly int ScreenMovementMargin = (int) (Game1.ScreenSize.X/5f);
+        private readonly int ScreenMovementMargin = (int) (Game.ScreenSize.X/5f);
         private const int ScreenMoveSpeed = 6;
         public override void Update()
         {
@@ -55,7 +55,7 @@ namespace PurpleStyrofoam.AiController
                 }
             }
             UpdateVelocity();
-            if (SpriteRectangle.Right > (-RenderHandler.ScreenMovement.X + Game1.ScreenSize.X) - ScreenMovementMargin)
+            if (SpriteRectangle.Right > (-RenderHandler.ScreenMovement.X + Game.ScreenSize.X) - ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.X -= ScreenMoveSpeed;
                 RenderHandler.ScreenOffset.X += ScreenMoveSpeed;
@@ -64,7 +64,7 @@ namespace PurpleStyrofoam.AiController
                 RenderHandler.ScreenMovement.X += ScreenMoveSpeed;
                 RenderHandler.ScreenOffset.X -= ScreenMoveSpeed;
             }
-            if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game1.ScreenSize.Y) + ScreenMovementMargin)
+            if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game.ScreenSize.Y) + ScreenMovementMargin)
             {
                 RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed;
                 RenderHandler.ScreenOffset.Y += ScreenMoveSpeed;

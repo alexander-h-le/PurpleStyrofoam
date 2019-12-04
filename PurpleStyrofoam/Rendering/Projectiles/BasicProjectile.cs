@@ -6,15 +6,15 @@ using System.Diagnostics;
 
 namespace PurpleStyrofoam.Rendering.Projectiles
 {
-    class BaseProjectile : Projectile
+    class BasicProjectile : Projectile
     {
         Rectangle ProjectileRectangle;
         Vector2 Velocity;
         Vector2 TerminalVelocity;
         Texture2D Texture;
         AnimatedSprite SpriteSource;
-        readonly int projectiledamage = 10;
-        public BaseProjectile(int x, int y, int width, int height, Vector2 velocityIn, float ang, Texture2D texture, AnimatedSprite source)
+        readonly int projectiledamage = 1;
+        public BasicProjectile(int x, int y, int width, int height, Vector2 velocityIn, float ang, Texture2D texture, AnimatedSprite source)
         {
             ProjectileRectangle = new Rectangle(x, y, width, height);
             Velocity = velocityIn;
@@ -77,6 +77,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)
         {
             target.AI.AddDamage(-projectiledamage);
+            if (target.AI.Health <= 0) target.AI.Delete();
             Delete();
         }
 
@@ -90,6 +91,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         public override void ProjectileAction(AnimatedSprite source, MapObject target)
         {
             Delete();
+            
         }
     }
 }

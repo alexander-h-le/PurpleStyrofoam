@@ -43,22 +43,30 @@ namespace PurpleStyrofoam.Rendering
             }
             Columns = (maxX - minX) / bucketlength;
             Rows = (maxY - minY) / bucketlength;
+            minX -= bucketlength;
+            maxX += bucketlength;
+            minY -= bucketlength;
+            maxY += bucketlength;
             Debug.WriteLine($"C: {Columns} R: {Rows}");
+            Debug.WriteLine($"MinX: {minX} MaxX: {maxX}");
+            Debug.WriteLine($"MinY: {minY} MaxY: {maxY}");
 
-            for (int y = minY; y <= maxY; y += bucketlength)
+            for (int y = minY; y < maxY; y += bucketlength)
             {
-                for (int x = minX; x <= maxX; x += bucketlength)
+                for (int x = minX; x < maxX; x += bucketlength)
                 {
-                    BucketMap.Add(new ObjectMap());
-                    BucketMap.Last().Key = BucketMapKeys++;
-                    BucketMap.Last().BucketBounds = new Rectangle(x, y, x + bucketlength, y + bucketlength);
+                    ObjectMap objectMap = new ObjectMap();
+                    objectMap.Key = BucketMapKeys++;
+                    objectMap.BucketBounds = new Rectangle(x, y,bucketlength, bucketlength);
                     foreach (MapObject i in map.ActiveLayer)
                     {
-                        if (i.MapRectangle.Intersects(BucketMap.Last().BucketBounds))
+                        if (i.MapRectangle.Intersects(objectMap.BucketBounds))
                         {
-                            BucketMap.Last().Bucket.Add(i);
+                            objectMap.Bucket.Add(i);
                         }
                     }
+                    //Debug.WriteLine($"Key: {objectMap.Key} BucketBounds: {objectMap.BucketBounds}");
+                    BucketMap.Add(objectMap);
                 }
             }
         }

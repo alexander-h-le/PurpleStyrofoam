@@ -48,7 +48,7 @@ namespace PurpleStyrofoam
         }
         protected int CenterX;
         protected int CenterY;
-        protected Rectangle SpriteRectangle;
+        public Rectangle SpriteRectangle;
         protected int Width;
         protected int Height;
         public bool North { get; private set; }
@@ -56,7 +56,7 @@ namespace PurpleStyrofoam
         public bool East { get; private set; }
         public bool West { get; private set; }
         protected Vector2 position;
-        protected Vector2 velocity;
+        public Vector2 velocity;
         protected const float gravity = -10f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
@@ -85,11 +85,14 @@ namespace PurpleStyrofoam
         }
         public virtual void Update()
         {
+            DetectCollision();
             currentFrame++;
             if (currentFrame == totalFrames)
             {
                 currentFrame = 0;
             }
+            if (South) velocity.Y = 0;
+            if (North) velocity.Y = -velocity.Y;
             UpdateVelocity();
             AI.NextMove();
         }
@@ -102,8 +105,8 @@ namespace PurpleStyrofoam
             if (velocity.X < -terminalVelocity.X) velocity.X = -terminalVelocity.X;
             if (velocity.Y > terminalVelocity.Y) velocity.Y = terminalVelocity.Y;
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
-            this.X += (int)(velocity.X * (float)Game1.GameTimeSeconds);
-            this.Y += (int)(velocity.Y * (float)Game1.GameTimeSeconds);
+            this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
+            this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
 
         public void Draw(SpriteBatch spriteBatch)

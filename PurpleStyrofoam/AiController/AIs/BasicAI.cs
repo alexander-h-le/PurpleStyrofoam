@@ -2,6 +2,7 @@
 using PurpleStyrofoam.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,40 +11,36 @@ namespace PurpleStyrofoam.AiController.AIs
 {
     class BasicAI : AIBase
     {
-        private int Health;
         private AnimatedSprite TargetSprite;
-        private AnimatedSprite SourceSprite;
         public BasicAI(AnimatedSprite source, AnimatedSprite Target)
         {
-            Health = 100;
+            Health = 1000;
             TargetSprite = Target;
-            SourceSprite = source;
+            SpriteSource = source;
         }
         public BasicAI(AnimatedSprite Target)
         {
             TargetSprite = Target;
         }
-        public override void AddDamage(int amount)
-        {
-            Health += amount;
-        }
 
+        bool inAir = false;
         public override void NextMove()
         {
             //Detect Direction
-            if (TargetSprite.X < SourceSprite.X && !SourceSprite.West)
+            if (TargetSprite.X < SpriteSource.X && !SpriteSource.West)
             {
-                SourceSprite.X -= 6;
+                SpriteSource.X -= 3;
             }
-            else if (!SourceSprite.East)
+            else if (!SpriteSource.East)
             {
-                SourceSprite.X += 6;
+                SpriteSource.X += 3;
             }
-        }
 
-        public override void SupplyAI(AnimatedSprite source)
-        {
-            SourceSprite = source;
+            if (SpriteSource.South && TargetSprite.SpriteRectangle.Bottom < SpriteSource.Y)
+            {
+                SpriteSource.Y -= 1;
+                SpriteSource.velocity.Y -= 500;
+            }
         }
     }
 }

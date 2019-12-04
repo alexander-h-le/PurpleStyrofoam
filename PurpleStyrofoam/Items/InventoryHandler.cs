@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Items
 {
-    static class InventoryHandler
+    public static class InventoryHandler
     {
         public static ArrayList Inventory = new ArrayList();
         public static Weapon EquippedWeapon { get; set; }

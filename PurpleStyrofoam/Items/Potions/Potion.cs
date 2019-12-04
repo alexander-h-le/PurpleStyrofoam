@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Items.Potions
 {
-    abstract class Potion
+    public abstract class Potion
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Items.Materials
 {
-    abstract class Material
+    public abstract class Material
     {
     }
 }
