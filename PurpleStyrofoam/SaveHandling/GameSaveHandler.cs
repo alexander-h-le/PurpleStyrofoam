@@ -28,14 +28,21 @@ namespace PurpleStyrofoam.Rendering
         public static void LoadSave(string Path)
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
-            using (StreamReader sr = File.OpenText(Path))
+            try
             {
-                using (JsonTextReader reader = new JsonTextReader(sr))
+                using (StreamReader sr = File.OpenText(Path))
                 {
-                    JsonSerializer jsonSerializer = new JsonSerializer();
-                    GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
-                    RenderHandler.InitiateChange(LoadMapFromName("PurpleStyrofoam.Maps." + save.ActiveMap), new PlayerController(Game.GameContent), (int) save.PlayerPosition.X, (int) save.PlayerPosition.Y);
+                    using (JsonTextReader reader = new JsonTextReader(sr))
+                    {
+                        JsonSerializer jsonSerializer = new JsonSerializer();
+                        GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
+                        RenderHandler.InitiateChange(LoadMapFromName("PurpleStyrofoam.Maps." + save.ActiveMap), new PlayerController(Game.GameContent), (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
+                    }
                 }
+            } catch (FileNotFoundException e)
+            {
+                CreateSave(new PlayerController(Game.GameContent), new Vector2(0,0), new TestMap());
+                LoadSave(Path);
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
         }

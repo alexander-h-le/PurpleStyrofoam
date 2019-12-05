@@ -23,7 +23,7 @@ namespace PurpleStyrofoam
         SpriteBatch spriteBatch;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
-        public static readonly Vector2 ScreenSize = new Vector2(800,800);
+        public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
         public static ContentManager GameContent;
         
         public Game()
@@ -98,7 +98,8 @@ namespace PurpleStyrofoam
         protected override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad1)) GameSaveHandler.CreateSave();
+            if (Keyboard.GetState().IsKeyDown(Keys.N) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.CreateSave();
+            if (Keyboard.GetState().IsKeyDown(Keys.L) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.LoadSave(GameSaveHandler.PathDirectory + "TestDocument.json");
             // TODO: Add your update logic here
             RenderHandler.Update();
             MouseHandler.Update(this.Content);

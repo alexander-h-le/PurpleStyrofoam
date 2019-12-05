@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.AiController.AIs;
+using PurpleStyrofoam.Managers;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -33,9 +34,12 @@ namespace PurpleStyrofoam.AiController
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
-                        RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
-                        character.Manager.AddDamage(10);
+                        //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
+                        //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
+                        AnimatedSprite capabiltiy = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 1, 1, (int)mousePos.X, (int)mousePos.Y,
+                            new BasicAI(character), new DefaultManager());
+                        capabiltiy.AI.SupplyAI(capabiltiy);
+                        RenderHandler.Add(capabiltiy);
                         break;
                     default:
                         break;
