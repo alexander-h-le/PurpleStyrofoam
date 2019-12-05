@@ -14,7 +14,6 @@ namespace PurpleStyrofoam.AiController.AIs
         private AnimatedSprite TargetSprite;
         public BasicAI(AnimatedSprite source, AnimatedSprite Target)
         {
-            Health = 1000;
             TargetSprite = Target;
             SpriteSource = source;
         }

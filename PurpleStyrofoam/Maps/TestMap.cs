@@ -9,17 +9,18 @@ using PurpleStyrofoam.Rendering;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using PurpleStyrofoam.AiController.AIs;
+using PurpleStyrofoam.Managers;
 
 namespace PurpleStyrofoam.Maps
 {
     class TestMap : BaseMap
     {
         private ContentManager Content;
-        public TestMap(ContentManager inC)
+        public TestMap()
         {
-            Content = inC;
+            Content = Game.GameContent;
             AnimatedSprite player = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
-            AnimatedSprite enemySprite = new AnimatedSprite(Content.Load<Texture2D>("enemyTest"), 1, 1, 100, 100, new BasicAI(player));
+            AnimatedSprite enemySprite = new AnimatedSprite(Content.Load<Texture2D>("enemyTest"), 1, 1, 100, 100, new BasicAI(player), new DefaultManager());
             enemySprite.AI.SupplyAI(enemySprite);
             BackgroundLayer = new MapObject[]
                 {

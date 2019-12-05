@@ -17,6 +17,11 @@ namespace PurpleStyrofoam.Maps
         public abstract MapObject[] ForegroundLayer { get; set; }
         public abstract List<AnimatedSprite> sprites { get; set; }
 
+        public BaseMap()
+        {
+
+        }
+
         public void DrawBackground(SpriteBatch sp)
         {
             foreach (MapObject item in BackgroundLayer)

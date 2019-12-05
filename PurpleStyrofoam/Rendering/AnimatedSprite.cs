@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering;
 using System.Diagnostics;
 using PurpleStyrofoam.AiController.AIs;
+using PurpleStyrofoam.Managers;
 
 namespace PurpleStyrofoam
 {
@@ -60,8 +61,9 @@ namespace PurpleStyrofoam
         protected const float gravity = -10f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
+        public IManager Manager;
 
-        public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai)
+        public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai, IManager manIn)
         {
             Texture = textIn;
             Rows = rowsIn;
@@ -74,6 +76,7 @@ namespace PurpleStyrofoam
             Y = yIn;
             SpriteRectangle = new Rectangle(X, Y, Width, Height);
             AI = ai;
+            Manager = manIn;
         }
         public void DetectCollision()
         {

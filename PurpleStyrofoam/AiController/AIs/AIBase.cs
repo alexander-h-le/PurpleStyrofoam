@@ -10,11 +10,6 @@ namespace PurpleStyrofoam.AiController.AIs
     public abstract class AIBase
     {
         protected AnimatedSprite SpriteSource { get; set; }
-        public int Health { get; set; }
-        public virtual void AddDamage(int amount)
-        {
-            Health += amount;
-        }
         public abstract void NextMove();
         public virtual void SupplyAI(AnimatedSprite source)
         {

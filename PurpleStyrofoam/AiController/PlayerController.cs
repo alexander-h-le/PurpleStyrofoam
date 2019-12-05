@@ -17,7 +17,6 @@ namespace PurpleStyrofoam.AiController
 {
     public class PlayerController : AnimatedSprite
     {
-        public Texture2D PlayerSprite;
         private const string basePlayerSpriteName = "playerSprite";
         private const string movingPlayerSprite = "playerSpriteMoving";
         private const string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
@@ -26,9 +25,9 @@ namespace PurpleStyrofoam.AiController
         private ContentManager Content;
         public Weapon HeldWeapon { get; set; }
         public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null) 
-            : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI())
+            : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI(), new PlayerManager())
         {
-            PlayerSprite = content.Load<Texture2D>(basePlayerSpriteName);
+            Texture = content.Load<Texture2D>(basePlayerSpriteName);
             Content = content;
             HeldWeapon = weapIn;
         }
@@ -55,25 +54,6 @@ namespace PurpleStyrofoam.AiController
                 }
             }
             UpdateVelocity();
-            if (SpriteRectangle.Right > (-RenderHandler.ScreenMovement.X + Game.ScreenSize.X) - ScreenMovementMargin)
-            {
-                RenderHandler.ScreenMovement.X -= ScreenMoveSpeed;
-                RenderHandler.ScreenOffset.X += ScreenMoveSpeed;
-            } else if (-SpriteRectangle.Left > RenderHandler.ScreenMovement.X - ScreenMovementMargin)
-            {
-                RenderHandler.ScreenMovement.X += ScreenMoveSpeed;
-                RenderHandler.ScreenOffset.X -= ScreenMoveSpeed;
-            }
-            if (-SpriteRectangle.Bottom < (RenderHandler.ScreenMovement.Y - Game.ScreenSize.Y) + ScreenMovementMargin)
-            {
-                RenderHandler.ScreenMovement.Y -= ScreenMoveSpeed;
-                RenderHandler.ScreenOffset.Y += ScreenMoveSpeed;
-            }
-            else if (-SpriteRectangle.Top > RenderHandler.ScreenMovement.Y - ScreenMovementMargin)
-            {
-                RenderHandler.ScreenMovement.Y += ScreenMoveSpeed;
-                RenderHandler.ScreenOffset.Y -= ScreenMoveSpeed;
-            }
         }
 
         private string currentSprite;

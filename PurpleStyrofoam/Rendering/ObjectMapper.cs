@@ -47,9 +47,6 @@ namespace PurpleStyrofoam.Rendering
             maxX += bucketlength;
             minY -= bucketlength;
             maxY += bucketlength;
-            Debug.WriteLine($"C: {Columns} R: {Rows}");
-            Debug.WriteLine($"MinX: {minX} MaxX: {maxX}");
-            Debug.WriteLine($"MinY: {minY} MaxY: {maxY}");
 
             for (int y = minY; y < maxY; y += bucketlength)
             {

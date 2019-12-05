@@ -21,6 +21,7 @@ namespace PurpleStyrofoam.Rendering
         public static List<Projectile> purgeProjectiles { get; private set; }
         public static List<AnimatedSprite> purgeSprites { get; private set; }
         public static BaseMap selectedMap;
+        private static PlayerController savedPlayer;
         public static GAMESTATE CurrentGameState { get; set; }
         public static void Initialize()
         {
@@ -29,15 +30,17 @@ namespace PurpleStyrofoam.Rendering
             allProjectiles = new List<Projectile>();
             purgeProjectiles = new List<Projectile>();
             purgeSprites = new List<AnimatedSprite>();
-            ScreenMovement = new Vector2(0, 0);
             CurrentGameState = GAMESTATE.MAINMENU;
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0)
         {
+            allCharacterSprites.Clear();
+            allItemSprites.Clear();
+            allProjectiles.Clear();
+            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites.Add(player);
-            //allCharacterSprites = selectedMap.sprites;
             allItemSprites = new List<ItemSprite>();
             if (player.HeldWeapon != null) allItemSprites.Add(player.HeldWeapon.Sprite);
             player.X = newX;
@@ -45,6 +48,10 @@ namespace PurpleStyrofoam.Rendering
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, List<ItemSprite> newItems, int newX = 0, int newY = 0)
         {
+            allCharacterSprites.Clear();
+            allItemSprites.Clear();
+            allProjectiles.Clear();
+            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites = newSprites;
@@ -55,6 +62,10 @@ namespace PurpleStyrofoam.Rendering
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, int newX = 0, int newY = 0)
         {
+            allCharacterSprites.Clear();
+            allItemSprites.Clear();
+            allProjectiles.Clear();
+            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites = newSprites;
@@ -102,14 +113,17 @@ namespace PurpleStyrofoam.Rendering
             purgeProjectiles.Clear();
         }
 
-        public static Vector2 ScreenMovement;
         public static Vector2 ScreenOffset = new Vector2(0, 0);
+        private static int XOffset = (int) Game.ScreenSize.X/2;
+        private static int YOffset = (int)Game.ScreenSize.Y/2;
         public static void Draw(SpriteBatch sp)
         {
-            sp.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(ScreenMovement.X, ScreenMovement.Y, 0));
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-savedPlayer.X) + XOffset, (-savedPlayer.Y) + YOffset, 0));
+                    ScreenOffset.X = savedPlayer.X - XOffset;
+                    ScreenOffset.Y = savedPlayer.Y - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
                     foreach (AnimatedSprite item in allCharacterSprites)
@@ -128,7 +142,11 @@ namespace PurpleStyrofoam.Rendering
                     if (MenuHandler.ActivePopUps != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 case GAMESTATE.MAINMENU:
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));
                     if (MenuHandler.ActiveFullScreenMenu != null) MenuHandler.DrawFullScreenMenu(sp);
+                    break;
+                case GAMESTATE.PAUSED:
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
@@ -170,6 +188,6 @@ namespace PurpleStyrofoam.Rendering
     }
     enum GAMESTATE
     {
-        MAINMENU, ACTIVE
+        MAINMENU, ACTIVE, PAUSED
     }
 }

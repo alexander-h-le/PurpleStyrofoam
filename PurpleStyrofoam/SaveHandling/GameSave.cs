@@ -11,8 +11,8 @@ namespace PurpleStyrofoam.SaveHandling
 {
     public class GameSave
     {
-        public PlayerController Player;
-        public BaseMap ActiveMap;
+        public PlayerManager player;
+        public string ActiveMap;
         public Vector2 PlayerPosition;
     }
 }

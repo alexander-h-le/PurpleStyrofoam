@@ -13,10 +13,6 @@ namespace PurpleStyrofoam.AiController.AIs
         {
             Health = 100;
         }
-        public override void AddDamage(int amount)
-        {
-            Health += amount;
-        }
 
         public override void NextMove()
         {

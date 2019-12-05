@@ -76,8 +76,8 @@ namespace PurpleStyrofoam.Rendering.Projectiles
 
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)
         {
-            target.AI.AddDamage(-projectiledamage);
-            if (target.AI.Health <= 0) target.AI.Delete();
+            target.Manager.AddDamage(-projectiledamage);
+            if (target.Manager.Health <= 0) target.AI.Delete();
             Delete();
         }
 

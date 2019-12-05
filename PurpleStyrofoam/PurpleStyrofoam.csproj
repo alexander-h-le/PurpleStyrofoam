@@ -60,10 +60,13 @@
     <Compile Include="Items\Weapons\Melee\Rapiers\Lithiel.cs" />
     <Compile Include="Items\Weapons\Melee\Swords\Flight.cs" />
     <Compile Include="Items\Weapons\Weapon.cs" />
+    <Compile Include="Managers\DefaultManager.cs" />
+    <Compile Include="Managers\IManager.cs" />
     <Compile Include="Maps\BaseMap.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />
     <Compile Include="Maps\Hubs\Hub.cs" />
     <Compile Include="Maps\TestMap.cs" />
+    <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Rendering\AnimatedSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

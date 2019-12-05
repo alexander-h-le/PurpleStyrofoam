@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.AiController.AIs;
+using System;
 
 namespace PurpleStyrofoam
 {
@@ -22,7 +23,7 @@ namespace PurpleStyrofoam
         SpriteBatch spriteBatch;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
-        public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
+        public static readonly Vector2 ScreenSize = new Vector2(800,800);
         public static ContentManager GameContent;
         
         public Game()
@@ -45,6 +46,8 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            GameSaveHandler.Initialize();
+            Debug.WriteLine(GameSaveHandler.PathDirectory);
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
             this.IsMouseVisible = true;
@@ -95,13 +98,13 @@ namespace PurpleStyrofoam
         protected override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad1)) GameSaveHandler.CreateSave();
             // TODO: Add your update logic here
             RenderHandler.Update();
             MouseHandler.Update(this.Content);
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             //rotationSprite.Angle += 0.01f;
-            Debug.WriteLine(RenderHandler.allCharacterSprites.Count);
             base.Update(gameTime);
         }
 

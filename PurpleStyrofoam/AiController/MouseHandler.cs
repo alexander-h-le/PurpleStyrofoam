@@ -27,20 +27,15 @@ namespace PurpleStyrofoam.AiController
             if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE) character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             if (newState.RightButton == ButtonState.Pressed)
             {
-                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X =(int) mousePos.X;
-                RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y =(int) mousePos.Y;
 
                 switch (RenderHandler.CurrentGameState)
                 {
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        /*
-                        AnimatedSprite testEnemy = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 
-                            1, 1, (int)mousePos.X, (int)mousePos.Y, new BasicAI(character));
-                        testEnemy.AI.SupplyAI(testEnemy);
-                        RenderHandler.Add(testEnemy);
-                        */
+                        RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
+                        RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
+                        character.Manager.AddDamage(10);
                         break;
                     default:
                         break;
