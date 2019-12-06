@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 using System;
@@ -35,9 +36,21 @@ namespace PurpleStyrofoam.Rendering.Menus
                 menu.Draw(sp);
             }
         }
+        private static KeyboardState oldState;
+        private static KeyboardState newState;
         public static void Update()
         {
+            newState = Keyboard.GetState();
 
+            foreach (IPopUp menu in ActivePopUps)
+            {
+                if (!menu.ShouldOpen(oldState, newState))
+                {
+                    ActivePopUps.Remove(menu);
+                }
+            }
+
+            oldState = newState;
         }
     }
 }

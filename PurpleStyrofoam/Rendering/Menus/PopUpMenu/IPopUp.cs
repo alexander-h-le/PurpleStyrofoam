@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
     {
         void Draw(SpriteBatch sp);
         void Update(SpriteBatch sp);
+        bool ShouldOpen(KeyboardState oldState, KeyboardState newState);
     }
 }

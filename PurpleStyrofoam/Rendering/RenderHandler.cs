@@ -79,6 +79,7 @@ namespace PurpleStyrofoam.Rendering
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
+                    MenuHandler.Update();
                     foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
                     {
                         sprite.Update();
