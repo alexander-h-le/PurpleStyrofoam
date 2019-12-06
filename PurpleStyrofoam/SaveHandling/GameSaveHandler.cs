@@ -23,7 +23,7 @@ namespace PurpleStyrofoam.Rendering
         public static BaseMap LoadMapFromName(string name)
         {
             Type type = Type.GetType(name);
-            return (TestMap) Activator.CreateInstance(type);
+            return (BaseMap) Activator.CreateInstance(type);
         }
         public static void LoadSave(string Path)
         {
@@ -36,7 +36,7 @@ namespace PurpleStyrofoam.Rendering
                     {
                         JsonSerializer jsonSerializer = new JsonSerializer();
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
-                        RenderHandler.InitiateChange(LoadMapFromName("PurpleStyrofoam.Maps." + save.ActiveMap), new PlayerController(Game.GameContent), (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
+                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), new PlayerController(Game.GameContent), (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
                     }
                 }
             } catch (FileNotFoundException e)
@@ -53,7 +53,7 @@ namespace PurpleStyrofoam.Rendering
             PlayerController _player = (PlayerController)RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             newSave.PlayerPosition = new Vector2(_player.X, _player.Y);
             newSave.player = (PlayerManager) _player.Manager;
-            newSave.ActiveMap = RenderHandler.selectedMap.GetType().Name;
+            newSave.ActiveMap = RenderHandler.selectedMap.GetType().Namespace + "." +  RenderHandler.selectedMap.GetType().Name;
 
             Debug.WriteLine($"Position: {newSave.PlayerPosition}\nPlayerInfo: {newSave.player.Health}\nMapName: {newSave.ActiveMap}");
 
@@ -76,7 +76,7 @@ namespace PurpleStyrofoam.Rendering
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             GameSave newSave = new GameSave();
             newSave.PlayerPosition = Position;
-            newSave.ActiveMap = map.GetType().Name;
+            newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
             newSave.player = new PlayerManager();
 
             // ------------------------------------------------------------------------------------------------

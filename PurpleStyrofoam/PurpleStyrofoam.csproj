@@ -63,6 +63,7 @@
     <Compile Include="Managers\DefaultManager.cs" />
     <Compile Include="Managers\IManager.cs" />
     <Compile Include="Maps\BaseMap.cs" />
+    <Compile Include="Maps\Dungeon Areas\CathedralRuinsFBoss.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />
     <Compile Include="Maps\Hubs\Hub.cs" />
     <Compile Include="Maps\TestMap.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="SaveHandling\GameSaveHandler.cs" />
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />
-    <Compile Include="Rendering\Menus\FullScreenMenus\MenuItem.cs" />
+    <Compile Include="Rendering\Menus\MenuItem.cs" />
     <Compile Include="Rendering\Menus\FullScreenMenus\Menus\GameStartMenu.cs" />
     <Compile Include="Rendering\Menus\FullScreenMenus\IFullMenu.cs" />
     <Compile Include="Rendering\Menus\MenuHandler.cs" />

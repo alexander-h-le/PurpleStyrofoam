@@ -11,6 +11,7 @@ using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.AiController.AIs;
 using System;
+using PurpleStyrofoam.Maps.Dungeon_Areas;
 
 namespace PurpleStyrofoam
 {
@@ -47,7 +48,6 @@ namespace PurpleStyrofoam
         {
             // TODO: Add your initialization logic here
             GameSaveHandler.Initialize();
-            Debug.WriteLine(GameSaveHandler.PathDirectory);
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
             this.IsMouseVisible = true;
@@ -90,6 +90,7 @@ namespace PurpleStyrofoam
             // TODO: Unload any non ContentManager content here
         }
 
+        public static bool ShouldClose = false;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -97,7 +98,7 @@ namespace PurpleStyrofoam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) Exit();
+            if (ShouldClose) Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.N) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.CreateSave();
             if (Keyboard.GetState().IsKeyDown(Keys.L) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.LoadSave(GameSaveHandler.PathDirectory + "TestDocument.json");
             // TODO: Add your update logic here

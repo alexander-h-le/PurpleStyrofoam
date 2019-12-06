@@ -76,7 +76,7 @@ namespace PurpleStyrofoam.AiController
         private KeyboardState oldState;
         private KeyboardState newState;
         private const int moveSpeed = 20;
-        private const int jumpSpeed = 500;
+        private const int jumpSpeed = 1500;
         public void CheckKeys()
         {
             newState = Keyboard.GetState();

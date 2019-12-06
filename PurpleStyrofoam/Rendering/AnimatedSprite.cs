@@ -58,7 +58,7 @@ namespace PurpleStyrofoam
         public bool West { get; private set; }
         protected Vector2 position;
         public Vector2 velocity;
-        protected const float gravity = -10f;
+        protected const float gravity = -20f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
         public IManager Manager;

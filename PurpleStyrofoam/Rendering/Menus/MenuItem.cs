@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
+namespace PurpleStyrofoam.Rendering.Menus
 {
     public class MenuItem
     {

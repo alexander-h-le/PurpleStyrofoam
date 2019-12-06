@@ -9,7 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Maps;
+using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus;
+using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 
 namespace PurpleStyrofoam.Rendering
 {
@@ -30,6 +32,7 @@ namespace PurpleStyrofoam.Rendering
             allProjectiles = new List<Projectile>();
             purgeProjectiles = new List<Projectile>();
             purgeSprites = new List<AnimatedSprite>();
+            MenuHandler.Initialize();
             CurrentGameState = GAMESTATE.MAINMENU;
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0)
@@ -74,12 +77,15 @@ namespace PurpleStyrofoam.Rendering
             player.X = newX;
             player.Y = newY;
         }
+
+        static KeyboardState oldState;
         public static void Update()
         {
+            KeyboardState newState = Keyboard.GetState();
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
-                    MenuHandler.Update();
+                    MenuHandler.CheckKeys();
                     foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
                     {
                         sprite.Update();
@@ -90,12 +96,21 @@ namespace PurpleStyrofoam.Rendering
                     }
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.O) && newState.IsKeyDown(Keys.O)) 
+                        RenderHandler.InitiateChange(new CathedralRuinsFBoss(), savedPlayer, 150,150);
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.T) && newState.IsKeyDown(Keys.T))
+                        RenderHandler.InitiateChange(new TestMap(), savedPlayer, 100, 100);
                     break;
                 case GAMESTATE.MAINMENU:
+                    break;
+                case GAMESTATE.PAUSED:
+                    MenuHandler.CheckKeys();
+                    MenuHandler.Update();
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
             }
+            oldState = newState;
         }
         public static void DeleteSprites()
         {
@@ -116,7 +131,7 @@ namespace PurpleStyrofoam.Rendering
 
         public static Vector2 ScreenOffset = new Vector2(0, 0);
         private static int XOffset = (int) Game.ScreenSize.X/2;
-        private static int YOffset = (int)Game.ScreenSize.Y/2;
+        private static int YOffset = (int) Game.ScreenSize.Y/2;
         public static void Draw(SpriteBatch sp)
         {
             switch (CurrentGameState)
@@ -140,20 +155,36 @@ namespace PurpleStyrofoam.Rendering
                         item.Draw(sp);
                     }
                     if (selectedMap != null) selectedMap.DrawForeground(sp);
-                    if (MenuHandler.ActivePopUps != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 case GAMESTATE.MAINMENU:
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));
                     if (MenuHandler.ActiveFullScreenMenu != null) MenuHandler.DrawFullScreenMenu(sp);
                     break;
                 case GAMESTATE.PAUSED:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-savedPlayer.X) + XOffset, (-savedPlayer.Y) + YOffset, 0));
+                    if (selectedMap != null) selectedMap.DrawBackground(sp);
+                    if (selectedMap != null) selectedMap.Draw(sp);
+                    foreach (AnimatedSprite item in allCharacterSprites)
+                    {
+                        item.Draw(sp);
+                    }
+                    foreach (Projectile item in allProjectiles)
+                    {
+                        item.Draw(sp);
+                    }
+                    foreach (ItemSprite item in allItemSprites)
+                    {
+                        item.Draw(sp);
+                    }
+                    if (selectedMap != null) selectedMap.DrawForeground(sp);
+                    if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
             }
             sp.End();
         }
+
         public static void Add(ItemSprite input)
         {
             allItemSprites.Add(input);

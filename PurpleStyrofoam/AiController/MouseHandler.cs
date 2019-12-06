@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Content;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
+using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -57,6 +58,9 @@ namespace PurpleStyrofoam.AiController
                            BasicProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y),
                            RenderHandler.LookAtMouse(new Vector2(character.X, character.Y)),
                            content.Load<Texture2D>("playerSprite"), character));
+                        break;
+                    case GAMESTATE.PAUSED:
+                        MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
                         break;
                     default:
                         break;
