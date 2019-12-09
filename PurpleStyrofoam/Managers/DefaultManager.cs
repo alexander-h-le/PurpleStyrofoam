@@ -9,6 +9,13 @@ namespace PurpleStyrofoam.Managers
     class DefaultManager : IManager
     {
         public int Health { get; set; }
+        public int MaxHealth { get; set; }
+
+        public DefaultManager()
+        {
+            MaxHealth = 100;
+            Health = MaxHealth;
+        }
 
         public void AddDamage(int amount)
         {

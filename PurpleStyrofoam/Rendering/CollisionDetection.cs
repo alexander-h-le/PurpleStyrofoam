@@ -21,12 +21,11 @@ namespace PurpleStyrofoam.Rendering
             }
             return false;
         }
-        public static bool DetectCollisionSprites(Rectangle rect, AnimatedSprite SpriteSource)
+        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource)
         {
             foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
             {
-                Rectangle spriteRect = new Rectangle(sprite.X, sprite.Y, sprite.Texture.Width, sprite.Texture.Height);
-                if (sprite != SpriteSource && rect.Intersects(spriteRect))
+                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(SpriteSource.SpriteRectangle))
                 {
                     return true;
                 }

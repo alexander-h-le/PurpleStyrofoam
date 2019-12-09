@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.SaveHandling;
 using System;
@@ -24,6 +25,11 @@ namespace PurpleStyrofoam.Rendering
         {
             Type type = Type.GetType(name);
             return (BaseMap) Activator.CreateInstance(type);
+        }
+        public static GameClass LoadClass(string name)
+        {
+            Type type = Type.GetType(name);
+            return (GameClass) Activator.CreateInstance(type);
         }
         public static void LoadSave(string Path)
         {

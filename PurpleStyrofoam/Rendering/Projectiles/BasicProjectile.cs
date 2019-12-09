@@ -37,6 +37,18 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             return new Vector2((float) (xResult), (float) (yTarget > ySource ? yResult : -yResult));
             
         }
+        public static Vector2 GenerateVelocityVector(int xSource, int ySource, int xTarget, int yTarget, int SpeedModifier)
+        {
+            double x1 = xTarget - xSource;
+            double y1 = yTarget - ySource;
+            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
+            double angle = Math.Acos(x1 / hypotenuse);
+            double normalizedHypotenuse = SpeedModifier;
+            double yResult = Math.Sin(angle) * normalizedHypotenuse;
+            double xResult = Math.Cos(angle) * normalizedHypotenuse;
+            return new Vector2((float)(xResult), (float)(yTarget > ySource ? yResult : -yResult));
+
+        }
         public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target)
         {
             double x1 = target.X - source.X;
@@ -44,6 +56,18 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
             double angle = Math.Acos(x1 / hypotenuse);
             double normalizedHypotenuse = ProjectileSpeedModifier;
+            double yResult = Math.Sin(angle) * normalizedHypotenuse;
+            double xResult = Math.Cos(angle) * normalizedHypotenuse;
+            return new Vector2((float)(xResult), (float)(target.Y > source.Y ? yResult : -yResult));
+
+        }
+        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target, int SpeedModifier)
+        {
+            double x1 = target.X - source.X;
+            double y1 = target.Y - source.Y;
+            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
+            double angle = Math.Acos(x1 / hypotenuse);
+            double normalizedHypotenuse = SpeedModifier;
             double yResult = Math.Sin(angle) * normalizedHypotenuse;
             double xResult = Math.Cos(angle) * normalizedHypotenuse;
             return new Vector2((float)(xResult), (float)(target.Y > source.Y ? yResult : -yResult));

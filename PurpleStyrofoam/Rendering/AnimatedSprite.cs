@@ -100,7 +100,7 @@ namespace PurpleStyrofoam
             AI.NextMove();
         }
 
-        public void UpdateVelocity()
+        public virtual void UpdateVelocity()
         {
             velocity.Y -= gravity;
             velocity.X -= velocity.X == 0 ? 0 : velocity.X > 0 ? 5 : -5;

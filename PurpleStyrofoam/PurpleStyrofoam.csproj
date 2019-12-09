@@ -60,6 +60,8 @@
     <Compile Include="Items\Weapons\Melee\Rapiers\Lithiel.cs" />
     <Compile Include="Items\Weapons\Melee\Swords\Flight.cs" />
     <Compile Include="Items\Weapons\Weapon.cs" />
+    <Compile Include="Managers\Classes\GameClass.cs" />
+    <Compile Include="Managers\Classes\Knight.cs" />
     <Compile Include="Managers\DefaultManager.cs" />
     <Compile Include="Managers\IManager.cs" />
     <Compile Include="Maps\BaseMap.cs" />
@@ -72,7 +74,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\CollisionDetection.cs" />
+    <Compile Include="Rendering\Menus\PlayerInfoUI.cs" />
     <Compile Include="Rendering\Menus\PopUpMenu\ExitMenuPopUp.cs" />
+    <Compile Include="Rendering\Projectiles\KnightHook.cs" />
     <Compile Include="SaveHandling\GameSaveHandler.cs" />
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />

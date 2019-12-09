@@ -17,15 +17,16 @@ using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 
 namespace PurpleStyrofoam.AiController
 {
-    static class MouseHandler
+    public static class MouseHandler
     {
         private static MouseState oldState;
         private static MouseState newState;
+        public static Vector2 mousePos;
         public static void Update(ContentManager content)
         {
             newState = Mouse.GetState();
-            Vector2 mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
             AnimatedSprite character = null;
+            mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
             if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE) character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             if (newState.RightButton == ButtonState.Pressed)
             {
@@ -37,10 +38,7 @@ namespace PurpleStyrofoam.AiController
                     case (GAMESTATE.ACTIVE):
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
-                        AnimatedSprite capabiltiy = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 1, 1, (int)mousePos.X, (int)mousePos.Y,
-                            new BasicAI(character), new DefaultManager());
-                        capabiltiy.AI.SupplyAI(capabiltiy);
-                        RenderHandler.Add(capabiltiy);
+                        character.Manager.AddDamage(-1);
                         break;
                     default:
                         break;
@@ -54,10 +52,7 @@ namespace PurpleStyrofoam.AiController
                         MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        _ = (new BasicProjectile(character.X, character.Y, 10, 10,
-                           BasicProjectile.GenerateVelocityVector(character.X, character.Y, (int)mousePos.X, (int)mousePos.Y),
-                           RenderHandler.LookAtMouse(new Vector2(character.X, character.Y)),
-                           content.Load<Texture2D>("playerSprite"), character));
+                        character.Manager.AddDamage(1);
                         break;
                     case GAMESTATE.PAUSED:
                         MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

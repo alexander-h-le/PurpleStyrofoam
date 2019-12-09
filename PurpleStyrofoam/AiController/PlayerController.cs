@@ -93,7 +93,7 @@ namespace PurpleStyrofoam.AiController
             {
                 if (newState.IsKeyDown(Keys.A))
                 {
-                    velocity.X = !West ? velocity.X - moveSpeed : 0;
+                    velocity.X -= !West && velocity.X > -terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.A))
                     {
                         SwitchSprite(movingPlayerSprite);
@@ -101,7 +101,7 @@ namespace PurpleStyrofoam.AiController
                 }
                 if (newState.IsKeyDown(Keys.D))
                 {
-                    velocity.X = !East ? velocity.X + moveSpeed : 0;
+                    velocity.X += !East && velocity.X < terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.D))
                     {
                         SwitchSprite(movingPlayerSprite);
@@ -118,12 +118,24 @@ namespace PurpleStyrofoam.AiController
                 }
                 //if (newState.IsKeyDown(Keys.S)) { }
                 //if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){}
-                //if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E)){}
+                if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+                {
+                }
                 
             }
             if (North) velocity.Y = -velocity.Y;
-            if (velocity.X == 0 && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
+            if ((velocity.X > -1 && velocity.X < 1) && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
             oldState = newState;
+        }
+        public override void UpdateVelocity()
+        {
+            velocity.Y -= velocity.Y < terminalVelocity.Y ?  gravity : 0;
+            velocity.X -= velocity.X == 0 ? 0 : velocity.X > 0 ? 5 : -5;
+            if (East && velocity.X > 0) velocity.X = 0;
+            if (West && velocity.X < 0) velocity.X = 0;
+            if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
+            this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
+            this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
     }
 }

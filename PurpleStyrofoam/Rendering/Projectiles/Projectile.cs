@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Rendering
 {
-    abstract class Projectile
+    public abstract class Projectile
     {
         public abstract void Draw(SpriteBatch sp);
         public abstract void ProjectileAction(AnimatedSprite source, AnimatedSprite target);

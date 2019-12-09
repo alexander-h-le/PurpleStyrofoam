@@ -13,6 +13,7 @@ namespace PurpleStyrofoam.SaveHandling
     {
         public PlayerManager player;
         public string ActiveMap;
+        public string ChosenClass;
         public Vector2 PlayerPosition;
     }
 }

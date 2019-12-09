@@ -48,6 +48,7 @@ namespace PurpleStyrofoam.Rendering
             if (player.HeldWeapon != null) allItemSprites.Add(player.HeldWeapon.Sprite);
             player.X = newX;
             player.Y = newY;
+            PlayerInfoUI.Initialize();
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, List<ItemSprite> newItems, int newX = 0, int newY = 0)
         {
@@ -62,6 +63,7 @@ namespace PurpleStyrofoam.Rendering
             allItemSprites = newItems;
             player.X = newX;
             player.Y = newY;
+            PlayerInfoUI.Initialize();
         }
         public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, int newX = 0, int newY = 0)
         {
@@ -76,6 +78,7 @@ namespace PurpleStyrofoam.Rendering
             allItemSprites = new List<ItemSprite>();
             player.X = newX;
             player.Y = newY;
+            PlayerInfoUI.Initialize();
         }
 
         static KeyboardState oldState;
@@ -100,6 +103,7 @@ namespace PurpleStyrofoam.Rendering
                         RenderHandler.InitiateChange(new CathedralRuinsFBoss(), savedPlayer, 150,150);
                     if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.T) && newState.IsKeyDown(Keys.T))
                         RenderHandler.InitiateChange(new TestMap(), savedPlayer, 100, 100);
+                    PlayerInfoUI.Update();
                     break;
                 case GAMESTATE.MAINMENU:
                     break;
@@ -142,8 +146,12 @@ namespace PurpleStyrofoam.Rendering
                     int yMove = ScreenOffset.Y < selectedMap.maxBounds.Top ? selectedMap.maxBounds.Top :
                         ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-savedPlayer.Y) + YOffset;
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
-                    ScreenOffset.X = (savedPlayer.X) - XOffset;
-                    ScreenOffset.Y = (savedPlayer.Y) - YOffset;
+                    ScreenOffset.X = (ScreenOffset.X < selectedMap.maxBounds.Left && xMove < 0) 
+                        || (ScreenOffset.X > selectedMap.maxBounds.Right && xMove > 0) ? 
+                        ScreenOffset.X : (savedPlayer.X) - XOffset;
+                    ScreenOffset.Y = (ScreenOffset.Y < selectedMap.maxBounds.Top && yMove < 0)
+                        || (ScreenOffset.Y > selectedMap.maxBounds.Bottom && yMove > 0) ? 
+                        ScreenOffset.Y : (savedPlayer.Y) - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
                     foreach (AnimatedSprite item in allCharacterSprites)
@@ -159,6 +167,7 @@ namespace PurpleStyrofoam.Rendering
                         item.Draw(sp);
                     }
                     if (selectedMap != null) selectedMap.DrawForeground(sp);
+                    PlayerInfoUI.Draw(sp);
                     break;
                 case GAMESTATE.MAINMENU:
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));

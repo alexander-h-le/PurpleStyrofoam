@@ -9,6 +9,7 @@ namespace PurpleStyrofoam.Managers
     public interface IManager
     {
         int Health { get; set; }
+        int MaxHealth { get; set; }
         void AddDamage(int amount);
     }
 }
