@@ -18,6 +18,7 @@ namespace PurpleStyrofoam.Maps
         private ContentManager Content;
         public TestMap()
         {
+            maxBounds = new Rectangle(0,0,10000,10000);
             Content = Game.GameContent;
             AnimatedSprite player = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             AnimatedSprite enemySprite = new AnimatedSprite(Content.Load<Texture2D>("enemyTest"), 1, 1, 100, 100, new BasicAI(player), new DefaultManager());

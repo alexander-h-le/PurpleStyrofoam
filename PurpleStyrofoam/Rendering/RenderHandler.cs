@@ -137,9 +137,13 @@ namespace PurpleStyrofoam.Rendering
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-savedPlayer.X) + XOffset, (-savedPlayer.Y) + YOffset, 0));
-                    ScreenOffset.X = savedPlayer.X - XOffset;
-                    ScreenOffset.Y = savedPlayer.Y - YOffset;
+                    int xMove = ScreenOffset.X < selectedMap.maxBounds.Left ? selectedMap.maxBounds.Left :
+                        ScreenOffset.X > selectedMap.maxBounds.Right ? selectedMap.maxBounds.Right : (-savedPlayer.X) + XOffset;
+                    int yMove = ScreenOffset.Y < selectedMap.maxBounds.Top ? selectedMap.maxBounds.Top :
+                        ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-savedPlayer.Y) + YOffset;
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
+                    ScreenOffset.X = (savedPlayer.X) - XOffset;
+                    ScreenOffset.Y = (savedPlayer.Y) - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
                     foreach (AnimatedSprite item in allCharacterSprites)

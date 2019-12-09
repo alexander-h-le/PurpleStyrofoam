@@ -20,27 +20,10 @@ namespace PurpleStyrofoam.Rendering
             BucketMap = new List<ObjectMap>();
             int BucketMapKeys = 0;
 
-            int minX = (int) map.ActiveLayer[0].location.X;
-            int maxX = 0;
-            int minY = (int) map.ActiveLayer[0].location.Y;
-            int maxY = 0;
-            foreach (MapObject i in map.ActiveLayer)
-            {
-                if (i.MapRectangle.X < minX)
-                {
-                    minX = i.MapRectangle.X;
-                } else if (i.MapRectangle.X > maxX)
-                {
-                    maxX = i.MapRectangle.X;
-                }
-                if (i.MapRectangle.Y < minY)
-                {
-                    minY = i.MapRectangle.Y;
-                } else if (i.MapRectangle.Y > maxY)
-                {
-                    maxY = i.MapRectangle.Y;
-                }
-            }
+            int minX = map.maxBounds.Left;
+            int maxX = map.maxBounds.Right;
+            int minY = map.maxBounds.Top;
+            int maxY = map.maxBounds.Bottom;
             Columns = (maxX - minX) / bucketlength;
             Rows = (maxY - minY) / bucketlength;
             minX -= bucketlength;

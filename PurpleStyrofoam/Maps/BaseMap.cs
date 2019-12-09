@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
 using System;
@@ -16,10 +17,11 @@ namespace PurpleStyrofoam.Maps
         public abstract MapObject[] ActiveLayer { get; set; }
         public abstract MapObject[] ForegroundLayer { get; set; }
         public abstract List<AnimatedSprite> sprites { get; set; }
+        public Rectangle maxBounds;
 
         public BaseMap()
         {
-
+            maxBounds = new Rectangle(0,0,1000,1000);
         }
 
         public void DrawBackground(SpriteBatch sp)

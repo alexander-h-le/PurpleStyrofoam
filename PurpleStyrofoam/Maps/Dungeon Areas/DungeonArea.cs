@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Maps.Dungeon_Areas
 {
-    abstract class DungeonArea : BaseMap
+    public abstract class DungeonArea : BaseMap
     {
         
     }
