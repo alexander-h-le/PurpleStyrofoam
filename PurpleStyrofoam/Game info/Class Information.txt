@@ -83,8 +83,16 @@ Dungeons are progressive.
 			Boss - 
 		CR - Second Floor
 			Boss - 
-		CR - Cemetary (Raise the dead to unlock an undead companion?)
+		CR - Cemetery (Raise the dead to unlock an undead companion?)
 			Boss - 
+		CR - Lower Floor 1
+			Boss - 
+		CR - Lower Floor 2
+			Boss - 
+		CR - Hidden Caves
+			Boss - 
+		CR - Cultists' Altar
+			Boss - Ravnik The Chosen
 		CR - Bell Tower (Secret) Drops broken skeleton key
 
 2) Jungle
@@ -162,6 +170,9 @@ Dungeons are progressive.
 			Boss - 
 		S - Crevice
 			Boss - 
+		S - Ravine
+			Boss - 
+		S - 
 6) Mountains (deltas off a mountian. lava too?)
 7) Crystal Caverns
 8) Plains
