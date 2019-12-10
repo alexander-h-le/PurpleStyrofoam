@@ -40,7 +40,7 @@ E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into 
 		Earth + Earth = Rumblers
 Weapons: Wands (Quick), Staff (Moderate), Tomes (Slow)
 Q Ability
-	Wand - Prestadignation? Press the ability to cast an orb, attracting enemies attention. Unique weapons will modify that ability to attack enemies or do other abilities.
+	Wand - Prestadigitation? Press the ability to cast an orb, attracting enemies attention. Unique weapons will modify that ability to attack enemies or do other abilities.
 	Staff - CONTROL THE ELEMENTS.  COntinuous beam
 	Tomes - Incantation. Press the ability to reduce movement greatly and focus your abilities into casting a large spell. Unique weapons for example will cast a meteor storm (almost) wiping out
 		all enemies afflicted.
@@ -58,9 +58,17 @@ Q Ability
 E Ability: Shadow dash. Join with the shadows and dash towards cursor and through enemies dealing damage to any that are hit. 
 	You are impervious to projectiles and attacks during this period, but cannot cancel dash.
 
-|||||||||||||||||||||||                 Pet Wrangler / Summoner 			||||||||||||||||||||||||||||
-
-
+|||||||||||||||||||||||                 Manipulator 			||||||||||||||||||||||||||||
+Weapons: Throwing (Very Quick), Sword (Quick), Tomes (Slow)
+Special class with three cursors following them. Selecting different weapons will change left-click
+	Throwing: Cursors become boomerangs doing return dmg. Low damage per hit.
+	Sword: ???
+	Tomes: Sancti Castanas. Cursors are not able to change element.
+Q Ability
+	Throwing: Flutterstorm: Send out multiple projectiles that, upon reaching the cursor's old position, start fluttering around like bees.
+	Sword: 
+	Tomes: 
+E Ability: Nano-plat, Press E to create a platform at the cursor. You cannot attack during the duration. Press E again to dismiss it.
 
 
 ||||||||||||||||||||||||                       Game Progression                      |||||||||||||||||||||||||
