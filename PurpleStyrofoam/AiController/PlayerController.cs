@@ -12,6 +12,7 @@ using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Items.Weapons;
 using System.Timers;
 using PurpleStyrofoam.AiController.AIs;
+using PurpleStyrofoam.Managers.Classes;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -24,16 +25,16 @@ namespace PurpleStyrofoam.AiController
         public bool InAir { get; private set; }
         private ContentManager Content;
         public Weapon HeldWeapon { get; set; }
-        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null) 
+        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null, PlayerManager manager = null) 
             : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI(), new PlayerManager())
         {
             Texture = content.Load<Texture2D>(basePlayerSpriteName);
             Content = content;
             HeldWeapon = weapIn;
+            Manager = manager == null ? new PlayerManager() : manager;
+            //((PlayerManager)Manager).Class = new Rogue(this);
         }
 
-        private readonly int ScreenMovementMargin = (int) (Game.ScreenSize.X/5f);
-        private const int ScreenMoveSpeed = 6;
         public override void Update()
         {
             base.DetectCollision();
@@ -93,7 +94,7 @@ namespace PurpleStyrofoam.AiController
             {
                 if (newState.IsKeyDown(Keys.A))
                 {
-                    velocity.X -= !West && velocity.X > -terminalVelocity.X ? moveSpeed : 0;
+                    velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.A))
                     {
                         SwitchSprite(movingPlayerSprite);
@@ -101,7 +102,7 @@ namespace PurpleStyrofoam.AiController
                 }
                 if (newState.IsKeyDown(Keys.D))
                 {
-                    velocity.X += !East && velocity.X < terminalVelocity.X ? moveSpeed : 0;
+                    velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir && oldState.IsKeyUp(Keys.D))
                     {
                         SwitchSprite(movingPlayerSprite);
@@ -120,6 +121,7 @@ namespace PurpleStyrofoam.AiController
                 //if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){}
                 if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
                 {
+                    ((PlayerManager)Manager).Class.EAction();
                 }
                 
             }

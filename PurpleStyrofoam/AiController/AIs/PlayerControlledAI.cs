@@ -8,10 +8,8 @@ namespace PurpleStyrofoam.AiController.AIs
 {
     public class PlayerControlledAI : AIBase
     {
-        private int Health;
         public PlayerControlledAI()
         {
-            Health = 100;
         }
 
         public override void NextMove()

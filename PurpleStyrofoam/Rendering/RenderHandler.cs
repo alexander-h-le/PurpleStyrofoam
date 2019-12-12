@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus;
@@ -89,7 +90,7 @@ namespace PurpleStyrofoam.Rendering
             {
                 case GAMESTATE.ACTIVE:
                     MenuHandler.CheckKeys();
-                    foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+                    foreach (AnimatedSprite sprite in allCharacterSprites)
                     {
                         sprite.Update();
                     }
@@ -99,10 +100,12 @@ namespace PurpleStyrofoam.Rendering
                     }
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
-                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.O) && newState.IsKeyDown(Keys.O)) 
-                        RenderHandler.InitiateChange(new CathedralRuinsFBoss(), savedPlayer, 150,150);
-                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.T) && newState.IsKeyDown(Keys.T))
-                        RenderHandler.InitiateChange(new TestMap(), savedPlayer, 100, 100);
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.R) && newState.IsKeyDown(Keys.R))
+                        ((PlayerManager)savedPlayer.Manager).Class = new Rogue(savedPlayer);
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.K) && newState.IsKeyDown(Keys.K))
+                        ((PlayerManager)savedPlayer.Manager).Class = new Knight(savedPlayer);
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.C) && newState.IsKeyDown(Keys.C))
+                        ((PlayerManager)savedPlayer.Manager).Class = new Caster(savedPlayer);
                     PlayerInfoUI.Update();
                     break;
                 case GAMESTATE.MAINMENU:

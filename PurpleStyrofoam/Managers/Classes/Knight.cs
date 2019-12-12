@@ -19,6 +19,12 @@ namespace PurpleStyrofoam.Managers.Classes
         {
             SpriteSource = (PlayerController)source;
         }
+
+        public override void AddSpriteSource(AnimatedSprite spIn)
+        {
+            SpriteSource = (PlayerController) spIn;
+        }
+
         public override void EAction()
         {
             if (projectile == null)
@@ -35,8 +41,18 @@ namespace PurpleStyrofoam.Managers.Classes
                 projectile = null;
             } else if (projectile.Connected == KnightHook.CONNECTION.SPRITE)
             {
-
+                Vector2 newVect = BasicProjectile.GenerateVelocityVector(projectile.ConnectedSprite.X, projectile.ConnectedSprite.Y,
+                    SpriteSource.X, SpriteSource.Y, 2000);
+                projectile.ConnectedSprite.velocity.X = newVect.X;
+                projectile.ConnectedSprite.velocity.Y = newVect.Y;
+                projectile.Delete();
+                projectile = null;
             }
+        }
+
+        public override void RClick()
+        {
+            throw new NotImplementedException();
         }
     }
 }

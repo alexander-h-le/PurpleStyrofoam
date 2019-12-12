@@ -103,14 +103,12 @@ namespace PurpleStyrofoam
         public virtual void UpdateVelocity()
         {
             velocity.Y -= gravity;
-            velocity.X -= velocity.X == 0 ? 0 : velocity.X > 0 ? 5 : -5;
-            if (velocity.X > terminalVelocity.X) velocity.X = terminalVelocity.X;
-            if (velocity.X < -terminalVelocity.X) velocity.X = -terminalVelocity.X;
             if (velocity.Y > terminalVelocity.Y) velocity.Y = terminalVelocity.Y;
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
             this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
             this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -40,9 +40,13 @@ namespace PurpleStyrofoam.Rendering
                 {
                     using (JsonTextReader reader = new JsonTextReader(sr))
                     {
-                        JsonSerializer jsonSerializer = new JsonSerializer();
+                        var settings = new JsonSerializerSettings();
+                        settings.Converters.Add(new GameClassConverter());
+                        JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
-                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), new PlayerController(Game.GameContent), (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
+                        PlayerController chara = new PlayerController(Game.GameContent, manager: save.player);
+                        save.player.Class.AddSpriteSource(chara);
+                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara , (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
                     }
                 }
             } catch (FileNotFoundException e)
@@ -68,8 +72,10 @@ namespace PurpleStyrofoam.Rendering
             File.WriteAllText(PathDirectory + "TestDocument.json", JsonConvert.SerializeObject(newSave));
             using (StreamWriter sw = File.CreateText(PathDirectory + "TestDocument.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(sw, newSave);
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new GameClassConverter());
+                JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
+                jsonSerializer.Serialize(sw, newSave);
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
 
@@ -90,8 +96,10 @@ namespace PurpleStyrofoam.Rendering
             File.WriteAllText(PathDirectory + "TestDocument.json", JsonConvert.SerializeObject(newSave));
             using (StreamWriter sw = File.CreateText(PathDirectory + "TestDocument.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(sw, newSave);
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new GameClassConverter());
+                JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
+                jsonSerializer.Serialize(sw, newSave);
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
 

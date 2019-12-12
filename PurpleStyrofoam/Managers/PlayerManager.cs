@@ -14,6 +14,7 @@ namespace PurpleStyrofoam
         public int MaxHealth { get; set; }
         public int Mana { get; set;}
         public int MaxMana { get; set; }
+        public GameClass Class { get; set; }
 
         public void AddDamage(int amount)
         {

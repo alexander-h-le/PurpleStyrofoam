@@ -33,6 +33,33 @@ namespace PurpleStyrofoam.Rendering
             return false;
         }
 
+        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, out AnimatedSprite connectedSprite)
+        {
+            connectedSprite = null;
+            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            {
+                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(SpriteSource.SpriteRectangle))
+                {
+                    connectedSprite = sprite;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)
+        {
+            connectedSprite = null;
+            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            {
+                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(rect))
+                {
+                    connectedSprite = sprite;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //bool array = {NORTH,SOUTH,EAST,WEST}
         public static bool[] DetectCollisionArrayMap(Rectangle rect)
         {
@@ -46,24 +73,28 @@ namespace PurpleStyrofoam.Rendering
             {
                 if (rect.Intersects(map.MapRectangle))
                 {
+                    if ((East || West) && (North || South)) break;
                     //EAST & WEST
-                    if (rect.Right >= map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
+                    if (rect.Right > map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
                     {
                         East = true;
+                        continue;
                     }
-                    else if (rect.Left <= map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
+                    else if (rect.Left < map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
                     {
                         West = true;
+                        continue;
                     }
-                    else if (rect.Top <= map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
+                    else if (rect.Top < map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
                     {
                         North = true;
+                        continue;
                     }
-                    else if (rect.Bottom >= map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
+                    else if (rect.Bottom > map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
                     {
                         South = true;
+                        continue;
                     }
-                    if ((East || West) && (North || South)) break;
                 }
             }
             return new bool[] { North, South, East, West };
@@ -106,7 +137,7 @@ namespace PurpleStyrofoam.Rendering
         public static List<MapObject> FindObjectMaps(Rectangle rect)
         {
             List<MapObject> mapObjects = new List<MapObject>();
-            List<ObjectMap> maps = ObjectMapper.BucketMap.FindAll(x => rect.Intersects(x.BucketBounds));
+            List<ObjectMap> maps = ObjectMapper.BucketMap.FindAll(x => x.BucketBounds.Intersects(rect));
             foreach (ObjectMap map in maps)
             {
                 foreach (MapObject i in map.Bucket)
@@ -114,7 +145,6 @@ namespace PurpleStyrofoam.Rendering
                     mapObjects.Add(i);
                 }
             }
-            mapObjects = new HashSet<MapObject>(mapObjects).ToList();
             return mapObjects;
         }
     }

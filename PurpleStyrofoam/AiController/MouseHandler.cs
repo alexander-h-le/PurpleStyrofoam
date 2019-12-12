@@ -38,7 +38,8 @@ namespace PurpleStyrofoam.AiController
                     case (GAMESTATE.ACTIVE):
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
-                        character.Manager.AddDamage(-1);
+                        ((PlayerManager)character.Manager).Class.RClick();
+                        //character.Manager.AddDamage(-1);
                         break;
                     default:
                         break;
@@ -52,7 +53,10 @@ namespace PurpleStyrofoam.AiController
                         MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        character.Manager.AddDamage(1);
+                        AnimatedSprite t = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 1, 1,
+                            (int)mousePos.X, (int)mousePos.Y, new BasicAI(character), new DefaultManager());
+                        t.AI.SupplyAI(t);
+                        RenderHandler.Add(t);
                         break;
                     case GAMESTATE.PAUSED:
                         MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

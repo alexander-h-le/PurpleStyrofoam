@@ -14,6 +14,7 @@ namespace PurpleStyrofoam.Rendering
         public static List<ObjectMap> BucketMap { get; private set; }
         public static int Rows { get; set; }
         public static int Columns { get; set; }
+        public static int TotalRC { get; set; }
         private const int bucketlength = 100;
         public static void MapObjects(BaseMap map)
         {
@@ -45,10 +46,10 @@ namespace PurpleStyrofoam.Rendering
                             objectMap.Bucket.Add(i);
                         }
                     }
-                    //Debug.WriteLine($"Key: {objectMap.Key} BucketBounds: {objectMap.BucketBounds}");
                     BucketMap.Add(objectMap);
                 }
             }
+            TotalRC = Columns * Rows;
         }
 
         public static int FindLowestKey(List<ObjectMap> maps)

@@ -15,6 +15,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         public Rectangle ProjRect;
         Vector2 Velocity;
         AnimatedSprite SpriteSource;
+        public AnimatedSprite ConnectedSprite;
         public KnightHook(int x, int y, int width, int height, Vector2 velIn, float ang, AnimatedSprite source)
         {
             ProjRect = new Rectangle(x,y,width,height);
@@ -27,12 +28,12 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
         public override void DetectCollision()
         {
-            if (CollisionDetection.DetectCollisionMap(ProjRect))
-            {
-                Connected = CONNECTION.MAP;
-            } else if (CollisionDetection.DetectCollisionSprites(SpriteSource))
+            if (CollisionDetection.DetectCollisionSprites(SpriteSource, ProjRect, out ConnectedSprite))
             {
                 Connected = CONNECTION.SPRITE;
+            } else if (CollisionDetection.DetectCollisionMap(ProjRect))
+            {
+                Connected = CONNECTION.MAP;
             }
         }
 
@@ -62,6 +63,9 @@ namespace PurpleStyrofoam.Rendering.Projectiles
                 ProjRect.X += (int)Velocity.X;
                 ProjRect.Y += (int)Velocity.Y;
                 DetectCollision();
+            } else if (Connected == CONNECTION.SPRITE)
+            {
+                ProjRect = ConnectedSprite.SpriteRectangle;
             }
         }
         public enum CONNECTION
