@@ -27,13 +27,20 @@ namespace PurpleStyrofoam.Managers.Classes
             if (t == null)
             {
                 t = new CasterEMove(SpriteSource.SpriteRectangle.Right, SpriteSource.SpriteRectangle.Top,
-                BasicProjectile.GenerateVelocityVector(SpriteSource.X, SpriteSource.Y, (int)MouseHandler.mousePos.X, (int)MouseHandler.mousePos.Y,5));
+                BasicProjectile.GenerateVelocityVector(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y, (int)MouseHandler.mousePos.X, (int)MouseHandler.mousePos.Y,5));
                 t.Velocity.Y = 0;
                 RenderHandler.allProjectiles.Add(t);
             } else
             {
-                SpriteSource.X = t.ProjRect.X;
-                SpriteSource.Y = t.ProjRect.Y;
+                if (t.CollidingR)
+                {
+                    SpriteSource.X = t.ProjRect.Right - SpriteSource.SpriteRectangle.Width;
+                    SpriteSource.Y = t.ProjRect.Y;
+                } else
+                {
+                    SpriteSource.X = t.ProjRect.X;
+                    SpriteSource.Y = t.ProjRect.Y;
+                }
                 t.Delete();
                 t = null;
             }

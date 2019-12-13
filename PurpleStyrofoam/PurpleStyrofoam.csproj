@@ -63,6 +63,7 @@
     <Compile Include="Managers\Classes\Caster.cs" />
     <Compile Include="Managers\Classes\GameClass.cs" />
     <Compile Include="Managers\Classes\Knight.cs" />
+    <Compile Include="Managers\Classes\Manipulator.cs" />
     <Compile Include="Managers\Classes\Rogue.cs" />
     <Compile Include="Managers\DefaultManager.cs" />
     <Compile Include="Managers\IManager.cs" />

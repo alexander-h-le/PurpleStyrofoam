@@ -21,6 +21,10 @@ namespace PurpleStyrofoam.Items
             Rarity = levelIn;
             Sprite = imageIn;
         }
+        public Item()
+        {
+
+        }
         /**
          * TODO
          *  - add way to get display process

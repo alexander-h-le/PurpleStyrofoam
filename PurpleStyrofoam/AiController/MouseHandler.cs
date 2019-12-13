@@ -53,10 +53,7 @@ namespace PurpleStyrofoam.AiController
                         MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        AnimatedSprite t = new AnimatedSprite(Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic"), 1, 1,
-                            (int)mousePos.X, (int)mousePos.Y, new BasicAI(character), new DefaultManager());
-                        t.AI.SupplyAI(t);
-                        RenderHandler.Add(t);
+                        ((PlayerController)character).HeldWeapon.OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:
                         MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

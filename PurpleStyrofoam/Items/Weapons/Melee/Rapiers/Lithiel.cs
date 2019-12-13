@@ -34,9 +34,5 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
             throw new NotImplementedException();
         }
 
-        public override void OnRightClick()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

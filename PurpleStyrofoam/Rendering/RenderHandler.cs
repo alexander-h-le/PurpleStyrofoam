@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Items.Weapons.Melee.Swords;
 using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
@@ -46,7 +47,7 @@ namespace PurpleStyrofoam.Rendering
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites.Add(player);
             allItemSprites = new List<ItemSprite>();
-            if (player.HeldWeapon != null) allItemSprites.Add(player.HeldWeapon.Sprite);
+            if (((PlayerController) player).HeldWeapon != null) allItemSprites.Add(((PlayerController)player).HeldWeapon.Sprite);
             player.X = newX;
             player.Y = newY;
             PlayerInfoUI.Initialize();
@@ -83,6 +84,7 @@ namespace PurpleStyrofoam.Rendering
         }
 
         static KeyboardState oldState;
+        public static List<MapObject> extras = new List<MapObject>();
         public static void Update()
         {
             KeyboardState newState = Keyboard.GetState();
@@ -100,12 +102,10 @@ namespace PurpleStyrofoam.Rendering
                     }
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
-                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.R) && newState.IsKeyDown(Keys.R))
-                        ((PlayerManager)savedPlayer.Manager).Class = new Rogue(savedPlayer);
                     if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.K) && newState.IsKeyDown(Keys.K))
                         ((PlayerManager)savedPlayer.Manager).Class = new Knight(savedPlayer);
-                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.C) && newState.IsKeyDown(Keys.C))
-                        ((PlayerManager)savedPlayer.Manager).Class = new Caster(savedPlayer);
+                    if (newState.IsKeyDown(Keys.LeftShift) && oldState.IsKeyUp(Keys.F) && newState.IsKeyDown(Keys.F))
+                        ((PlayerController)savedPlayer).HeldWeapon = new Flight(Game.GameContent);
                     PlayerInfoUI.Update();
                     break;
                 case GAMESTATE.MAINMENU:
@@ -157,6 +157,10 @@ namespace PurpleStyrofoam.Rendering
                         ScreenOffset.Y : (savedPlayer.Y) - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
+                    foreach (MapObject i in  extras)
+                    {
+                        i.Draw(sp);
+                    }
                     foreach (AnimatedSprite item in allCharacterSprites)
                     {
                         item.Draw(sp);

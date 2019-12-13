@@ -1,4 +1,6 @@
-﻿using PurpleStyrofoam.Managers;
+﻿using PurpleStyrofoam.Items.Weapons;
+using PurpleStyrofoam.Items.Weapons.Melee.Swords;
+using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Managers.Classes;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,6 @@ namespace PurpleStyrofoam
         public int Mana { get; set;}
         public int MaxMana { get; set; }
         public GameClass Class { get; set; }
-
         public void AddDamage(int amount)
         {
             Health += Health + amount < MaxHealth ? amount : 0;

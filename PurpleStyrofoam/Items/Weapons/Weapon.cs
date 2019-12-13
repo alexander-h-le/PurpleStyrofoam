@@ -14,10 +14,13 @@ namespace PurpleStyrofoam.Items.Weapons
             Damage = damage;
             AttackSpeed = atkspd;
         }
+        public Weapon()
+        {
+
+        }
 
         public int Damage { get; } // Get the item's damage.
         public abstract void OnLeftClick(); // Will be called when player left-clicks
-        public abstract void OnRightClick(); // Will be called when player right-clicks
         public abstract void OnQAbility(); // Will be called when player presses Q
         public ATTACKSPEED AttackSpeed { get; set; }
     }

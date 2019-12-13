@@ -33,10 +33,5 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Axes
         {
             throw new NotImplementedException();
         }
-
-        public override void OnRightClick()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

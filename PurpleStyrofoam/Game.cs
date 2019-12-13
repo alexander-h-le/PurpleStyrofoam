@@ -24,7 +24,7 @@ namespace PurpleStyrofoam
         SpriteBatch spriteBatch;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
-        public static readonly Vector2 ScreenSize = new Vector2(800,800);
+        public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
         public static ContentManager GameContent;
         
         public Game()

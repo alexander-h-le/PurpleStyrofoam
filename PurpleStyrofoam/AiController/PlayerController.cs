@@ -24,13 +24,12 @@ namespace PurpleStyrofoam.AiController
         private const string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
         public bool InAir { get; private set; }
         private ContentManager Content;
-        public Weapon HeldWeapon { get; set; }
-        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, Weapon weapIn = null, PlayerManager manager = null) 
+        public Weapon HeldWeapon;
+        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, PlayerManager manager = null) 
             : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI(), new PlayerManager())
         {
             Texture = content.Load<Texture2D>(basePlayerSpriteName);
             Content = content;
-            HeldWeapon = weapIn;
             Manager = manager == null ? new PlayerManager() : manager;
             //((PlayerManager)Manager).Class = new Rogue(this);
         }
@@ -118,7 +117,9 @@ namespace PurpleStyrofoam.AiController
                     }
                 }
                 //if (newState.IsKeyDown(Keys.S)) { }
-                //if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){}
+                if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){
+                    HeldWeapon.OnQAbility();
+                }
                 if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
                 {
                     ((PlayerManager)Manager).Class.EAction();
@@ -138,6 +139,8 @@ namespace PurpleStyrofoam.AiController
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
             this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
             this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
+            HeldWeapon.Sprite.X = this.X;
+            HeldWeapon.Sprite.Y = this.Y;
         }
     }
 }

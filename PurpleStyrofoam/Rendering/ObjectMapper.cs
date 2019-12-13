@@ -76,5 +76,22 @@ namespace PurpleStyrofoam.Rendering
             }
             return lowest;
         }
+
+        public static void AddMapObject(MapObject input)
+        {
+            foreach (ObjectMap i in BucketMap.FindAll(x => x.BucketBounds.Intersects(input.MapRectangle)))
+            {
+                i.Bucket.Add(input);
+            }
+            RenderHandler.extras.Add(input);
+        }
+        public static void DeleteMapObject(MapObject input)
+        {
+            foreach (ObjectMap i in BucketMap)
+            {
+                i.Bucket.Remove(input);
+            }
+            RenderHandler.extras.Remove(input);
+        }
     }
 }
