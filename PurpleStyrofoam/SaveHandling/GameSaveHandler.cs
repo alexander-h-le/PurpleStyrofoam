@@ -18,28 +18,62 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Rendering
 {
+    /// <summary>
+    /// Handles saving in the game. A static class much like RenderHandler. 
+    /// </summary>
     public static class GameSaveHandler
     {
+
+        /// <summary>
+        /// The string directory that holds all the saves in the game.
+        /// </summary>
         public static string PathDirectory;
+
+        /// <summary>
+        /// Starts up GameSaveHandler. Ran along with other initialize methods, but this is only run once.
+        /// </summary>
         public static void Initialize()
         {
             PathDirectory = Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\GameTestFolder").FullName + "\\";
         }
+
+        /// <summary>
+        /// Returns a BaseMap object based on a given string
+        /// </summary>
+        /// <param name="name">Path of the BaseMap to be created. Format: Namespace.ClassName</param>
+        /// <returns>BaseMap object based on the string provided</returns>
         public static BaseMap LoadMapFromName(string name)
         {
             Type type = Type.GetType(name);
             return (BaseMap) Activator.CreateInstance(type);
         }
+
+        /// <summary>
+        /// Returns a GameClass based on a given string
+        /// </summary>
+        /// <param name="name">Path of the GameClass to be created. Format: Namespace.ClassName</param>
+        /// <returns>GameClass object based on the string provided</returns>
         public static GameClass LoadClass(string name)
         {
             Type type = Type.GetType(name);
             return (GameClass) Activator.CreateInstance(type);
         }
+
+        /// <summary>
+        /// Returns an Item based on a given string
+        /// </summary>
+        /// <param name="name">Path of the Item to be created. Format: Namespace.ClassName</param>
+        /// <returns>Item object based on the string provided</returns>
         public static Item LoadItem(string name)
         {
             Type type = Type.GetType(name);
             return (Item) Activator.CreateInstance(type);
         }
+
+        /// <summary>
+        /// Sets the game state based on the save given
+        /// </summary>
+        /// <param name="Path">Absolute path of the save to be loaded</param>
         public static void LoadSave(string Path)
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
@@ -67,6 +101,12 @@ namespace PurpleStyrofoam.Rendering
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
         }
+
+        /// <summary>
+        /// Generates a new save based on the current game state.
+        /// Do not run this method when the game is not active.
+        /// </summary>
+        /// <returns> Returns whether or not if it was successful</returns>
         public static bool CreateSave()
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
@@ -97,6 +137,14 @@ namespace PurpleStyrofoam.Rendering
 
             return true;
         }
+
+        /// <summary>
+        /// Generates a save based on the given information
+        /// </summary>
+        /// <param name="player">The current PlayerController being used</param>
+        /// <param name="Position">The position of the player</param>
+        /// <param name="map">The current active map</param>
+        /// <returns>Returns whether or not it was successful</returns>
         public static bool CreateSave(PlayerController player, Vector2 Position, BaseMap map)
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
