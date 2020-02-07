@@ -88,7 +88,7 @@ namespace PurpleStyrofoam
         }
         public virtual void Update()
         {
-            DetectCollision();
+            if (velocity.X != 0 || velocity.Y != 0) DetectCollision();
             currentFrame++;
             if (currentFrame == totalFrames)
             {

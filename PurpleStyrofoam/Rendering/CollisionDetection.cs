@@ -142,7 +142,7 @@ namespace PurpleStyrofoam.Rendering
             {
                 foreach (MapObject i in map.Bucket)
                 {
-                    mapObjects.Add(i);
+                    if (!mapObjects.Contains(i)) mapObjects.Add(i);
                 }
             }
             return mapObjects;

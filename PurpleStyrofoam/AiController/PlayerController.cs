@@ -36,7 +36,7 @@ namespace PurpleStyrofoam.AiController
 
         public override void Update()
         {
-            base.DetectCollision();
+            if (velocity.X != 0 || velocity.Y != 0) base.DetectCollision();
             CheckKeys();
             currentFrame++;
             if (currentFrame >= totalFrames)
