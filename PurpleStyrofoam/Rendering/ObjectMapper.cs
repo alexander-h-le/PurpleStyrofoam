@@ -66,6 +66,11 @@ namespace PurpleStyrofoam.Rendering
             TotalRC = Columns * Rows;
         }
 
+        /// <summary>
+        /// Gets the all the current buckets the object occupies based on the position. Given in rect to check all corners.
+        /// </summary>
+        /// <param name="rect">The object to be obtain buckets for</param>
+        /// <returns>Buckets that the object is contained in</returns>
         public static List<int> GetObjectHashId(Rectangle rect)
         {
             List<int> items = new List<int>();
@@ -95,11 +100,21 @@ namespace PurpleStyrofoam.Rendering
             return items;
         }
 
+        /// <summary>
+        /// Gets the Column # based on X position
+        /// </summary>
+        /// <param name="x">The current X position of the target object</param>
+        /// <returns>Column number</returns>
         private static int GetColumn(int x)
         {
             return (int) Math.Ceiling((double) (x / bucketlength));
         }
 
+        /// <summary>
+        /// Gets the Row # based on the Y position
+        /// </summary>
+        /// <param name="y">The current Y position of the target object</param>
+        /// <returns>Row number</returns>
         private static int GetRow(int y)
         {
             return (int) Math.Ceiling((double) (y / bucketlength));
