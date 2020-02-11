@@ -54,6 +54,13 @@ namespace PurpleStyrofoam.AiController
                         break;
                     case (GAMESTATE.ACTIVE):
                         ((PlayerController)character).HeldWeapon.OnLeftClick();
+                        if (character != null)
+                        {
+                            AnimatedSprite temp = new AnimatedSprite(content.Load<Texture2D>("playerSpriteMoving"), 1, 1,
+                            (int)mousePos.X, (int)mousePos.Y, new BasicAI(character), new DefaultManager());
+                            temp.AI.SupplyAI(temp);
+                            RenderHandler.Add(temp);
+                        }
                         break;
                     case GAMESTATE.PAUSED:
                         MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

@@ -10,7 +10,7 @@ namespace PurpleStyrofoam.Rendering
     /// <summary>
     /// The storage for the <c>MapObject</c>s within a certain range
     /// </summary>
-    public class ObjectMap
+    public class ObjectBucket
     {
         /// <summary>
         /// Index of the object
@@ -27,7 +27,7 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public Rectangle BucketBounds { get; set; }
 
-        public ObjectMap()
+        public ObjectBucket()
         {
             Bucket = new List<MapObject>();
         }

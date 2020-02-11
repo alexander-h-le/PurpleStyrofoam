@@ -24,15 +24,13 @@ namespace PurpleStyrofoam
         SpriteBatch spriteBatch;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;
-        public static readonly Vector2 ScreenSize = new Vector2(1920,1080);
+        public static Vector2 ScreenSize;
         public static ContentManager GameContent;
         
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = (int) ScreenSize.X;
-            graphics.PreferredBackBufferHeight = (int) ScreenSize.Y;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             GameContent = this.Content;
@@ -47,6 +45,7 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
             GameSaveHandler.Initialize();
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
@@ -90,6 +89,15 @@ namespace PurpleStyrofoam
             // TODO: Unload any non ContentManager content here
         }
 
+        protected void setScreenSize(float w, float h)
+        {
+            ScreenSize = new Vector2(w,h);
+            graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
+            graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
+            graphics.ApplyChanges();
+
+        }
+
         public static bool ShouldClose = false;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -106,7 +114,7 @@ namespace PurpleStyrofoam
             MouseHandler.Update(this.Content);
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
-            //rotationSprite.Angle += 0.01f;
+            setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
             base.Update(gameTime);
         }
 

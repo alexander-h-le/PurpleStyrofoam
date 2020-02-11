@@ -17,7 +17,7 @@ namespace PurpleStyrofoam.Rendering
         /// <summary>
         /// List of buckets which contain all <c>MapObjects</c> in a certain range
         /// </summary>
-        public static List<ObjectMap> BucketMap { get; private set; }
+        public static Dictionary<int, List<MapObject>> BucketMap { get; private set; }
 
         /// <summary>
         /// The number of rows of <c>ObjectMap</c>s there are.
@@ -41,74 +41,68 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="map">The <c>BaseMap</c> to be mapped</param>
         public static void MapObjects(BaseMap map)
         {
-            BucketMap = new List<ObjectMap>();
-            int BucketMapKeys = 0;
+            BucketMap = new Dictionary<int, List<MapObject>>();
 
-            int minX = map.maxBounds.Left;
-            int maxX = map.maxBounds.Right;
-            int minY = map.maxBounds.Top;
-            int maxY = map.maxBounds.Bottom;
-            Columns = (maxX - minX) / bucketlength;
-            Rows = (maxY - minY) / bucketlength;
-            minX -= bucketlength;
-            maxX += bucketlength;
-            minY -= bucketlength;
-            maxY += bucketlength;
+            Columns = map.maxBounds.Right / bucketlength;
+            Rows = map.maxBounds.Bottom / bucketlength;
 
-            for (int y = minY; y < maxY; y += bucketlength)
+            int i = 0;
+            for (int y = map.maxBounds.Top; y <= map.maxBounds.Bottom; y+=bucketlength)
             {
-                for (int x = minX; x < maxX; x += bucketlength)
+                for (int x = map.maxBounds.Left; x <= map.maxBounds.Right; x+=bucketlength)
                 {
-                    ObjectMap objectMap = new ObjectMap();
-                    objectMap.Key = BucketMapKeys++;
-                    objectMap.BucketBounds = new Rectangle(x, y,bucketlength, bucketlength);
-                    foreach (MapObject i in map.ActiveLayer)
-                    {
-                        if (i.MapRectangle.Intersects(objectMap.BucketBounds))
-                        {
-                            objectMap.Bucket.Add(i);
-                        }
-                    }
-                    BucketMap.Add(objectMap);
+                    BucketMap.Add(i++, new List<MapObject>());
                 }
             }
+
+            foreach(MapObject mapO in map.ActiveLayer)
+            {
+                foreach(int index in GetObjectHashId(mapO.MapRectangle))
+                {
+                    BucketMap[index].Add(mapO);
+                }
+            }
+
             TotalRC = Columns * Rows;
         }
 
-        /// <summary>
-        /// Given a list of <c>ObjectMap</c>s, it finds the one with the lowest index
-        /// </summary>
-        /// <param name="maps">The list of <c>ObjectMap</c>s to be iterated through</param>
-        /// <returns>The index of the <c>ObjectMap</c> with the lowest index</returns>
-        public static int FindLowestKey(List<ObjectMap> maps)
+        public static List<int> GetObjectHashId(Rectangle rect)
         {
-            int lowest = maps[0].Key;
-            foreach(ObjectMap key in maps)
+            List<int> items = new List<int>();
+
+            //TopLeft ~~> TopRight
+            for (int y = rect.Top; y < rect.Bottom; y+=bucketlength)
             {
-                if (lowest > key.Key)
+                for (int x = rect.Left; x < rect.Right; x+= bucketlength)
                 {
-                    lowest = key.Key;
+                    int num = GetColumn(x) + ((GetRow(y) > 0 ? GetRow(y) - 1: 0) * Columns);
+                    Debug.WriteLine(y);
+                    items.Add(num);
                 }
             }
-            return lowest;
+            //TopRight
+            int TR = GetColumn(rect.Right) + ((GetRow(rect.Top) > 0 ? GetRow(rect.Top) - 1 : 0) * Columns);
+            if (!items.Contains(TR)) items.Add(TR);
+
+            //BottomLeft
+            int BL = GetColumn(rect.Left) + ((GetRow(rect.Bottom) > 0 ? GetRow(rect.Bottom) - 1 : 0) * Columns);
+            if (!items.Contains(BL)) items.Add(BL);
+
+            //BottomRight
+            int BR = GetColumn(rect.Right) + ((GetRow(rect.Bottom) > 0 ? GetRow(rect.Bottom) - 1 : 0) * Columns);
+            if (!items.Contains(BR)) items.Add(BR);
+
+            return items;
         }
 
-        /// <summary>
-        /// Given a list of <c>ObjectMap</c>s, it finds the one with the highest index
-        /// </summary>
-        /// <param name="maps">The list of <c>ObjectMap</c>s to be iterated through</param>
-        /// <returns>The index of the <c>ObjectMap</c> with the highest index</returns>
-        public static int FindHighestKey(List<ObjectMap> maps)
+        private static int GetColumn(int x)
         {
-            int lowest = maps[0].Key;
-            foreach (ObjectMap key in maps)
-            {
-                if (lowest > key.Key)
-                {
-                    lowest = key.Key;
-                }
-            }
-            return lowest;
+            return (int) Math.Ceiling((double) (x / bucketlength));
+        }
+
+        private static int GetRow(int y)
+        {
+            return (int) Math.Ceiling((double) (y / bucketlength));
         }
 
         /// <summary>
@@ -117,11 +111,10 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="input">The <c>MapObject</c> to be added</param>
         public static void AddMapObject(MapObject input)
         {
-            foreach (ObjectMap i in BucketMap.FindAll(x => x.BucketBounds.Intersects(input.MapRectangle)))
+            foreach (int index in GetObjectHashId(input.MapRectangle))
             {
-                i.Bucket.Add(input);
+                BucketMap[index].Add(input);
             }
-            RenderHandler.extras.Add(input);
         }
 
         /// <summary>
@@ -130,11 +123,10 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="input">The <c>MapObject</c> to be removed.</param>
         public static void DeleteMapObject(MapObject input)
         {
-            foreach (ObjectMap i in BucketMap)
+            foreach (int index in GetObjectHashId(input.MapRectangle))
             {
-                i.Bucket.Remove(input);
+                BucketMap[index].Remove(input);
             }
-            RenderHandler.extras.Remove(input);
         }
     }
 }

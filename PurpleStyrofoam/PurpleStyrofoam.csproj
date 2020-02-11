@@ -90,7 +90,7 @@
     <Compile Include="Rendering\Menus\FullScreenMenus\IFullMenu.cs" />
     <Compile Include="Rendering\Menus\MenuHandler.cs" />
     <Compile Include="Rendering\Menus\PopUpMenu\IPopUp.cs" />
-    <Compile Include="Rendering\ObjectMap.cs" />
+    <Compile Include="Rendering\ObjectBucket.cs" />
     <Compile Include="Rendering\ObjectMapper.cs" />
     <Compile Include="Rendering\Projectiles\Projectile.cs" />
     <Compile Include="Rendering\Projectiles\BasicProjectile.cs" />
