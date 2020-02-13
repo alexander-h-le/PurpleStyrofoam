@@ -1,4 +1,5 @@
-﻿using PurpleStyrofoam.Items.Weapons;
+﻿using PurpleStyrofoam.Items;
+using PurpleStyrofoam.Items.Weapons;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
 using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Managers.Classes;
@@ -17,6 +18,14 @@ namespace PurpleStyrofoam
         public int Mana { get; set;}
         public int MaxMana { get; set; }
         public GameClass Class { get; set; }
+        public List<Item> Inventory { get; }
+        public Weapon EquippedWeapon { get; set; }
+
+        public static string basePlayerSpriteName = "playerSprite";
+        public static string movingPlayerSprite = "playerSpriteMoving";
+        public static string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
+        public static string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
+
         public void AddDamage(int amount)
         {
             Health += Health + amount < MaxHealth ? amount : 0;
@@ -31,6 +40,7 @@ namespace PurpleStyrofoam
             Health = MaxHealth;
             MaxMana = 100;
             Mana = MaxMana;
+            Inventory = new List<Item>();
         }
     }
 }

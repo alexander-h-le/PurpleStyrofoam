@@ -40,8 +40,8 @@ namespace PurpleStyrofoam.Rendering.Menus
         }
         public static void Update()
         {
-            HLength = ((double)Manager.Health / (double)Manager.MaxHealth) * BarLength;
-            MLength = ((double)Manager.Mana / (double)Manager.MaxMana) * BarLength;
+            HLength = ((double)Manager.Health / Manager.MaxHealth) * BarLength;
+            MLength = ((double)Manager.Mana / Manager.MaxMana) * BarLength;
             BaseMap map = RenderHandler.selectedMap;
             Location = new Vector2(
                 RenderHandler.ScreenOffset.X < map.maxBounds.Left ? map.maxBounds.Left + 100: RenderHandler.ScreenOffset.X + 100,

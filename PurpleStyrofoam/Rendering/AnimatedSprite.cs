@@ -20,38 +20,7 @@ namespace PurpleStyrofoam
         public int Columns { get; set; }
         protected int currentFrame;
         protected int totalFrames;
-        private int x;
-        public int X {
-            get
-            {
-                return x;
-            }
-            set
-            {
-                x = value;
-                SpriteRectangle.X = value;
-                CenterX = X + (Width / 2);
-            }
-        }
-        private int y;
-        public int Y
-        {
-            get
-            {
-                return y;
-            }
-            set
-            {
-                y = value;
-                SpriteRectangle.Y = value;
-                CenterY = Y + (Height / 2);
-            }
-        }
-        protected int CenterX;
-        protected int CenterY;
         public Rectangle SpriteRectangle;
-        protected int Width;
-        protected int Height;
         public bool North { get; private set; }
         public bool South { get; private set; }
         public bool East { get; private set; }
@@ -63,18 +32,13 @@ namespace PurpleStyrofoam
         public AIBase AI;
         public IManager Manager;
 
-        public AnimatedSprite(Texture2D textIn, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai, IManager manIn)
+        public AnimatedSprite(string TextureName, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai, IManager manIn)
         {
-            Texture = textIn;
+            Texture = Game.GameContent.Load<Texture2D>(TextureName);
             Rows = rowsIn;
             Columns = columnsIn;
             currentFrame = 0;
-            totalFrames = Rows * Columns;
-            Width = Texture.Width / Columns;
-            Height = Texture.Height / Rows;
-            X = xIn;
-            Y = yIn;
-            SpriteRectangle = new Rectangle(X, Y, Width, Height);
+            SpriteRectangle = new Rectangle(xIn, yIn, Texture.Width / Columns, Texture.Height / Rows);
             AI = ai;
             Manager = manIn;
         }
@@ -105,8 +69,8 @@ namespace PurpleStyrofoam
             velocity.Y -= gravity;
             if (velocity.Y > terminalVelocity.Y) velocity.Y = terminalVelocity.Y;
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
-            this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
-            this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
+            SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
+            SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
 
 
@@ -114,7 +78,7 @@ namespace PurpleStyrofoam
         {
             int row = (int)((float)currentFrame / (float)Columns);
             int column = currentFrame % Columns;
-            Rectangle sourceRectangle = new Rectangle(Width * column, Height * row, Width, Height);
+            Rectangle sourceRectangle = new Rectangle(SpriteRectangle.Width * column, SpriteRectangle.Height * row, SpriteRectangle.Width, SpriteRectangle.Height);
 
             spriteBatch.Draw(Texture, SpriteRectangle, sourceRectangle, Color.White);
         }

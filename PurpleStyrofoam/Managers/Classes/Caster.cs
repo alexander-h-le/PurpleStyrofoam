@@ -1,4 +1,5 @@
-﻿using PurpleStyrofoam.AiController;
+﻿using Microsoft.Xna.Framework;
+using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Rendering.Projectiles;
 using System;
@@ -27,19 +28,19 @@ namespace PurpleStyrofoam.Managers.Classes
             if (t == null)
             {
                 t = new CasterEMove(SpriteSource.SpriteRectangle.Right, SpriteSource.SpriteRectangle.Top,
-                BasicProjectile.GenerateVelocityVector(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y, (int)MouseHandler.mousePos.X, (int)MouseHandler.mousePos.Y,5));
+                BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y), MouseHandler.mousePos, 5));
                 t.Velocity.Y = 0;
                 RenderHandler.allProjectiles.Add(t);
             } else
             {
                 if (t.CollidingR)
                 {
-                    SpriteSource.X = t.ProjRect.Right - SpriteSource.SpriteRectangle.Width;
-                    SpriteSource.Y = t.ProjRect.Y;
+                    SpriteSource.SpriteRectangle.X = t.ProjRect.Right - SpriteSource.SpriteRectangle.Width;
+                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y;
                 } else
                 {
-                    SpriteSource.X = t.ProjRect.X;
-                    SpriteSource.Y = t.ProjRect.Y;
+                    SpriteSource.SpriteRectangle.X = t.ProjRect.X;
+                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y;
                 }
                 t.Delete();
                 t = null;

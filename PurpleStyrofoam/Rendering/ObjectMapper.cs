@@ -18,6 +18,7 @@ namespace PurpleStyrofoam.Rendering
         /// List of buckets which contain all <c>MapObjects</c> in a certain range
         /// </summary>
         public static Dictionary<int, List<MapObject>> BucketMap { get; private set; }
+        public static Dictionary<int, List<AnimatedSprite>> BucketSprite { get; private set; }
 
         /// <summary>
         /// The number of rows of <c>ObjectMap</c>s there are.
@@ -29,10 +30,6 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public static int Columns { get; set; }
 
-        /// <summary>
-        /// The total number of cells there are in this table of <c>ObjectMap</c>s
-        /// </summary>
-        public static int TotalRC { get; set; }
         private const int bucketlength = 100;
 
         /// <summary>
@@ -42,6 +39,7 @@ namespace PurpleStyrofoam.Rendering
         public static void MapObjects(BaseMap map)
         {
             BucketMap = new Dictionary<int, List<MapObject>>();
+            BucketSprite = new Dictionary<int, List<AnimatedSprite>>();
 
             Columns = map.maxBounds.Right / bucketlength;
             Rows = map.maxBounds.Bottom / bucketlength;
@@ -51,7 +49,8 @@ namespace PurpleStyrofoam.Rendering
             {
                 for (int x = map.maxBounds.Left; x <= map.maxBounds.Right; x+=bucketlength)
                 {
-                    BucketMap.Add(i++, new List<MapObject>());
+                    BucketMap.Add(i, new List<MapObject>());
+                    BucketSprite.Add(i++, new List<AnimatedSprite>());
                 }
             }
 
@@ -63,7 +62,13 @@ namespace PurpleStyrofoam.Rendering
                 }
             }
 
-            TotalRC = Columns * Rows;
+            foreach(AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            {
+                foreach(int index in GetObjectHashId(sprite.SpriteRectangle))
+                {
+                    BucketSprite[index].Add(sprite);
+                }
+            }
         }
 
         /// <summary>
@@ -81,7 +86,6 @@ namespace PurpleStyrofoam.Rendering
                 for (int x = rect.Left; x < rect.Right; x+= bucketlength)
                 {
                     int num = GetColumn(x) + ((GetRow(y) > 0 ? GetRow(y) - 1: 0) * Columns);
-                    Debug.WriteLine(y);
                     items.Add(num);
                 }
             }
@@ -132,6 +136,14 @@ namespace PurpleStyrofoam.Rendering
             }
         }
 
+        public static void AddSpriteObject(AnimatedSprite input)
+        {
+            foreach (int index in GetObjectHashId(input.SpriteRectangle))
+            {
+                BucketSprite[index].Add(input);
+            }
+        }
+
         /// <summary>
         /// Removes an object from the <c>ObjectMap</c> table
         /// </summary>
@@ -141,6 +153,14 @@ namespace PurpleStyrofoam.Rendering
             foreach (int index in GetObjectHashId(input.MapRectangle))
             {
                 BucketMap[index].Remove(input);
+            }
+        }
+
+        public static void DeleteSpriteObject(AnimatedSprite input)
+        {
+            foreach (int index in GetObjectHashId(input.SpriteRectangle))
+            {
+                BucketSprite[index].Remove(input);
             }
         }
     }

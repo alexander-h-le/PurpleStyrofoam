@@ -13,25 +13,19 @@ using PurpleStyrofoam.Items.Weapons;
 using System.Timers;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers.Classes;
+using PurpleStyrofoam.Helpers;
 
 namespace PurpleStyrofoam.AiController
 {
     public class PlayerController : AnimatedSprite
     {
-        private const string basePlayerSpriteName = "playerSprite";
-        private const string movingPlayerSprite = "playerSpriteMoving";
-        private const string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
-        private const string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
         public bool InAir { get; private set; }
-        private ContentManager Content;
-        public Weapon HeldWeapon;
-        public PlayerController(ContentManager content, int rows = 1, int columns = 1,  int xIn = 0, int yIn = 0, PlayerManager manager = null) 
-            : base(content.Load<Texture2D>(basePlayerSpriteName), rows, columns, xIn, yIn, new PlayerControlledAI(), new PlayerManager())
+
+        public PlayerController(PlayerManager manager) 
+            : base(PlayerManager.basePlayerSpriteName, 1, 1, 100, 100, new PlayerControlledAI(), manager)
         {
-            Texture = content.Load<Texture2D>(basePlayerSpriteName);
-            Content = content;
+            Texture = Game.GameContent.Load<Texture2D>(PlayerManager.basePlayerSpriteName);
             Manager = manager == null ? new PlayerManager() : manager;
-            //((PlayerManager)Manager).Class = new Rogue(this);
         }
 
         public override void Update()
@@ -41,17 +35,8 @@ namespace PurpleStyrofoam.AiController
             currentFrame++;
             if (currentFrame >= totalFrames)
             {
-                if (!InAir)
-                {
-                    currentFrame = 0;
-                } else if (currentSprite == jumpingDPlayerSprite)
-                {
-                    SwitchSprite(jumpingSPlayerSprite);
-                    currentFrame = 0;
-                } else
-                {
-                    currentFrame = 0;
-                }
+                if (currentSprite == PlayerManager.jumpingDPlayerSprite) SwitchSprite(PlayerManager.jumpingSPlayerSprite);
+                currentFrame = 0;
             }
             UpdateVelocity();
         }
@@ -64,22 +49,17 @@ namespace PurpleStyrofoam.AiController
                 Rows = rowsIn;
                 Columns = columnsIn;
                 totalFrames = Rows * Columns;
-                Texture = Content.Load<Texture2D>(nameOfFile);
+                Texture = Game.GameContent.Load<Texture2D>(nameOfFile);
                 currentFrame = 0;
-                Width = Texture.Width / Columns;
-                Height = Texture.Height / Rows;
                 SpriteRectangle.Width = Texture.Width / Columns;
                 SpriteRectangle.Height = Texture.Height / Rows;
                 currentSprite = nameOfFile;
             }
         }
-        private KeyboardState oldState;
-        private KeyboardState newState;
         private const int moveSpeed = 20;
         private const int jumpSpeed = 1500;
         public void CheckKeys()
         {
-            newState = Keyboard.GetState();
             if (South)
             {
                 InAir = false;
@@ -91,44 +71,37 @@ namespace PurpleStyrofoam.AiController
             }
             if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE)
             {
-                if (newState.IsKeyDown(Keys.A))
+                if (KeyHelper.CheckHeld(Keys.A))
                 {
                     velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
-                    if (!InAir && oldState.IsKeyUp(Keys.A))
-                    {
-                        SwitchSprite(movingPlayerSprite);
-                    }
+                    if (!InAir) SwitchSprite(PlayerManager.movingPlayerSprite);
                 }
-                if (newState.IsKeyDown(Keys.D))
+                if (KeyHelper.CheckHeld(Keys.D))
                 {
                     velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
-                    if (!InAir && oldState.IsKeyUp(Keys.D))
-                    {
-                        SwitchSprite(movingPlayerSprite);
-                    }
+                    if (!InAir) SwitchSprite(PlayerManager.movingPlayerSprite);
                 }
-                if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                if (KeyHelper.CheckTap(Keys.Space))
                 {
                     if (!InAir)
                     {
                         InAir = true;
                         velocity.Y -= jumpSpeed;
-                        SwitchSprite(jumpingDPlayerSprite, 1, 1);
+                        SwitchSprite(PlayerManager.jumpingDPlayerSprite, 1, 1);
                     }
                 }
                 //if (newState.IsKeyDown(Keys.S)) { }
-                if (newState.IsKeyDown(Keys.Q) && oldState.IsKeyUp(Keys.Q)){
-                    HeldWeapon.OnQAbility();
+                if (KeyHelper.CheckTap(Keys.Q)){
+                    ((PlayerManager) Manager).EquippedWeapon.OnQAbility();
                 }
-                if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+                if (KeyHelper.CheckTap(Keys.E))
                 {
                     ((PlayerManager)Manager).Class.EAction();
                 }
                 
             }
             if (North) velocity.Y = -velocity.Y;
-            if ((velocity.X > -1 && velocity.X < 1) && !InAir) SwitchSprite(basePlayerSpriteName,1,1);
-            oldState = newState;
+            if ((velocity.X > -1 && velocity.X < 1) && !InAir) SwitchSprite(PlayerManager.basePlayerSpriteName,1,1);
         }
         public override void UpdateVelocity()
         {
@@ -137,10 +110,12 @@ namespace PurpleStyrofoam.AiController
             if (East && velocity.X > 0) velocity.X = 0;
             if (West && velocity.X < 0) velocity.X = 0;
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
-            this.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
-            this.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
-            HeldWeapon.Sprite.X = this.X;
-            HeldWeapon.Sprite.Y = this.Y;
+            SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
+            SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
+            if (KeyHelper.CheckHeld(Keys.A)) ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
+                    SpriteRectangle.Left - ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Width;
+            else ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
+            ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y;
         }
     }
 }

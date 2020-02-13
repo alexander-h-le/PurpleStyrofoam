@@ -14,6 +14,7 @@ using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
+using PurpleStyrofoam.Helpers;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -25,9 +26,7 @@ namespace PurpleStyrofoam.AiController
         public static void Update(ContentManager content)
         {
             newState = Mouse.GetState();
-            AnimatedSprite character = null;
             mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
-            if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE) character = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
             if (newState.RightButton == ButtonState.Pressed)
             {
 
@@ -38,7 +37,7 @@ namespace PurpleStyrofoam.AiController
                     case (GAMESTATE.ACTIVE):
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
                         //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
-                        ((PlayerManager)character.Manager).Class.RClick();
+                        ((PlayerManager)Game.PlayerCharacter.Manager).Class.RClick();
                         //character.Manager.AddDamage(-1);
                         break;
                     default:
@@ -53,14 +52,10 @@ namespace PurpleStyrofoam.AiController
                         MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        ((PlayerController)character).HeldWeapon.OnLeftClick();
-                        if (character != null)
-                        {
-                            AnimatedSprite temp = new AnimatedSprite(content.Load<Texture2D>("playerSpriteMoving"), 1, 1,
-                            (int)mousePos.X, (int)mousePos.Y, new BasicAI(character), new DefaultManager());
-                            temp.AI.SupplyAI(temp);
-                            RenderHandler.Add(temp);
-                        }
+                        AnimatedSprite n = new AnimatedSprite(PlayerManager.jumpingDPlayerSprite, 1, 1, (int)mousePos.X, (int)mousePos.Y, new BasicAI(Game.PlayerCharacter), new DefaultManager());
+                        n.AI.SupplyAI(n);
+                        if (KeyHelper.CheckHeld(Keys.O)) RenderHandler.Add(n);
+                        ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:
                         MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

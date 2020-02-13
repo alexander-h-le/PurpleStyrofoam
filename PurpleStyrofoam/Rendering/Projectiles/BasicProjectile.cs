@@ -10,13 +10,12 @@ namespace PurpleStyrofoam.Rendering.Projectiles
     {
         Rectangle ProjectileRectangle;
         Vector2 Velocity;
-        Vector2 TerminalVelocity;
         Texture2D Texture;
         AnimatedSprite SpriteSource;
         readonly int projectiledamage = 1;
-        public BasicProjectile(int x, int y, int width, int height, Vector2 velocityIn, float ang, Texture2D texture, AnimatedSprite source)
+        public BasicProjectile(Rectangle rect, Vector2 velocityIn, float ang, Texture2D texture, AnimatedSprite source)
         {
-            ProjectileRectangle = new Rectangle(x, y, width, height);
+            ProjectileRectangle = rect;
             Velocity = velocityIn;
             RenderHandler.allProjectiles.Add(this);
             Texture = texture;
@@ -25,43 +24,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
 
         const double ProjectileSpeedModifier = 40;
-        public static Vector2 GenerateVelocityVector(int xSource, int ySource, int xTarget, int yTarget)
-        {
-            double x1 = xTarget - xSource;
-            double y1 = yTarget - ySource;
-            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
-            double angle = Math.Acos(x1 / hypotenuse);
-            double normalizedHypotenuse = ProjectileSpeedModifier;
-            double yResult = Math.Sin(angle) * normalizedHypotenuse;
-            double xResult = Math.Cos(angle) * normalizedHypotenuse;
-            return new Vector2((float) (xResult), (float) (yTarget > ySource ? yResult : -yResult));
-            
-        }
-        public static Vector2 GenerateVelocityVector(int xSource, int ySource, int xTarget, int yTarget, int SpeedModifier)
-        {
-            double x1 = xTarget - xSource;
-            double y1 = yTarget - ySource;
-            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
-            double angle = Math.Acos(x1 / hypotenuse);
-            double normalizedHypotenuse = SpeedModifier;
-            double yResult = Math.Sin(angle) * normalizedHypotenuse;
-            double xResult = Math.Cos(angle) * normalizedHypotenuse;
-            return new Vector2((float)(xResult), (float)(yTarget > ySource ? yResult : -yResult));
-
-        }
-        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target)
-        {
-            double x1 = target.X - source.X;
-            double y1 = target.Y - source.Y;
-            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
-            double angle = Math.Acos(x1 / hypotenuse);
-            double normalizedHypotenuse = ProjectileSpeedModifier;
-            double yResult = Math.Sin(angle) * normalizedHypotenuse;
-            double xResult = Math.Cos(angle) * normalizedHypotenuse;
-            return new Vector2((float)(xResult), (float)(target.Y > source.Y ? yResult : -yResult));
-
-        }
-        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target, int SpeedModifier)
+        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target, double SpeedModifier = ProjectileSpeedModifier)
         {
             double x1 = target.X - source.X;
             double y1 = target.Y - source.Y;
@@ -81,7 +44,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             }
             foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
             {
-                Rectangle spriteRect = new Rectangle(sprite.X, sprite.Y, sprite.Texture.Width, sprite.Texture.Height);
+                Rectangle spriteRect = new Rectangle(sprite.SpriteRectangle.X, sprite.SpriteRectangle.Y, sprite.Texture.Width, sprite.Texture.Height);
                 if (sprite != SpriteSource && ProjectileRectangle.Intersects(spriteRect))
                 {
                     ProjectileAction(SpriteSource, sprite);
@@ -91,11 +54,10 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
 
         public float Angle = 0.0f;
-        public Vector2 Origin;
         public float Scale = 1.0f;
         public override void Draw(SpriteBatch sp)
         {
-            sp.Draw(Texture, new Vector2(ProjectileRectangle.X, ProjectileRectangle.Y), new Rectangle(0, 0, Texture.Width, Texture.Height), Color.White, Angle, Origin, Scale, SpriteEffects.None, 1.0f);
+            sp.Draw(Texture, new Vector2(ProjectileRectangle.X, ProjectileRectangle.Y), new Rectangle(0, 0, Texture.Width, Texture.Height), Color.White, Angle, new Vector2(), Scale, SpriteEffects.None, 1.0f);
         }
 
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)

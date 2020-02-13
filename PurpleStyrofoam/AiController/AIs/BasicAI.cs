@@ -22,22 +22,21 @@ namespace PurpleStyrofoam.AiController.AIs
             TargetSprite = Target;
         }
 
-        bool inAir = false;
         public override void NextMove()
         {
             //Detect Direction
-            if (TargetSprite.X < SpriteSource.X && !SpriteSource.West)
+            if (TargetSprite.SpriteRectangle.X < SpriteSource.SpriteRectangle.X && !SpriteSource.West)
             {
-                SpriteSource.X -= 3;
+                SpriteSource.SpriteRectangle.X -= 3;
             }
             else if (!SpriteSource.East)
             {
-                SpriteSource.X += 3;
+                SpriteSource.SpriteRectangle.X += 3;
             }
 
-            if (SpriteSource.South && TargetSprite.SpriteRectangle.Bottom < SpriteSource.Y)
+            if (SpriteSource.South && TargetSprite.SpriteRectangle.Bottom < SpriteSource.SpriteRectangle.Y)
             {
-                SpriteSource.Y -= 1;
+                SpriteSource.SpriteRectangle.Y -= 1;
                 SpriteSource.velocity.Y -= 500;
             }
         }

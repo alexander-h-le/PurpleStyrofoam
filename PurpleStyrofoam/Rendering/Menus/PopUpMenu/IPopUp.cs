@@ -13,8 +13,8 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
     {
         void Draw(SpriteBatch sp);
         void Update();
-        bool ShouldOpen(KeyboardState oldState, KeyboardState newState);
-        bool ShouldClose(KeyboardState oldState, KeyboardState newState);
+        bool ShouldOpen();
+        bool ShouldClose();
         void ActionAtPosition(Vector2 pos);
     }
 }

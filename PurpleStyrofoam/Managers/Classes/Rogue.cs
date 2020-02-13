@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Rendering;
@@ -25,8 +26,8 @@ namespace PurpleStyrofoam.Managers.Classes
 
         public override void EAction()
         {
-            SourceSprite.velocity = BasicProjectile.GenerateVelocityVector(SourceSprite.X,SourceSprite.Y, 
-                (int)MouseHandler.mousePos.X, (int)MouseHandler.mousePos.Y,1500);
+            SourceSprite.velocity = BasicProjectile.GenerateVelocityVector(new Vector2(SourceSprite.SpriteRectangle.X, SourceSprite.SpriteRectangle.Y),
+                MouseHandler.mousePos, 1500);
         }
 
         public override void RClick()

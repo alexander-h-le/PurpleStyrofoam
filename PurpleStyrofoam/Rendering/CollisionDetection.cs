@@ -12,7 +12,7 @@ namespace PurpleStyrofoam.Rendering
     {
         public static bool DetectCollisionMap(Rectangle rect)
         {
-            foreach (MapObject map in RenderHandler.selectedMap.ActiveLayer)
+            foreach (MapObject map in FindObjectBuckets(rect))
             {
                 if (rect.Intersects(map.MapRectangle))
                 {
@@ -21,35 +21,9 @@ namespace PurpleStyrofoam.Rendering
             }
             return false;
         }
-        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource)
-        {
-            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
-            {
-                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(SpriteSource.SpriteRectangle))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, out AnimatedSprite connectedSprite)
-        {
-            connectedSprite = null;
-            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
-            {
-                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(SpriteSource.SpriteRectangle))
-                {
-                    connectedSprite = sprite;
-                    return true;
-                }
-            }
-            return false;
-        }
         public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)
         {
-            connectedSprite = null;
-            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            foreach (AnimatedSprite sprite in FindSprites(rect))
             {
                 if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(rect))
                 {
@@ -57,6 +31,7 @@ namespace PurpleStyrofoam.Rendering
                     return true;
                 }
             }
+            connectedSprite = null;
             return false;
         }
 
@@ -107,10 +82,10 @@ namespace PurpleStyrofoam.Rendering
             bool South = false;
             int CenterX = rect.Right - (rect.Width / 2);
             int CenterY = rect.Bottom - (rect.Height / 2);
-            foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
+            foreach (AnimatedSprite sprite in FindSprites(rect))
             {
-                Rectangle SpriteRectangle = new Rectangle(sprite.X, sprite.Y, sprite.Texture.Width, sprite.Texture.Height);
-                if (rect.Intersects(SpriteRectangle))
+                Rectangle SpriteRectangle = new Rectangle(sprite.SpriteRectangle.X, sprite.SpriteRectangle.Y, sprite.Texture.Width, sprite.Texture.Height);
+                if (rect.Intersects(SpriteRectangle) && sprite != SpriteSource)
                 {
                     //EAST & WEST
                     if (rect.Right >= SpriteRectangle.Left && CenterX < SpriteRectangle.Left)
@@ -145,6 +120,24 @@ namespace PurpleStyrofoam.Rendering
                 }
             }
             return mapObjects;
+        }
+
+        /// <summary>
+        /// Finds all the sprites that are in the same buckets as specified rectangle
+        /// </summary>
+        /// <param name="rect">Rectangle to check</param>
+        /// <returns>List of sprites</returns>
+        public static List<AnimatedSprite> FindSprites(Rectangle rect)
+        {
+            List<AnimatedSprite> sprites = new List<AnimatedSprite>();
+            foreach (int i in ObjectMapper.GetObjectHashId(rect))
+            {
+                foreach (AnimatedSprite s in ObjectMapper.BucketSprite[i])
+                {
+                    if (!sprites.Contains(s)) sprites.Add(s);
+                }
+            }
+            return sprites;
         }
     }
 }

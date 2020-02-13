@@ -44,6 +44,7 @@ namespace PurpleStyrofoam.Rendering
         /// <returns>BaseMap object based on the string provided</returns>
         public static BaseMap LoadMapFromName(string name)
         {
+            if (name == null) return new CathedralRuinsFBoss();
             Type type = Type.GetType(name);
             return (BaseMap) Activator.CreateInstance(type);
         }
@@ -55,31 +56,22 @@ namespace PurpleStyrofoam.Rendering
         /// <returns>GameClass object based on the string provided</returns>
         public static GameClass LoadClass(string name)
         {
+            if (name == null) return new Knight(RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")));
             Type type = Type.GetType(name);
             return (GameClass) Activator.CreateInstance(type);
         }
 
         /// <summary>
-        /// Returns an Item based on a given string
-        /// </summary>
-        /// <param name="name">Path of the Item to be created. Format: Namespace.ClassName</param>
-        /// <returns>Item object based on the string provided</returns>
-        public static Item LoadItem(string name)
-        {
-            Type type = Type.GetType(name);
-            return (Item) Activator.CreateInstance(type);
-        }
-
-        /// <summary>
         /// Sets the game state based on the save given
         /// </summary>
-        /// <param name="Path">Absolute path of the save to be loaded</param>
-        public static void LoadSave(string Path)
+        /// <param name="SaveName">Absolute path of the save to be loaded</param>
+        /// <returns>Returns whether or not the file could be found and successfully loaded</returns>
+        public static bool LoadSave(string SaveName)
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             try
             {
-                using (StreamReader sr = File.OpenText(Path))
+                using (StreamReader sr = File.OpenText(PathDirectory + SaveName))
                 {
                     using (JsonTextReader reader = new JsonTextReader(sr))
                     {
@@ -87,19 +79,18 @@ namespace PurpleStyrofoam.Rendering
                         settings.Converters.Add(new GameClassConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
-                        PlayerController chara = new PlayerController(Game.GameContent, manager: save.player);
-                        if (save.player.Class != null) save.player.Class.AddSpriteSource(chara);
-                        else save.player.Class = new Knight(chara);
-                        chara.HeldWeapon = (Weapon) LoadItem(save.ActiveWeapon);
+                        PlayerController chara = new PlayerController(save.player);
+                        ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
+                        ((PlayerManager)chara.Manager).EquippedWeapon = (Weapon) Activator.CreateInstance(Type.GetType(save.EquippedWeapon));
                         RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara , (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
                     }
                 }
-            } catch (FileNotFoundException e)
+            } catch
             {
-                CreateSave(new PlayerController(Game.GameContent), new Vector2(200,200), new CathedralRuinsFBoss());
-                LoadSave(Path);
+                return false;
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
+            return true;
         }
 
         /// <summary>
@@ -107,31 +98,35 @@ namespace PurpleStyrofoam.Rendering
         /// Do not run this method when the game is not active.
         /// </summary>
         /// <returns> Returns whether or not if it was successful</returns>
-        public static bool CreateSave()
+        public static bool CreateSave(string SaveName)
         {
+            GAMESTATE prevGameState = RenderHandler.CurrentGameState;
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
+
             GameSave newSave = new GameSave();
-            PlayerController _player = (PlayerController)RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
-            newSave.PlayerPosition = new Vector2(_player.X, _player.Y);
+
+            PlayerController _player = Game.PlayerCharacter;
+
+            BaseMap map = RenderHandler.selectedMap;
+
+            newSave.PlayerPosition = new Vector2(_player.SpriteRectangle.X, _player.SpriteRectangle.Y);
             newSave.player = (PlayerManager) _player.Manager;
-            newSave.ActiveMap = RenderHandler.selectedMap.GetType().Namespace + "." +  RenderHandler.selectedMap.GetType().Name;
-            if (_player.HeldWeapon != null) newSave.ActiveWeapon = _player.HeldWeapon.GetType().Namespace + "." + _player.HeldWeapon.GetType().Name;
-            else newSave.ActiveWeapon = "PurpleStyrofoam.Items.Weapons.Melee.Swords.Flight";
+            newSave.ActiveMap = map.GetType().Namespace + "." +  map.GetType().Name;
 
             Debug.WriteLine($"Position: {newSave.PlayerPosition}\nPlayerInfo: {newSave.player.Health}\nMapName: {newSave.ActiveMap}" +
-                $"\nClass: {newSave.player.Class}");
+                $"\nClass: {newSave.player.Class} \nWeapon: {newSave.EquippedWeapon}");
 
             // ------------------------------------------------------------------------------------------------
 
-            File.WriteAllText(PathDirectory + "TestDocument.json", JsonConvert.SerializeObject(newSave));
-            using (StreamWriter sw = File.CreateText(PathDirectory + "TestDocument.json"))
+            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave));
+            using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
             {
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new GameClassConverter());
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }
-            RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
+            RenderHandler.CurrentGameState = prevGameState;
 
             // ------------------------------------------------------------------------------------------------
 
@@ -145,20 +140,20 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="Position">The position of the player</param>
         /// <param name="map">The current active map</param>
         /// <returns>Returns whether or not it was successful</returns>
-        public static bool CreateSave(PlayerController player, Vector2 Position, BaseMap map)
+        public static bool CreateSave(string SaveName, PlayerController player, Vector2 Position, BaseMap map, GameClass targetClass, Weapon equippedWeapon)
         {
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             GameSave newSave = new GameSave();
             newSave.PlayerPosition = Position;
             newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
-            newSave.player = new PlayerManager();
-            if (player.HeldWeapon != null) newSave.ActiveWeapon = player.HeldWeapon.GetType().Namespace + "." + player.HeldWeapon.GetType().Name;
-            else newSave.ActiveWeapon = "PurpleStyrofoam.Items.Weapons.Melee.Swords.Flight";
+            newSave.player = (PlayerManager) player.Manager;
+            newSave.EquippedWeapon = equippedWeapon.GetType().Namespace + "." + equippedWeapon.GetType().Name;
+            newSave.player.Class = targetClass;
 
             // ------------------------------------------------------------------------------------------------
 
-            File.WriteAllText(PathDirectory + "TestDocument.json", JsonConvert.SerializeObject(newSave));
-            using (StreamWriter sw = File.CreateText(PathDirectory + "TestDocument.json"))
+            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave));
+            using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
             {
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new GameClassConverter());

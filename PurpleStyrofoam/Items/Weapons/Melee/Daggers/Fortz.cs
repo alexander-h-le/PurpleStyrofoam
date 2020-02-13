@@ -15,7 +15,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
         public override int ID => 002;
 
         public override string Description => "One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight.";
-        public Fortz(ContentManager content) : base("Fortz", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ItemSprite(content.Load<Texture2D>("Fortz"), new Vector2(0, 0)))
+        public Fortz() : base("Fortz", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ItemSprite(Game.GameContent.Load<Texture2D>("Fortz"), new Vector2(0, 0)))
         {
         }
 

@@ -27,8 +27,9 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
 
         public override void OnLeftClick()
         {
-            AnimatedSprite temp = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController"));
-
+            AnimatedSprite temp;
+            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
+            if (temp != null) RenderHandler.purgeSprites.Add(temp);
         }
 
         public override void OnQAbility()

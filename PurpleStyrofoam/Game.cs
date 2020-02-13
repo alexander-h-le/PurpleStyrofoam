@@ -12,6 +12,7 @@ using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.AiController.AIs;
 using System;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
+using PurpleStyrofoam.Helpers;
 
 namespace PurpleStyrofoam
 {
@@ -26,6 +27,7 @@ namespace PurpleStyrofoam
         public static double GameTimeSeconds;
         public static Vector2 ScreenSize;
         public static ContentManager GameContent;
+        public static PlayerController PlayerCharacter;
         
         public Game()
         {
@@ -107,9 +109,8 @@ namespace PurpleStyrofoam
         protected override void Update(GameTime gameTime)
         {
             if (ShouldClose) Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.N) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.CreateSave();
-            if (Keyboard.GetState().IsKeyDown(Keys.L) && Keyboard.GetState().IsKeyDown(Keys.LeftShift)) GameSaveHandler.LoadSave(GameSaveHandler.PathDirectory + "TestDocument.json");
             // TODO: Add your update logic here
+            KeyHelper.Update();
             RenderHandler.Update();
             MouseHandler.Update(this.Content);
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -126,9 +127,6 @@ namespace PurpleStyrofoam
         {
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
-            //spriteBatch.Begin();
-            //spriteBatch.DrawString(font, "Get dunked on", new Vector2(100, 100), Color.Black);
-            //spriteBatch.End();
             RenderHandler.Draw(spriteBatch);
             base.Draw(gameTime);
         }

@@ -16,9 +16,9 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         Vector2 Velocity;
         AnimatedSprite SpriteSource;
         public AnimatedSprite ConnectedSprite;
-        public KnightHook(int x, int y, int width, int height, Vector2 velIn, float ang, AnimatedSprite source)
+        public KnightHook(Rectangle rect, Vector2 velIn, float ang, AnimatedSprite source)
         {
-            ProjRect = new Rectangle(x,y,width,height);
+            ProjRect = rect;
             Angle = ang;
             text = Game.GameContent.Load<Texture2D>("testBackground");
             Velocity = velIn;

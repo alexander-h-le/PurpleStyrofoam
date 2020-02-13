@@ -12,9 +12,9 @@ namespace PurpleStyrofoam.Rendering.Menus
     {
         public Rectangle MenuRectangle { get; private set; }
         Texture2D menuTexture;
-        public MenuItem(int x, int y, int width, int height, Texture2D texture)
+        public MenuItem(Rectangle rect, Texture2D texture)
         {
-            MenuRectangle = new Rectangle(x, y, width, height);
+            MenuRectangle = rect;
             menuTexture = texture;
         }
         public Action Action{ get; set;}

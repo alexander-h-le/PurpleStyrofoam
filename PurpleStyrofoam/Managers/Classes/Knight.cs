@@ -29,20 +29,22 @@ namespace PurpleStyrofoam.Managers.Classes
         {
             if (projectile == null)
             {
-                projectile = new KnightHook(SpriteSource.X, SpriteSource.Y, (int)SpriteSource.SpriteRectangle.Width, (int)SpriteSource.SpriteRectangle.Height,
-                    BasicProjectile.GenerateVelocityVector(SpriteSource.X, SpriteSource.Y, (int)MouseHandler.mousePos.X, (int)MouseHandler.mousePos.Y),0f, SpriteSource
-                    );
+                projectile = new KnightHook(
+                    SpriteSource.SpriteRectangle,
+                    BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.X, SpriteSource.SpriteRectangle.Y),
+                    MouseHandler.mousePos),0f, SpriteSource);
             } else if (projectile.Connected == KnightHook.CONNECTION.MAP)
             {
-                Vector2 newVect = BasicProjectile.GenerateVelocityVector(SpriteSource.X, SpriteSource.Y, projectile.ProjRect.X, projectile.ProjRect.Y, 1500);
+                Vector2 newVect = BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.X, SpriteSource.SpriteRectangle.Y),
+                    new Vector2(projectile.ProjRect.X, projectile.ProjRect.Y), 1500);
                 SpriteSource.velocity.X = newVect.X;
                 SpriteSource.velocity.Y = newVect.Y;
                 projectile.Delete();
                 projectile = null;
             } else if (projectile.Connected == KnightHook.CONNECTION.SPRITE)
             {
-                Vector2 newVect = BasicProjectile.GenerateVelocityVector(projectile.ConnectedSprite.X, projectile.ConnectedSprite.Y,
-                    SpriteSource.X, SpriteSource.Y, 2000);
+                Vector2 newVect = BasicProjectile.GenerateVelocityVector(new Vector2(projectile.ConnectedSprite.SpriteRectangle.X, projectile.ConnectedSprite.SpriteRectangle.Y),
+                    new Vector2(SpriteSource.SpriteRectangle.X, SpriteSource.SpriteRectangle.Y), 2000);
                 projectile.ConnectedSprite.velocity.X = newVect.X;
                 projectile.ConnectedSprite.velocity.Y = newVect.Y;
                 projectile.Delete();

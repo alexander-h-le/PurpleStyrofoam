@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Rendering.Menus;
 
 namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
@@ -42,16 +43,16 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
         }
 
         public bool IsOpen = false;
-        public bool ShouldOpen(KeyboardState oldState, KeyboardState newState)
+        public bool ShouldOpen()
         {
-            if (!IsOpen && oldState.IsKeyUp(Keys.Escape) && newState.IsKeyDown(Keys.Escape))
+            if (!IsOpen && KeyHelper.CheckTap(Keys.Escape))
             {
                 PopUpRect = new Rectangle((int)RenderHandler.ScreenOffset.X + ((int)Game.ScreenSize.X / 2) - (SizeX/2), 
                     (int)RenderHandler.ScreenOffset.Y + ((int)Game.ScreenSize.Y / 2) - (SizeY/2), 
                     SizeX, SizeY);
                 menuItems.Clear();
                 //Exit Button
-                menuItems.Add(new MenuItem(PopUpRect.X, PopUpRect.Bottom, PopUpRect.Width, 50,
+                menuItems.Add(new MenuItem(new Rectangle(PopUpRect.X, PopUpRect.Bottom, PopUpRect.Width, 50),
                     Game.GameContent.Load<Texture2D>("playerSpriteMoving"))
                 {
                     Action = () =>
@@ -70,9 +71,9 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
         {
         }
 
-        public bool ShouldClose(KeyboardState oldState, KeyboardState newState)
+        public bool ShouldClose()
         {
-            if (IsOpen && oldState.IsKeyUp(Keys.Escape) && newState.IsKeyDown(Keys.Escape))
+            if (IsOpen && KeyHelper.CheckTap(Keys.Escape))
             {
                 IsOpen = false;
                 MenuHandler.ActivePopUp = null;

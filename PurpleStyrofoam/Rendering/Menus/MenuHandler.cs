@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
@@ -45,27 +46,21 @@ namespace PurpleStyrofoam.Rendering.Menus
         {
             if (ActivePopUp != null) ActivePopUp.Update();
         }
-        private static KeyboardState oldState;
-        private static KeyboardState newState;
         public static void CheckKeys()
         {
-            newState = Keyboard.GetState();
-
             foreach (IPopUp menu in AllPopUps)
             {
-                if (menu.ShouldClose(oldState, newState))
+                if (menu.ShouldClose())
                 {
                     RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
                     break;
                 }
-                if (menu.ShouldOpen(oldState,newState))
+                if (menu.ShouldOpen())
                 {
                     RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
                     break;
                 }
             }
-
-            oldState = newState;
         }
     }
 }
