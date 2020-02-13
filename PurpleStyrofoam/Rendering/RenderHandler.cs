@@ -36,7 +36,6 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public static List<AnimatedSprite> purgeSprites { get; private set; }
         public static BaseMap selectedMap;
-        private static PlayerController savedPlayer;
         /// <summary>
         /// Active GameState. Used to differentiate pausing and active gameplay
         /// </summary>
@@ -68,7 +67,6 @@ namespace PurpleStyrofoam.Rendering
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
-            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites.Add(player);
@@ -95,7 +93,6 @@ namespace PurpleStyrofoam.Rendering
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
-            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites = newSprites;
@@ -121,7 +118,6 @@ namespace PurpleStyrofoam.Rendering
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
-            savedPlayer = player;
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
             allCharacterSprites = newSprites;
@@ -163,10 +159,6 @@ namespace PurpleStyrofoam.Rendering
                     }
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
-                    if (KeyHelper.CheckCombination(Keys.K, Keys.LeftShift))
-                        ((PlayerManager)savedPlayer.Manager).Class = new Knight(savedPlayer);
-                    if (KeyHelper.CheckCombination(Keys.F, Keys.LeftShift))
-                        ((PlayerManager)savedPlayer.Manager).EquippedWeapon = new Flight(Game.GameContent);
                     PlayerInfoUI.Update();
                     break;
                 case GAMESTATE.MAINMENU:
@@ -219,16 +211,16 @@ namespace PurpleStyrofoam.Rendering
             {
                 case GAMESTATE.ACTIVE:
                     int xMove = ScreenOffset.X < selectedMap.maxBounds.Left ? selectedMap.maxBounds.Left :
-                        ScreenOffset.X > selectedMap.maxBounds.Right ? selectedMap.maxBounds.Right : (-savedPlayer.SpriteRectangle.X) + XOffset;
+                        ScreenOffset.X > selectedMap.maxBounds.Right ? selectedMap.maxBounds.Right : (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
                     int yMove = ScreenOffset.Y < selectedMap.maxBounds.Top ? selectedMap.maxBounds.Top :
-                        ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-savedPlayer.SpriteRectangle.Y) + YOffset;
+                        ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     ScreenOffset.X = (ScreenOffset.X < selectedMap.maxBounds.Left && xMove < 0) 
                         || (ScreenOffset.X > selectedMap.maxBounds.Right && xMove > 0) ? 
-                        ScreenOffset.X : (savedPlayer.SpriteRectangle.X) - XOffset;
+                        ScreenOffset.X : (Game.PlayerCharacter.SpriteRectangle.X) - XOffset;
                     ScreenOffset.Y = (ScreenOffset.Y < selectedMap.maxBounds.Top && yMove < 0)
                         || (ScreenOffset.Y > selectedMap.maxBounds.Bottom && yMove > 0) ? 
-                        ScreenOffset.Y : (savedPlayer.SpriteRectangle.Y) - YOffset;
+                        ScreenOffset.Y : (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
                     foreach (MapObject i in  extras)
@@ -255,7 +247,7 @@ namespace PurpleStyrofoam.Rendering
                     if (MenuHandler.ActiveFullScreenMenu != null) MenuHandler.DrawFullScreenMenu(sp);
                     break;
                 case GAMESTATE.PAUSED:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-savedPlayer.SpriteRectangle.X) + XOffset, (-savedPlayer.SpriteRectangle.Y) + YOffset, 0));
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-Game.PlayerCharacter.SpriteRectangle.X) + XOffset, (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset, 0));
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
                     foreach (AnimatedSprite item in allCharacterSprites)

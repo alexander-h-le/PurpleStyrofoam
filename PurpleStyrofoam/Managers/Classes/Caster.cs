@@ -14,9 +14,9 @@ namespace PurpleStyrofoam.Managers.Classes
     {
         PlayerController SpriteSource;
         CasterEMove t;
-        public Caster(AnimatedSprite sp)
+        public Caster()
         {
-            SpriteSource = (PlayerController)sp;
+            SpriteSource = Game.PlayerCharacter;
         }
         public override void AddSpriteSource(AnimatedSprite spIN)
         {

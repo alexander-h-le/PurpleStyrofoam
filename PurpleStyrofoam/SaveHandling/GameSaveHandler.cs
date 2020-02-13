@@ -34,7 +34,19 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public static void Initialize()
         {
-            PathDirectory = Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\GameTestFolder").FullName + "\\";
+            string dash = "";
+            //Mac
+            if (Environment.OSVersion.VersionString.Contains("Unix"))
+            {
+                dash = "/";
+            }
+            //Windows
+            else if (Environment.OSVersion.VersionString.Contains("Windows"))
+            {
+                dash = "\\";
+            }
+
+            PathDirectory = Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dash + "PurpleStyrofoamGameFolder").FullName + dash;
         }
 
         /// <summary>
@@ -50,13 +62,13 @@ namespace PurpleStyrofoam.Rendering
         }
 
         /// <summary>
-        /// Returns a GameClass based on a given string
+        /// Returns a GameClass object based on a given string
         /// </summary>
         /// <param name="name">Path of the GameClass to be created. Format: Namespace.ClassName</param>
         /// <returns>GameClass object based on the string provided</returns>
         public static GameClass LoadClass(string name)
         {
-            if (name == null) return new Knight(RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")));
+            if (name == null) return new Knight();
             Type type = Type.GetType(name);
             return (GameClass) Activator.CreateInstance(type);
         }
@@ -76,17 +88,19 @@ namespace PurpleStyrofoam.Rendering
                     using (JsonTextReader reader = new JsonTextReader(sr))
                     {
                         var settings = new JsonSerializerSettings();
-                        settings.Converters.Add(new GameClassConverter());
+                        settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
+                        ((PlayerManager)chara.Manager).Class = LoadClass(save.ActiveClass);
                         ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
                         ((PlayerManager)chara.Manager).EquippedWeapon = (Weapon) Activator.CreateInstance(Type.GetType(save.EquippedWeapon));
-                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara , (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
+                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara, (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
                     }
                 }
-            } catch
+            } catch (Exception e)
             {
+                Debug.WriteLine(e);
                 return false;
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
@@ -112,6 +126,7 @@ namespace PurpleStyrofoam.Rendering
             newSave.PlayerPosition = new Vector2(_player.SpriteRectangle.X, _player.SpriteRectangle.Y);
             newSave.player = (PlayerManager) _player.Manager;
             newSave.ActiveMap = map.GetType().Namespace + "." +  map.GetType().Name;
+            newSave.ActiveClass = newSave.player.Class.GetType().Namespace + "." + newSave.player.Class.GetType().Name;
 
             Debug.WriteLine($"Position: {newSave.PlayerPosition}\nPlayerInfo: {newSave.player.Health}\nMapName: {newSave.ActiveMap}" +
                 $"\nClass: {newSave.player.Class} \nWeapon: {newSave.EquippedWeapon}");
@@ -122,7 +137,7 @@ namespace PurpleStyrofoam.Rendering
             using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
             {
                 var settings = new JsonSerializerSettings();
-                settings.Converters.Add(new GameClassConverter());
+                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }
@@ -142,13 +157,16 @@ namespace PurpleStyrofoam.Rendering
         /// <returns>Returns whether or not it was successful</returns>
         public static bool CreateSave(string SaveName, PlayerController player, Vector2 Position, BaseMap map, GameClass targetClass, Weapon equippedWeapon)
         {
+            GAMESTATE prevGameState = RenderHandler.CurrentGameState;
+            RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
+
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             GameSave newSave = new GameSave();
             newSave.PlayerPosition = Position;
             newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
             newSave.player = (PlayerManager) player.Manager;
             newSave.EquippedWeapon = equippedWeapon.GetType().Namespace + "." + equippedWeapon.GetType().Name;
-            newSave.player.Class = targetClass;
+            newSave.ActiveClass = targetClass.GetType().Namespace + "." + targetClass.GetType().Name;
 
             // ------------------------------------------------------------------------------------------------
 
@@ -156,15 +174,27 @@ namespace PurpleStyrofoam.Rendering
             using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
             {
                 var settings = new JsonSerializerSettings();
-                settings.Converters.Add(new GameClassConverter());
+                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }
-            RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
+            RenderHandler.CurrentGameState = prevGameState;
 
             // ------------------------------------------------------------------------------------------------
 
             return true;
+        }
+
+        public static int GetNextSaveID()
+        {
+            int ID = 0;
+            foreach (String f in Directory.GetFiles(PathDirectory))
+            {
+                int fileID;
+                try { fileID = int.Parse(Path.GetFileName(f)); } catch { fileID = 0; }
+                if (ID < fileID) ID = fileID;
+            }
+            return ++ID;
         }
     }
 }

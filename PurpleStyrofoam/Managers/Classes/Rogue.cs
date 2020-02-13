@@ -15,9 +15,9 @@ namespace PurpleStyrofoam.Managers.Classes
     public class Rogue : GameClass
     {
         PlayerController SourceSprite;
-        public Rogue(AnimatedSprite inp)
+        public Rogue()
         {
-            SourceSprite = (PlayerController) inp;
+            SourceSprite = Game.PlayerCharacter;
         }
         public override void AddSpriteSource(AnimatedSprite spIN)
         {
@@ -26,7 +26,7 @@ namespace PurpleStyrofoam.Managers.Classes
 
         public override void EAction()
         {
-            SourceSprite.velocity = BasicProjectile.GenerateVelocityVector(new Vector2(SourceSprite.SpriteRectangle.X, SourceSprite.SpriteRectangle.Y),
+            Game.PlayerCharacter.velocity = BasicProjectile.GenerateVelocityVector(new Vector2(Game.PlayerCharacter.SpriteRectangle.X, Game.PlayerCharacter.SpriteRectangle.Y),
                 MouseHandler.mousePos, 1500);
         }
 

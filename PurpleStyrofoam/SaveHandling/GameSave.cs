@@ -20,6 +20,7 @@ namespace PurpleStyrofoam.SaveHandling
         public PlayerManager player;
         public string ActiveMap;
         public string EquippedWeapon;
+        public string ActiveClass;
         public Vector2 PlayerPosition;
     }
 }

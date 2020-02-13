@@ -25,7 +25,6 @@ namespace PurpleStyrofoam.AiController
             : base(PlayerManager.basePlayerSpriteName, 1, 1, 100, 100, new PlayerControlledAI(), manager)
         {
             Texture = Game.GameContent.Load<Texture2D>(PlayerManager.basePlayerSpriteName);
-            Manager = manager == null ? new PlayerManager() : manager;
         }
 
         public override void Update()
@@ -96,7 +95,8 @@ namespace PurpleStyrofoam.AiController
                 }
                 if (KeyHelper.CheckTap(Keys.E))
                 {
-                    ((PlayerManager)Manager).Class.EAction();
+                    Debug.WriteLine(((PlayerManager)Manager).Class.GetType().Name);
+                    ((PlayerManager) Manager).Class.EAction();
                 }
                 
             }

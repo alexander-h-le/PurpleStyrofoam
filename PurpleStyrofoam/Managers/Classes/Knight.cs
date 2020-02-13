@@ -15,9 +15,9 @@ namespace PurpleStyrofoam.Managers.Classes
     {
         public KnightHook projectile;
         PlayerController SpriteSource;
-        public Knight(AnimatedSprite source)
+        public Knight()
         {
-            SpriteSource = (PlayerController)source;
+            SpriteSource = Game.PlayerCharacter;
         }
 
         public override void AddSpriteSource(AnimatedSprite spIn)

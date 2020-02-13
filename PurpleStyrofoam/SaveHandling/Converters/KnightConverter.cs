@@ -1,19 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using PurpleStyrofoam.Managers.Classes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PurpleStyrofoam.SaveHandling
+namespace PurpleStyrofoam.SaveHandling.Converters
 {
-    /// <summary>
-    /// A converter for the originally undeserializable GameClass
-    /// </summary>
-    public class GameClassConverter : JsonConverter
+    public class KnightConverter : JsonConverter
     {
         /// <summary>
         /// Determines whether or not the object is a GameClass
@@ -22,7 +13,7 @@ namespace PurpleStyrofoam.SaveHandling
         /// <returns>Returns if object is a GameClass</returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(GameClass);
+            return objectType == typeof(Knight);
         }
 
         /// <summary>
@@ -35,11 +26,7 @@ namespace PurpleStyrofoam.SaveHandling
         /// <returns>Returns serialized object</returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (objectType == typeof(Knight)) return serializer.Deserialize(reader, typeof(Knight));
-            else if (objectType == typeof(Manipulator))  return serializer.Deserialize(reader, typeof(Manipulator));
-            else if (objectType == typeof(Rogue)) return serializer.Deserialize(reader, typeof(Rogue));
-            else if (objectType == typeof(Caster)) return serializer.Deserialize(reader, typeof(Caster));
-            return serializer.Deserialize(reader, typeof(Knight));
+            return new Knight(Game.PlayerCharacter);
         }
 
         /// <summary>
@@ -50,7 +37,7 @@ namespace PurpleStyrofoam.SaveHandling
         /// <param name="serializer"></param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            serializer.Serialize(writer,value);
+            serializer.Serialize(writer, value);
         }
     }
 }

@@ -81,7 +81,6 @@
     <Compile Include="Rendering\Menus\PopUpMenu\ExitMenuPopUp.cs" />
     <Compile Include="Rendering\Projectiles\CasterEMove.cs" />
     <Compile Include="Rendering\Projectiles\KnightHook.cs" />
-    <Compile Include="SaveHandling\GameClassConverter.cs" />
     <Compile Include="SaveHandling\GameSaveHandler.cs" />
     <Compile Include="Rendering\ItemSprite.cs" />
     <Compile Include="Rendering\MapObject.cs" />

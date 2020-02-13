@@ -16,27 +16,28 @@ namespace PurpleStyrofoam.Managers.Classes
         PlayerController SpriteSource;
         public bool ActivePlatform = false;
         MapObject Platform;
-        public Manipulator(AnimatedSprite inp)
+        public Manipulator()
         {
-            SpriteSource =(PlayerController) inp;
+            SpriteSource = Game.PlayerCharacter;
         }
         public override void AddSpriteSource(AnimatedSprite spIN)
         {
-            SpriteSource =(PlayerController) spIN;
+            SpriteSource = (PlayerController) spIN;
         }
 
         public override void EAction()
         {
             if (!ActivePlatform)
             {
-                Debug.WriteLine("cheeks");
-                Platform = new MapObject("Manipulator-Platform",Game.GameContent, "playerSpriteMoving",
+                Platform = new MapObject("Manipulator-Platform",Game.GameContent, PlayerManager.movingPlayerSprite,
                     new Vector2(MouseHandler.mousePos.X, MouseHandler.mousePos.Y), 200,20);
                 ObjectMapper.AddMapObject(Platform);
+                RenderHandler.extras.Add(Platform);
                 ActivePlatform = true;
             } else
             {
                 ObjectMapper.DeleteMapObject(Platform);
+                RenderHandler.extras.Remove(Platform);
                 Platform = null;
                 ActivePlatform = false;
             }

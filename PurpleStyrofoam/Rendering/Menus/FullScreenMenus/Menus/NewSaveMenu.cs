@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,10 +17,13 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
     {
         List<MenuItem> menuItems;
         GameClass targetClass;
+        PlayerController player;
+        string Errors;
 
         public NewSaveMenu()
         {
             menuItems = new List<MenuItem>();
+            Errors = "";
         }
 
         public void ActionAtPosition(MouseState mouse)
@@ -29,7 +33,10 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
 
         public void Draw(SpriteBatch sp)
         {
-            sp.DrawString(Game.GameContent.Load<SpriteFont>(""), "Chosen Class: " + targetClass.GetType().Name, new Vector2(100, 100), Color.Black);
+            sp.DrawString(Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default),
+                "Chosen Class: " + (targetClass != null ? targetClass.GetType().Name : "None") , new Vector2(LeftStart + 10, (int)(0.2 * Game.ScreenSize.Y)), Color.White);
+            sp.DrawString(Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default), Errors,
+                new Vector2(LeftStart + (int)(0.13 * Game.ScreenSize.X) + 10, (int)(0.7 * Game.ScreenSize.Y)), Color.Wheat);
             foreach (MenuItem i in menuItems) i.Draw(sp);
         }
 
@@ -37,6 +44,8 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
         int LeftStart = (int)(0.025 * Game.ScreenSize.X);
         public void Initialize()
         {
+            player = new PlayerController(new PlayerManager());
+
             // Caster Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.3 * Game.ScreenSize.Y)), IconSize),
@@ -44,6 +53,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             {
                 Action = () =>
                 {
+                    targetClass = new Caster();
                 }
             });
 
@@ -54,6 +64,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             {
                 Action = () =>
                 {
+                    targetClass = new Knight();
                 }
             });
 
@@ -64,6 +75,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             {
                 Action = () =>
                 {
+                    targetClass = new Manipulator();
                 }
             });
 
@@ -74,37 +86,44 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             {
                 Action = () =>
                 {
-                }
-            });
-
-            // Back Button
-            menuItems.Add(new MenuItem(
-                new Rectangle(new Point(LeftStart, (int)(0.7 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.EnemySprite))
-            {
-                Action = () =>
-                {
-                    MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
+                    targetClass = new Rogue();
                 }
             });
 
             // Create Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.7 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.TestImage))
+                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.TestImage))
             {
                 Action = () =>
                 {
+                    string saveID = GameSaveHandler.GetNextSaveID().ToString();
                     if (targetClass is Knight)
-                        GameSaveHandler.CreateSave("abc", new PlayerController(new PlayerManager()), new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else if (targetClass is Caster)
-                        GameSaveHandler.CreateSave("abc", new PlayerController(new PlayerManager()), new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else if (targetClass is Manipulator)
-                        GameSaveHandler.CreateSave("abc", new PlayerController(new PlayerManager()), new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Fortz());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else if (targetClass is Rogue)
-                        GameSaveHandler.CreateSave("abc", new PlayerController(new PlayerManager()), new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Fortz());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else
-                        throw new Exception("Class not found");
+                    {
+                        Errors = "Choose a class!";
+                        return;
+                    }
+                    Debug.WriteLine(saveID);
+                    GameSaveHandler.LoadSave(saveID);
+                }
+            });
+
+            // Back Button
+            menuItems.Add(new MenuItem(
+                new Rectangle(new Point(LeftStart, (int)(0.8 * Game.ScreenSize.Y)), IconSize),
+                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite))
+            {
+                Action = () =>
+                {
+                    MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
                 }
             });
         }

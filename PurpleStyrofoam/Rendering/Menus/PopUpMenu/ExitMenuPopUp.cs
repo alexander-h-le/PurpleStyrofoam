@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Rendering.Menus;
+using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 
 namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
 {
@@ -57,7 +58,9 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
                 {
                     Action = () =>
                     {
-                        Game.ShouldClose = true;
+                        RenderHandler.CurrentGameState = GAMESTATE.MAINMENU;
+                        MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
+                        ForceClose = true;
                     }
                 });
                 IsOpen = true;
@@ -71,11 +74,13 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
         {
         }
 
+        private bool ForceClose = false;
         public bool ShouldClose()
         {
-            if (IsOpen && KeyHelper.CheckTap(Keys.Escape))
+            if (IsOpen && (KeyHelper.CheckTap(Keys.Escape) || ForceClose))
             {
                 IsOpen = false;
+                ForceClose = false;
                 MenuHandler.ActivePopUp = null;
                 return true;
             }
