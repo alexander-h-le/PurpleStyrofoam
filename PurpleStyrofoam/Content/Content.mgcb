@@ -145,3 +145,10 @@
 /processorParam:TextureFormat=Color
 /build:testIMG.jpg
 
+#begin DefaultGameText.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:DefaultGameText.spritefont
+
