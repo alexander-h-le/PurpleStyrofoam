@@ -63,6 +63,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             {
                 Action = () =>
                 {
+                    MenuHandler.ActiveFullScreenMenu = new LoadSaveMenu();
                 }
             });
 

@@ -62,72 +62,31 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="player">The player information to be handed in</param>
         /// <param name="newX">The new player position</param>
         /// <param name="newY">The new player position</param>
-        public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0)
+        public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0, List<AnimatedSprite> newSprites = null, List<ItemSprite> newItems = null)
         {
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
-            allCharacterSprites.Add(player);
-            allItemSprites = new List<ItemSprite>();
+            if (newSprites != null) allCharacterSprites = newSprites;
+            if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
+            allItemSprites = newItems != null ? newItems : new List<ItemSprite>();
             if ( ((PlayerManager) player.Manager).EquippedWeapon != null) allItemSprites.Add(((PlayerManager)player.Manager).EquippedWeapon.Sprite);
+            PlayerInfoUI.Initialize();
+            LoadGameTextures();
             player.SpriteRectangle.X = newX;
             player.SpriteRectangle.Y = newY;
-            PlayerInfoUI.Initialize();
-
             Game.PlayerCharacter = player;
         }
 
-        /// <summary>
-        /// Changes the game state. Primarily used to change the map. Allows for custom sprites and items to be inputted.
-        /// </summary>
-        /// <param name="newMap">The new map to be changed to</param>
-        /// <param name="player">The player information to be handed in</param>
-        /// <param name="newSprites">The custom list of sprites to be used</param>
-        /// <param name="newItems">The custom list of items to be used</param>
-        /// <param name="newX">The new player postiion</param>
-        /// <param name="newY">The new player position</param>
-        public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, List<ItemSprite> newItems, int newX = 0, int newY = 0)
+        private static void LoadGameTextures()
         {
-            allCharacterSprites.Clear();
-            allItemSprites.Clear();
-            allProjectiles.Clear();
-            selectedMap = newMap;
-            ObjectMapper.MapObjects(selectedMap);
-            allCharacterSprites = newSprites;
-            if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
-            allItemSprites = newItems;
-            player.SpriteRectangle.X = newX;
-            player.SpriteRectangle.Y = newY;
-            PlayerInfoUI.Initialize();
-
-            Game.PlayerCharacter = player;
-        }
-
-        /// <summary>
-        /// Changes the game state. Primarily used to change the map. Allows for custom sprites to be inputted.
-        /// </summary>
-        /// <param name="newMap">The new map to be changed to</param>
-        /// <param name="player">The player information to be handed in</param>
-        /// <param name="newSprites">The custom list of sprites to be used</param>
-        /// <param name="newX">The new player position</param>
-        /// <param name="newY">The new player position</param>
-        public static void InitiateChange(BaseMap newMap, PlayerController player, List<AnimatedSprite> newSprites, int newX = 0, int newY = 0)
-        {
-            allCharacterSprites.Clear();
-            allItemSprites.Clear();
-            allProjectiles.Clear();
-            selectedMap = newMap;
-            ObjectMapper.MapObjects(selectedMap);
-            allCharacterSprites = newSprites;
-            if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
-            allItemSprites = new List<ItemSprite>();
-            player.SpriteRectangle.X = newX;
-            player.SpriteRectangle.Y = newY;
-            PlayerInfoUI.Initialize();
-
-            Game.PlayerCharacter = player;
+            foreach (AnimatedSprite i in allCharacterSprites) i.Load();
+            foreach (MapObject i in selectedMap.BackgroundLayer) i.Load();
+            foreach (MapObject i in selectedMap.ActiveLayer) i.Load();
+            foreach (MapObject i in selectedMap.ForegroundLayer) i.Load();
+            foreach (ItemSprite i in allItemSprites) i.Load();
         }
 
 
@@ -153,10 +112,7 @@ namespace PurpleStyrofoam.Rendering
                         ObjectMapper.DeleteSpriteObject(sprite);
                         ObjectMapper.AddSpriteObject(sprite);
                     }
-                    foreach (Projectile item in allProjectiles)
-                    {
-                        item.Update();
-                    }
+                    foreach (Projectile item in allProjectiles) item.Update();
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
                     PlayerInfoUI.Update();
@@ -214,6 +170,7 @@ namespace PurpleStyrofoam.Rendering
                         ScreenOffset.X > selectedMap.maxBounds.Right ? selectedMap.maxBounds.Right : (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
                     int yMove = ScreenOffset.Y < selectedMap.maxBounds.Top ? selectedMap.maxBounds.Top :
                         ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
+
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     ScreenOffset.X = (ScreenOffset.X < selectedMap.maxBounds.Left && xMove < 0) 
                         || (ScreenOffset.X > selectedMap.maxBounds.Right && xMove > 0) ? 
@@ -223,22 +180,10 @@ namespace PurpleStyrofoam.Rendering
                         ScreenOffset.Y : (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
-                    foreach (MapObject i in  extras)
-                    {
-                        i.Draw(sp);
-                    }
-                    foreach (AnimatedSprite item in allCharacterSprites)
-                    {
-                        item.Draw(sp);
-                    }
-                    foreach (Projectile item in allProjectiles)
-                    {
-                        item.Draw(sp);
-                    }
-                    foreach (ItemSprite item in allItemSprites)
-                    {
-                        item.Draw(sp);
-                    }
+                    foreach (MapObject i in  extras) i.Draw(sp);
+                    foreach (AnimatedSprite item in allCharacterSprites) item.Draw(sp);
+                    foreach (Projectile item in allProjectiles) item.Draw(sp);
+                    foreach (ItemSprite item in allItemSprites) item.Draw(sp);
                     if (selectedMap != null) selectedMap.DrawForeground(sp);
                     PlayerInfoUI.Draw(sp);
                     break;
@@ -250,18 +195,9 @@ namespace PurpleStyrofoam.Rendering
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-Game.PlayerCharacter.SpriteRectangle.X) + XOffset, (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset, 0));
                     if (selectedMap != null) selectedMap.DrawBackground(sp);
                     if (selectedMap != null) selectedMap.Draw(sp);
-                    foreach (AnimatedSprite item in allCharacterSprites)
-                    {
-                        item.Draw(sp);
-                    }
-                    foreach (Projectile item in allProjectiles)
-                    {
-                        item.Draw(sp);
-                    }
-                    foreach (ItemSprite item in allItemSprites)
-                    {
-                        item.Draw(sp);
-                    }
+                    foreach (AnimatedSprite item in allCharacterSprites) item.Draw(sp);
+                    foreach (Projectile item in allProjectiles) item.Draw(sp);
+                    foreach (ItemSprite item in allItemSprites) item.Draw(sp);
                     if (selectedMap != null) selectedMap.DrawForeground(sp);
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
@@ -287,58 +223,6 @@ namespace PurpleStyrofoam.Rendering
         public static void Add(AnimatedSprite input)
         {
             allCharacterSprites.Add(input);
-        }
-
-        /// <summary>
-        /// Gives the angle in radians to make object look at certain point
-        /// </summary>
-        /// <param name="source">The position of the origin</param>
-        /// <param name="xIn">The target X position</param>
-        /// <param name="yIn">The target Y position</param>
-        /// <returns>Returns angle in radians</returns>
-        public static float LookAtXY(Vector2 source, int xIn, int yIn)
-        {
-            double deltaX = xIn - source.X;
-            double deltaY = yIn - source.Y;
-            return (float) Math.Atan2(deltaY, deltaX);
-        }
-
-        /// <summary>
-        /// Gives the angle in radians to make object look at the mouse
-        /// </summary>
-        /// <param name="source">The position of the origin</param>
-        /// <returns>Returns angle in radians</returns>
-        public static float LookAtMouse(Vector2 source)
-        {
-            double deltaX = MouseHandler.mousePos.X - source.X;
-            double deltaY = MouseHandler.mousePos.Y - source.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
-        }
-
-        /// <summary>
-        /// Gives the angle in radians to make an <c>ItemSprite</c> look at a sprite
-        /// </summary>
-        /// <param name="objectIn">The <c>ItemSprite</c> source</param>
-        /// <param name="objectToSee">The <c>AnimatedSprite</c> to look at</param>
-        /// <returns>Returns the angle in radians</returns>
-        public static float LookAtSprite(ItemSprite objectIn, AnimatedSprite objectToSee)
-        {
-            double deltaX = objectToSee.SpriteRectangle.X - objectIn.ItemRectangle.X;
-            double deltaY = objectToSee.SpriteRectangle.Y - objectIn.ItemRectangle.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
-        }
-
-        /// <summary>
-        /// Give the angle in radians to make an <c>ItemSprite</c> look at a sprite
-        /// </summary>
-        /// <param name="objectIn">The <c>ItemSprite</c> source</param>
-        /// <param name="characterSpriteName">The name of the sprite to be looked at</param>
-        /// <returns>Returns the angle in radians</returns>
-        public static float LookAtSprite(ItemSprite objectIn, string characterSpriteName)
-        {
-            double deltaX = allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.X - objectIn.ItemRectangle.X;
-            double deltaY = allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.Y - objectIn.ItemRectangle.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
         }
     }
 

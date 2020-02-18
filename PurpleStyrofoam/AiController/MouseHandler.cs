@@ -49,11 +49,12 @@ namespace PurpleStyrofoam.AiController
                 switch (RenderHandler.CurrentGameState)
                 {
                     case GAMESTATE.MAINMENU:
-                        MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
+                        if (oldState.LeftButton == ButtonState.Released) MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
                         AnimatedSprite n = new AnimatedSprite(PlayerManager.jumpingDPlayerSprite, 1, 1, (int)mousePos.X, (int)mousePos.Y, new BasicAI(Game.PlayerCharacter), new DefaultManager());
                         n.AI.SupplyAI(n);
+                        n.Load();
                         if (KeyHelper.CheckHeld(Keys.O)) RenderHandler.Add(n);
                         ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
                         break;

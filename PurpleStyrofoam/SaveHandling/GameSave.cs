@@ -19,8 +19,7 @@ namespace PurpleStyrofoam.SaveHandling
         /// </summary>
         public PlayerManager player;
         public string ActiveMap;
-        public string EquippedWeapon;
-        public string ActiveClass;
         public Vector2 PlayerPosition;
+        //public List<AnimatedSprite> sprites;
     }
 }

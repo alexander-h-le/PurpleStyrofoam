@@ -29,8 +29,9 @@ namespace PurpleStyrofoam.Managers.Classes
         {
             if (!ActivePlatform)
             {
-                Platform = new MapObject("Manipulator-Platform",Game.GameContent, PlayerManager.movingPlayerSprite,
+                Platform = new MapObject(PlayerManager.movingPlayerSprite,
                     new Vector2(MouseHandler.mousePos.X, MouseHandler.mousePos.Y), 200,20);
+                Platform.Load();
                 ObjectMapper.AddMapObject(Platform);
                 RenderHandler.extras.Add(Platform);
                 ActivePlatform = true;

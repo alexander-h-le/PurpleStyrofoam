@@ -8,6 +8,7 @@ using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.SaveHandling;
+using PurpleStyrofoam.SaveHandling.GameConverters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,15 +37,9 @@ namespace PurpleStyrofoam.Rendering
         {
             string dash = "";
             //Mac
-            if (Environment.OSVersion.VersionString.Contains("Unix"))
-            {
-                dash = "/";
-            }
+            if (Environment.OSVersion.VersionString.Contains("Unix")) dash = "/";
             //Windows
-            else if (Environment.OSVersion.VersionString.Contains("Windows"))
-            {
-                dash = "\\";
-            }
+            else if (Environment.OSVersion.VersionString.Contains("Windows")) dash = "\\";
 
             PathDirectory = Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dash + "PurpleStyrofoamGameFolder").FullName + dash;
         }
@@ -59,18 +54,6 @@ namespace PurpleStyrofoam.Rendering
             if (name == null) return new CathedralRuinsFBoss();
             Type type = Type.GetType(name);
             return (BaseMap) Activator.CreateInstance(type);
-        }
-
-        /// <summary>
-        /// Returns a GameClass object based on a given string
-        /// </summary>
-        /// <param name="name">Path of the GameClass to be created. Format: Namespace.ClassName</param>
-        /// <returns>GameClass object based on the string provided</returns>
-        public static GameClass LoadClass(string name)
-        {
-            if (name == null) return new Knight();
-            Type type = Type.GetType(name);
-            return (GameClass) Activator.CreateInstance(type);
         }
 
         /// <summary>
@@ -89,12 +72,13 @@ namespace PurpleStyrofoam.Rendering
                     {
                         var settings = new JsonSerializerSettings();
                         settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        settings.Converters.Add(new GameClassConverter());
+                        settings.Converters.Add(new ItemConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
-                        ((PlayerManager)chara.Manager).Class = LoadClass(save.ActiveClass);
                         ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
-                        ((PlayerManager)chara.Manager).EquippedWeapon = (Weapon) Activator.CreateInstance(Type.GetType(save.EquippedWeapon));
+                        ((PlayerManager)chara.Manager).CurrentSave = SaveName;
                         RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara, (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
                     }
                 }
@@ -105,6 +89,36 @@ namespace PurpleStyrofoam.Rendering
             }
             RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
             return true;
+        }
+
+        public static GameSave RetrieveGameSave(string SaveName)
+        {
+            GameSave gSave;
+            try
+            {
+                using (StreamReader sr = File.OpenText(PathDirectory + SaveName))
+                {
+                    using (JsonTextReader reader = new JsonTextReader(sr))
+                    {
+                        var settings = new JsonSerializerSettings();
+                        settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        settings.Converters.Add(new GameClassConverter());
+                        settings.Converters.Add(new ItemConverter());
+                        JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
+                        GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
+                        PlayerController chara = new PlayerController(save.player);
+                        ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
+                        ((PlayerManager)chara.Manager).CurrentSave = SaveName;
+                        gSave = save;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+            return gSave;
         }
 
         /// <summary>
@@ -126,10 +140,9 @@ namespace PurpleStyrofoam.Rendering
             newSave.PlayerPosition = new Vector2(_player.SpriteRectangle.X, _player.SpriteRectangle.Y);
             newSave.player = (PlayerManager) _player.Manager;
             newSave.ActiveMap = map.GetType().Namespace + "." +  map.GetType().Name;
-            newSave.ActiveClass = newSave.player.Class.GetType().Namespace + "." + newSave.player.Class.GetType().Name;
 
             Debug.WriteLine($"Position: {newSave.PlayerPosition}\nPlayerInfo: {newSave.player.Health}\nMapName: {newSave.ActiveMap}" +
-                $"\nClass: {newSave.player.Class} \nWeapon: {newSave.EquippedWeapon}");
+                $"\nClass: {newSave.player.Class} \nWeapon: {newSave.player.EquippedWeapon.Name}");
 
             // ------------------------------------------------------------------------------------------------
 
@@ -138,6 +151,8 @@ namespace PurpleStyrofoam.Rendering
             {
                 var settings = new JsonSerializerSettings();
                 settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                settings.Converters.Add(new GameClassConverter());
+                settings.Converters.Add(new ItemConverter());
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }
@@ -165,8 +180,8 @@ namespace PurpleStyrofoam.Rendering
             newSave.PlayerPosition = Position;
             newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
             newSave.player = (PlayerManager) player.Manager;
-            newSave.EquippedWeapon = equippedWeapon.GetType().Namespace + "." + equippedWeapon.GetType().Name;
-            newSave.ActiveClass = targetClass.GetType().Namespace + "." + targetClass.GetType().Name;
+            ((PlayerManager)newSave.player).Class = targetClass;
+            ((PlayerManager)newSave.player).EquippedWeapon = equippedWeapon;
 
             // ------------------------------------------------------------------------------------------------
 
@@ -175,6 +190,8 @@ namespace PurpleStyrofoam.Rendering
             {
                 var settings = new JsonSerializerSettings();
                 settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                settings.Converters.Add(new GameClassConverter());
+                settings.Converters.Add(new ItemConverter());
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }

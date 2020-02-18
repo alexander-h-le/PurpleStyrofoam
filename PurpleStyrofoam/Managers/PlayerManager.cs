@@ -17,6 +17,7 @@ namespace PurpleStyrofoam
         public int MaxHealth { get; set; }
         public int Mana { get; set;}
         public int MaxMana { get; set; }
+        public string CurrentSave { get; set; }
         public GameClass Class { get; set; }
         public List<Item> Inventory { get; }
         public Weapon EquippedWeapon { get; set; }

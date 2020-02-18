@@ -59,6 +59,7 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
                     Action = () =>
                     {
                         RenderHandler.CurrentGameState = GAMESTATE.MAINMENU;
+                        GameSaveHandler.CreateSave(( (PlayerManager) Game.PlayerCharacter.Manager).CurrentSave);
                         MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
                         ForceClose = true;
                     }
