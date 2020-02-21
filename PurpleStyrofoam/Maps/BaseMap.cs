@@ -45,5 +45,13 @@ namespace PurpleStyrofoam.Maps
                 item.Draw(sp);
             }
         }
+
+        public void DrawMap(SpriteBatch sp, Action<SpriteBatch> insert) 
+        {
+            DrawBackground(sp);
+            Draw(sp);
+            insert(sp);
+            DrawForeground(sp);
+        }
     }
 }

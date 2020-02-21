@@ -23,7 +23,7 @@ namespace PurpleStyrofoam.AiController
         private static MouseState oldState;
         private static MouseState newState;
         public static Vector2 mousePos;
-        public static void Update(ContentManager content)
+        public static void Update()
         {
             newState = Mouse.GetState();
             mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
@@ -35,10 +35,7 @@ namespace PurpleStyrofoam.AiController
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).X = (int)mousePos.X;
-                        //RenderHandler.allCharacterSprites.Find(x => x.GetType().Name.Equals("PlayerController")).Y = (int)mousePos.Y;
                         ((PlayerManager)Game.PlayerCharacter.Manager).Class.RClick();
-                        //character.Manager.AddDamage(-1);
                         break;
                     default:
                         break;
@@ -52,10 +49,6 @@ namespace PurpleStyrofoam.AiController
                         if (oldState.LeftButton == ButtonState.Released) MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        AnimatedSprite n = new AnimatedSprite(PlayerManager.jumpingDPlayerSprite, 1, 1, (int)mousePos.X, (int)mousePos.Y, new BasicAI(Game.PlayerCharacter), new DefaultManager());
-                        n.AI.SupplyAI(n);
-                        n.Load();
-                        if (KeyHelper.CheckHeld(Keys.O)) RenderHandler.Add(n);
                         ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:

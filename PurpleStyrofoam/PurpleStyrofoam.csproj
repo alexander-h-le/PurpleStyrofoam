@@ -72,7 +72,6 @@
     <Compile Include="Maps\Dungeon Areas\CathedralRuinsFBoss.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />
     <Compile Include="Maps\Hubs\Hub.cs" />
-    <Compile Include="Maps\TestMap.cs" />
     <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Rendering\GameObject.cs" />
     <Compile Include="Rendering\Sprites\AnimatedSprite.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Rendering\Menus\FullScreenMenus\Menus\NewSaveMenu.cs" />
     <Compile Include="Helpers\SpriteTextureHelper.cs" />
+    <Compile Include="Rendering\Text\Dialogue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -179,6 +179,7 @@
     <Folder Include="Items\Weapons\Ranged\Throwing\" />
     <Folder Include="Items\Weapons\Ranged\Tomes\" />
     <Folder Include="Items\Weapons\Ranged\Wands\" />
+    <Folder Include="Rendering\Text\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

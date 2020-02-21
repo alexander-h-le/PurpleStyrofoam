@@ -112,7 +112,7 @@ namespace PurpleStyrofoam
             // TODO: Add your update logic here
             KeyHelper.Update();
             RenderHandler.Update();
-            MouseHandler.Update(this.Content);
+            MouseHandler.Update();
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);

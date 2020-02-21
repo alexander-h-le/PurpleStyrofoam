@@ -67,12 +67,16 @@ namespace PurpleStyrofoam.Rendering
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
+
             selectedMap = newMap;
             ObjectMapper.MapObjects(selectedMap);
-            if (newSprites != null) allCharacterSprites = newSprites;
+            if (newSprites != null) allCharacterSprites.AddRange(newSprites);
+            else if (selectedMap.sprites != null) allCharacterSprites.AddRange(selectedMap.sprites);
             if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
+
             allItemSprites = newItems != null ? newItems : new List<ItemSprite>();
             if ( ((PlayerManager) player.Manager).EquippedWeapon != null) allItemSprites.Add(((PlayerManager)player.Manager).EquippedWeapon.Sprite);
+
             PlayerInfoUI.Initialize();
             LoadGameTextures();
             player.SpriteRectangle.X = newX;
@@ -163,42 +167,36 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="sp">The <c>SpriteBatch</c> given from the Game class.</param>
         public static void Draw(SpriteBatch sp)
         {
+            int xMove = 0;
+            int yMove = 0;
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
-                    int xMove = ScreenOffset.X < selectedMap.maxBounds.Left ? selectedMap.maxBounds.Left :
-                        ScreenOffset.X > selectedMap.maxBounds.Right ? selectedMap.maxBounds.Right : (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
-                    int yMove = ScreenOffset.Y < selectedMap.maxBounds.Top ? selectedMap.maxBounds.Top :
-                        ScreenOffset.Y > selectedMap.maxBounds.Bottom ? selectedMap.maxBounds.Bottom : (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
-
+                    FindOffset(out xMove, out yMove);
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
-                    ScreenOffset.X = (ScreenOffset.X < selectedMap.maxBounds.Left && xMove < 0) 
-                        || (ScreenOffset.X > selectedMap.maxBounds.Right && xMove > 0) ? 
-                        ScreenOffset.X : (Game.PlayerCharacter.SpriteRectangle.X) - XOffset;
-                    ScreenOffset.Y = (ScreenOffset.Y < selectedMap.maxBounds.Top && yMove < 0)
-                        || (ScreenOffset.Y > selectedMap.maxBounds.Bottom && yMove > 0) ? 
-                        ScreenOffset.Y : (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
-                    if (selectedMap != null) selectedMap.DrawBackground(sp);
-                    if (selectedMap != null) selectedMap.Draw(sp);
-                    foreach (MapObject i in  extras) i.Draw(sp);
-                    foreach (AnimatedSprite item in allCharacterSprites) item.Draw(sp);
-                    foreach (Projectile item in allProjectiles) item.Draw(sp);
-                    foreach (ItemSprite item in allItemSprites) item.Draw(sp);
-                    if (selectedMap != null) selectedMap.DrawForeground(sp);
+                    ScreenOffset.X = (Game.PlayerCharacter.SpriteRectangle.X) - XOffset;
+                    ScreenOffset.Y = (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
+                    selectedMap.DrawMap(sp, (spr) => {
+                        foreach (MapObject i in extras) i.Draw(spr);
+                        foreach (AnimatedSprite item in allCharacterSprites) item.Draw(spr);
+                        foreach (Projectile item in allProjectiles) item.Draw(spr);
+                        foreach (ItemSprite item in allItemSprites) item.Draw(spr);
+                    });
                     PlayerInfoUI.Draw(sp);
                     break;
                 case GAMESTATE.MAINMENU:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(0, 0, 0));
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     if (MenuHandler.ActiveFullScreenMenu != null) MenuHandler.DrawFullScreenMenu(sp);
                     break;
                 case GAMESTATE.PAUSED:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation((-Game.PlayerCharacter.SpriteRectangle.X) + XOffset, (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset, 0));
-                    if (selectedMap != null) selectedMap.DrawBackground(sp);
-                    if (selectedMap != null) selectedMap.Draw(sp);
-                    foreach (AnimatedSprite item in allCharacterSprites) item.Draw(sp);
-                    foreach (Projectile item in allProjectiles) item.Draw(sp);
-                    foreach (ItemSprite item in allItemSprites) item.Draw(sp);
-                    if (selectedMap != null) selectedMap.DrawForeground(sp);
+                    FindOffset(out xMove, out yMove);
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
+                    selectedMap.DrawMap(sp, (spr) => {
+                        foreach (MapObject i in extras) i.Draw(spr);
+                        foreach (AnimatedSprite item in allCharacterSprites) item.Draw(spr);
+                        foreach (Projectile item in allProjectiles) item.Draw(spr);
+                        foreach (ItemSprite item in allItemSprites) item.Draw(spr);
+                    });
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 default:
@@ -207,22 +205,20 @@ namespace PurpleStyrofoam.Rendering
             sp.End();
         }
 
-        /// <summary>
-        /// Adds a sprite to <c>allItemSprites</c>
-        /// </summary>
-        /// <param name="input"></param>
-        public static void Add(ItemSprite input)
+        private static void FindOffset(out int XMovement, out int YMovement)
         {
-            allItemSprites.Add(input);
-        }
+            if (ScreenOffset.X < selectedMap.maxBounds.Left) XMovement = selectedMap.maxBounds.Left;
 
-        /// <summary>
-        /// Adds a sprite to <c>allSprites</c>
-        /// </summary>
-        /// <param name="input"></param>
-        public static void Add(AnimatedSprite input)
-        {
-            allCharacterSprites.Add(input);
+            else if (ScreenOffset.X > selectedMap.maxBounds.Right) XMovement = selectedMap.maxBounds.Right;
+
+            else XMovement = (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
+
+
+            if (ScreenOffset.Y < selectedMap.maxBounds.Top) YMovement = selectedMap.maxBounds.Top;
+
+            else if (ScreenOffset.Y > selectedMap.maxBounds.Bottom) YMovement = selectedMap.maxBounds.Bottom;
+
+            else YMovement = (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
         }
     }
 
