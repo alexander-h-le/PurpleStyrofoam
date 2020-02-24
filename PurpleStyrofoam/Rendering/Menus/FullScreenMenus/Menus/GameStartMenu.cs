@@ -48,7 +48,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             // New Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.3 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>("NewGameButton"))
+                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite), "New Game")
             {
                 Action = () =>
                 {
@@ -59,7 +59,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             // Load Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.4 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingDPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingDPlayerSprite), "Load Save")
             {
                 Action = () =>
                 {
@@ -70,7 +70,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             // Settings Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.5 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingSPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingSPlayerSprite), "Settings")
             {
                 Action = () =>
                 {
@@ -80,7 +80,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             // Exit Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.6 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite), "Exit Game")
             {
                 Action = () =>
                 {

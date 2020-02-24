@@ -52,9 +52,10 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
                     (int)RenderHandler.ScreenOffset.Y + ((int)Game.ScreenSize.Y / 2) - (SizeY/2), 
                     SizeX, SizeY);
                 menuItems.Clear();
+
                 //Exit Button
                 menuItems.Add(new MenuItem(new Rectangle(PopUpRect.X, PopUpRect.Bottom, PopUpRect.Width, 50),
-                    Game.GameContent.Load<Texture2D>("playerSpriteMoving"))
+                    Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite), "Exit")
                 {
                     Action = () =>
                     {
@@ -64,6 +65,8 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
                         ForceClose = true;
                     }
                 });
+
+
                 IsOpen = true;
                 MenuHandler.ActivePopUp = this;
                 return true;

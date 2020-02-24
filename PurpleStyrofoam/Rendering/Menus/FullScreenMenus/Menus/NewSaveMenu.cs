@@ -49,7 +49,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Caster Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.3 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.basePlayerSpriteName))
+                Game.GameContent.Load<Texture2D>(PlayerManager.basePlayerSpriteName), "Caster")
             {
                 Action = () =>
                 {
@@ -60,7 +60,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Knight Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.4 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingDPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingDPlayerSprite), "Knight")
             {
                 Action = () =>
                 {
@@ -71,7 +71,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Manipulator Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.5 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingSPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingSPlayerSprite), "Manipulator")
             {
                 Action = () =>
                 {
@@ -82,7 +82,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Rogue Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.6 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite))
+                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite), "Rogue")
             {
                 Action = () =>
                 {
@@ -93,7 +93,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Create Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.7 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.TestImage))
+                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.TestImage), "Create Save")
             {
                 Action = () =>
                 {
@@ -119,7 +119,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Back Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.8 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite))
+                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite), "Back")
             {
                 Action = () =>
                 {

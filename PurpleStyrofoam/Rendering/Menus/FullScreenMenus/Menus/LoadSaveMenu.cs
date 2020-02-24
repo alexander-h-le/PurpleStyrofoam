@@ -52,7 +52,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
                 string gClass = save.player.Class.GetType().Name;
                 string DisplayText = Path.GetFileName(f) + " : " + gClass;
                 Vector2 DisplaySize = Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default).MeasureString(DisplayText);
-                saves.Add(new MenuItem(new Rectangle(LeftStart, (++i) * YLevel, (int)DisplaySize.X, (int)DisplaySize.Y), DisplayText)
+                saves.Add(new MenuItem(new Rectangle(LeftStart, (++i) * YLevel, (int)DisplaySize.X, (int)DisplaySize.Y), text: DisplayText)
                 {
                     Action = () =>
                     {
@@ -62,7 +62,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             }
             saves.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, ++i * YLevel), new Point((int)(0.13 * Game.ScreenSize.X), (int)(0.05 * Game.ScreenSize.Y))),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite))
+                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite), "Back")
             {
                 Action = () =>
                 {
