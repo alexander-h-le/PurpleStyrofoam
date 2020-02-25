@@ -30,8 +30,8 @@ namespace PurpleStyrofoam.Rendering.Menus
         public Action Action{ get; set;}
         public void Draw(SpriteBatch sp)
         {
-            sp.DrawString(font, Text, StringLocation, Color.White);
             if (menuTexture != null) sp.Draw(menuTexture, MenuRectangle, new Rectangle(0, 0, menuTexture.Width, menuTexture.Height), Color.White);
+            sp.DrawString(font, Text, StringLocation, Color.White);
         }
     }
 }

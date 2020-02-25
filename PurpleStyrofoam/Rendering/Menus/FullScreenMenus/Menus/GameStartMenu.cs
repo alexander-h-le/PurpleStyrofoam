@@ -48,7 +48,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus
             // New Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.3 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.movingPlayerSprite), "New Game")
+                Game.GameContent.Load<Texture2D>(PlayerManager.basePlayerSpriteName), "New Game")
             {
                 Action = () =>
                 {

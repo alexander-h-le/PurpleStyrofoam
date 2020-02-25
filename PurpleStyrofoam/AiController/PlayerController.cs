@@ -24,36 +24,15 @@ namespace PurpleStyrofoam.AiController
         public PlayerController(PlayerManager manager) 
             : base(PlayerManager.basePlayerSpriteName, 1, 1, 100, 100, new PlayerControlledAI(), manager)
         {
-            textureName = PlayerManager.basePlayerSpriteName;
         }
 
         public override void Update()
         {
             if (velocity.X != 0 || velocity.Y != 0) base.DetectCollision();
             CheckKeys();
-            currentFrame++;
-            if (currentFrame >= totalFrames)
-            {
-                if (currentSprite == PlayerManager.jumpingDPlayerSprite) SwitchSprite(PlayerManager.jumpingSPlayerSprite);
-                currentFrame = 0;
-            }
+            animate.Update();
+            if (animate.Finished() && animate.Texture.Name == SpriteTextureHelper.Sprites.Dog) animate.Pause();
             UpdateVelocity();
-        }
-
-        private string currentSprite;
-        public void SwitchSprite(string nameOfFile, int rowsIn = 1, int columnsIn = 1)
-        {
-             if (!nameOfFile.Equals(currentSprite))
-            {
-                Rows = rowsIn;
-                Columns = columnsIn;
-                totalFrames = Rows * Columns;
-                Texture = Game.GameContent.Load<Texture2D>(nameOfFile);
-                currentFrame = 0;
-                SpriteRectangle.Width = Texture.Width / Columns;
-                SpriteRectangle.Height = Texture.Height / Rows;
-                currentSprite = nameOfFile;
-            }
         }
         private const int moveSpeed = 20;
         private const int jumpSpeed = 1500;
@@ -73,12 +52,12 @@ namespace PurpleStyrofoam.AiController
                 if (KeyHelper.CheckHeld(Keys.A))
                 {
                     velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
-                    if (!InAir) SwitchSprite(PlayerManager.movingPlayerSprite);
+                    if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
                 }
                 if (KeyHelper.CheckHeld(Keys.D))
                 {
                     velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
-                    if (!InAir) SwitchSprite(PlayerManager.movingPlayerSprite);
+                    if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
                 }
                 if (KeyHelper.CheckTap(Keys.Space))
                 {
@@ -86,7 +65,7 @@ namespace PurpleStyrofoam.AiController
                     {
                         InAir = true;
                         velocity.Y -= jumpSpeed;
-                        SwitchSprite(PlayerManager.jumpingDPlayerSprite, 1, 1);
+                        animate.Switch(SpriteTextureHelper.Sprites.Dog, SpriteRectangle, 4, 4);
                     }
                 }
                 //if (newState.IsKeyDown(Keys.S)) { }
@@ -100,7 +79,7 @@ namespace PurpleStyrofoam.AiController
                 
             }
             if (North) velocity.Y = -velocity.Y;
-            if ((velocity.X > -1 && velocity.X < 1) && !InAir) SwitchSprite(PlayerManager.basePlayerSpriteName,1,1);
+            if ((velocity.X > -1 && velocity.X < 1) && !InAir) animate.Switch(PlayerManager.basePlayerSpriteName, SpriteRectangle, 1,1);
         }
         public override void UpdateVelocity()
         {

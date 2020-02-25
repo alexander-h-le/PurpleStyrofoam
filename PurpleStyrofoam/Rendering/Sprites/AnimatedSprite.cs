@@ -10,35 +10,28 @@ using PurpleStyrofoam.Rendering;
 using System.Diagnostics;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
+using PurpleStyrofoam.Rendering.Animations;
 
 namespace PurpleStyrofoam
 {
     public class AnimatedSprite : GameObject
     {
-        public Texture2D Texture { get; set; }
-        public string textureName;
-        public int Rows { get; set; }
-        public int Columns { get; set; }
-        protected int currentFrame;
-        protected int totalFrames;
         public Rectangle SpriteRectangle;
         private Point xy;
         public bool North { get; private set; }
         public bool South { get; private set; }
         public bool East { get; private set; }
         public bool West { get; private set; }
+        public Animation animate;
         public Vector2 velocity;
         protected const float gravity = -20f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
         public IManager Manager;
 
-        public AnimatedSprite(string TextureName, int rowsIn, int columnsIn, int xIn, int yIn, AIBase ai, IManager manIn)
+        public AnimatedSprite(string TextureName, int rows, int columns, int xIn, int yIn, AIBase ai, IManager manIn)
         {
-            textureName = TextureName;
-            Rows = rowsIn;
-            Columns = columnsIn;
-            currentFrame = 0;
+            animate = new Animation(TextureName, rows, columns);
             AI = ai;
             xy = new Point(xIn,yIn);
             Manager = manIn;
@@ -54,11 +47,6 @@ namespace PurpleStyrofoam
         public override void Update()
         {
             if (velocity.X != 0 || velocity.Y != 0) DetectCollision();
-            currentFrame++;
-            if (currentFrame == totalFrames)
-            {
-                currentFrame = 0;
-            }
             if (South) velocity.Y = 0;
             if (North) velocity.Y = -velocity.Y;
             UpdateVelocity();
@@ -77,21 +65,13 @@ namespace PurpleStyrofoam
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            int row = (int)((float)currentFrame / (float)Columns);
-            int column = currentFrame % Columns;
-            Rectangle sourceRectangle = new Rectangle(SpriteRectangle.Width * column, SpriteRectangle.Height * row, SpriteRectangle.Width, SpriteRectangle.Height);
-
-            try { spriteBatch.Draw(Texture, SpriteRectangle, sourceRectangle, Color.White); }
-            catch (ArgumentNullException e)
-            {
-                throw new Exception("Texture was not properly loaded at: " + e.InnerException);
-            }
+            animate.Draw(spriteBatch, SpriteRectangle);
         }
 
         public override void Load()
         {
-            Texture = Game.GameContent.Load<Texture2D>(textureName);
-            SpriteRectangle = new Rectangle(xy.X, xy.Y, Texture.Width / Columns, Texture.Height / Rows);
+            animate.Load();
+            SpriteRectangle = new Rectangle(xy.X, xy.Y, animate.Texture.Width / animate.Columns, animate.Texture.Height / animate.Rows);
         }
     }
 }

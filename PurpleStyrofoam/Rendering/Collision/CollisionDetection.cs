@@ -84,7 +84,7 @@ namespace PurpleStyrofoam.Rendering
             int CenterY = rect.Bottom - (rect.Height / 2);
             foreach (AnimatedSprite sprite in FindSprites(rect))
             {
-                Rectangle SpriteRectangle = new Rectangle(sprite.SpriteRectangle.X, sprite.SpriteRectangle.Y, sprite.Texture.Width, sprite.Texture.Height);
+                Rectangle SpriteRectangle = sprite.SpriteRectangle;
                 if (rect.Intersects(SpriteRectangle) && sprite != SpriteSource)
                 {
                     //EAST & WEST

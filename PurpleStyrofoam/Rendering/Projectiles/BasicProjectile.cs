@@ -44,8 +44,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             }
             foreach (AnimatedSprite sprite in RenderHandler.allCharacterSprites)
             {
-                Rectangle spriteRect = new Rectangle(sprite.SpriteRectangle.X, sprite.SpriteRectangle.Y, sprite.Texture.Width, sprite.Texture.Height);
-                if (sprite != SpriteSource && ProjectileRectangle.Intersects(spriteRect))
+                if (sprite != SpriteSource && ProjectileRectangle.Intersects(sprite.SpriteRectangle))
                 {
                     ProjectileAction(SpriteSource, sprite);
                     break;

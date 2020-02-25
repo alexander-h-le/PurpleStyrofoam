@@ -29,7 +29,7 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
             AnimatedSprite sp = (AnimatedSprite) value;
             JObject newObj = new JObject();
             JObject manager = JObject.FromObject(sp.Manager);
-            newObj.Add(new JProperty("texture", new JValue(sp.textureName)));
+            newObj.Add(new JProperty("texture", new JValue(sp.animate.Texture.Name)));
             newObj.Add(new JProperty("X", new JValue(sp.SpriteRectangle.X)));
             newObj.Add(new JProperty("Y", new JValue(sp.SpriteRectangle.Y)));
             newObj.Add(new JProperty("manager", manager));
