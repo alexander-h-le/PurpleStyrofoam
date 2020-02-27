@@ -25,10 +25,6 @@ namespace PurpleStyrofoam.Items
         {
 
         }
-        /**
-         * TODO
-         *  - add way to get display process
-         **/
     }
 
     public enum RARITY // Rarity levels

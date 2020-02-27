@@ -46,7 +46,6 @@ namespace PurpleStyrofoam
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
             GameSaveHandler.Initialize();
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
@@ -75,7 +74,6 @@ namespace PurpleStyrofoam
 
             Debug.WriteLine("Adding objects to RenderHandler...");
             Debug.WriteLine("Finished adding objects to RenderHandler");
-            // TODO: use this.Content to load your game content here
 
             // ---------------------------------------------------------------------------------------------------------------------
 
@@ -88,7 +86,6 @@ namespace PurpleStyrofoam
         protected override void UnloadContent()
         {
             Content.Unload();
-            // TODO: Unload any non ContentManager content here
         }
 
         protected void setScreenSize(float w, float h)
@@ -109,7 +106,6 @@ namespace PurpleStyrofoam
         protected override void Update(GameTime gameTime)
         {
             if (ShouldClose) Exit();
-            // TODO: Add your update logic here
             KeyHelper.Update();
             RenderHandler.Update();
             MouseHandler.Update();
@@ -126,7 +122,6 @@ namespace PurpleStyrofoam
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            // TODO: Add your drawing code here
             RenderHandler.Draw(spriteBatch);
             base.Draw(gameTime);
         }
