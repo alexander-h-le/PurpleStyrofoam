@@ -25,10 +25,11 @@ namespace PurpleStyrofoam.Rendering.Animations
 
         public void Draw(SpriteBatch sp, Rectangle location)
         {
+            int width = Texture.Width / Columns;
+            int height = Texture.Height / Rows;
             int row = (int)((double)CurrentFrame / Columns);
-            int column = (int)((double)CurrentFrame % Columns);
-            Rectangle sourceRectangle = new Rectangle(location.Width * column, location.Height * row, location.Width,
-                location.Height);
+            int column = CurrentFrame % Columns;
+            Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
 
             try { sp.Draw(Texture, location, sourceRectangle, Color.White); }
             catch (ArgumentNullException e)

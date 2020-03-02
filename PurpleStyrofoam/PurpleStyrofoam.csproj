@@ -105,6 +105,7 @@
     <Compile Include="Helpers\TextureHelper.cs" />
     <Compile Include="Rendering\Text\Dialogue.cs" />
     <Compile Include="Rendering\Animations\Animation.cs" />
+    <Compile Include="Rendering\Text\DialogueHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

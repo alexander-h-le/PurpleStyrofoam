@@ -31,7 +31,7 @@ namespace PurpleStyrofoam.AiController
             if (velocity.X != 0 || velocity.Y != 0) base.DetectCollision();
             CheckKeys();
             animate.Update();
-            if (animate.Finished() && animate.Texture.Name == SpriteTextureHelper.Sprites.Dog) animate.Pause();
+            if (animate.Finished() && animate.Texture.Name == SpriteTextureHelper.Sprites.Dog) animate.Switch(PlayerManager.jumpingSPlayerSprite, SpriteRectangle, 1, 1);
             UpdateVelocity();
         }
         private const int moveSpeed = 20;
