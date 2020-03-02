@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 namespace PurpleStyrofoam.Rendering.Text
 {
-    public class DialogueHandler
+    public static class DialogueHandler
     {
-        public Dialogue ActiveDialogue { get; private set; }
+        public static Dialogue ActiveDialogue { get; private set; }
 
-        public DialogueHandler()
+        public static void Update()
         {
+            ActiveDialogue
+        }
+
+        public static void Draw(SpriteBatch sp)
+        {
+
         }
     }
 }

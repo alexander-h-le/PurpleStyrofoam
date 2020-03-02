@@ -62,7 +62,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 Weapons: Throwing (Very Quick), Sword (Quick), Tomes (Slow)
 Special class with three cursors following them. Selecting different weapons will change left-click
 	Throwing: Cursors become boomerangs doing return dmg. Low damage per hit.
-	Sword: ???
+	Sword: Cursors flutter out a short distance in front of them, creating essentially a longer sword swing.
 	Tomes: Sancti Castanas. Cursors are not able to change element.
 Q Ability
 	Throwing: Flutterstorm: Send out multiple projectiles that, upon reaching the cursor's old position, start fluttering around like bees.
