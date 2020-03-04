@@ -1,7 +1,10 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace PurpleStyrofoam.Helpers
 {
-    public static class SpriteTextureHelper
+    public static class TextureHelper
     {
         public static class Sprites
         {
@@ -13,6 +16,12 @@ namespace PurpleStyrofoam.Helpers
         public static class Fonts
         {
             public const string Default = "DefaultGameText";
+        }
+
+        public static Texture2D Blank(Color cl)
+        {
+            Texture2D tx = new Texture2D(Game.graphics.GraphicsDevice, 1, 1);
+            tx.SetData(new[] { cl });
         }
     }
 }

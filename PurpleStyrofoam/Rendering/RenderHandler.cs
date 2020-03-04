@@ -15,6 +15,7 @@ using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
+using PurpleStyrofoam.Rendering.Text;
 
 namespace PurpleStyrofoam.Rendering
 {
@@ -126,6 +127,7 @@ namespace PurpleStyrofoam.Rendering
                 case GAMESTATE.PAUSED:
                     MenuHandler.CheckKeys();
                     MenuHandler.Update();
+                    DialogueHandler.Update();
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
@@ -197,6 +199,7 @@ namespace PurpleStyrofoam.Rendering
                         foreach (Projectile item in allProjectiles) item.Draw(spr);
                         foreach (ItemSprite item in allItemSprites) item.Draw(spr);
                     });
+                    DialogueHandler.Draw(sp);
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 default:

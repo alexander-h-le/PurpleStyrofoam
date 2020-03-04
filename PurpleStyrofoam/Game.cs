@@ -21,7 +21,7 @@ namespace PurpleStyrofoam
     /// </summary>
     public class Game : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static double GameTimeMilliseconds;
         public static double GameTimeSeconds;

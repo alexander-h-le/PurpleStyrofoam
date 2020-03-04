@@ -33,9 +33,9 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
 
         public void Draw(SpriteBatch sp)
         {
-            sp.DrawString(Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default),
+            sp.DrawString(Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default),
                 "Chosen Class: " + (targetClass != null ? targetClass.GetType().Name : "None") , new Vector2(LeftStart + 10, (int)(0.2 * Game.ScreenSize.Y)), Color.White);
-            sp.DrawString(Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default), Errors,
+            sp.DrawString(Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default), Errors,
                 new Vector2(LeftStart + (int)(0.13 * Game.ScreenSize.X) + 10, (int)(0.7 * Game.ScreenSize.Y)), Color.Wheat);
             foreach (MenuItem i in menuItems) i.Draw(sp);
         }
@@ -93,7 +93,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Create Save Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.7 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.TestImage), "Create Save")
+                Game.GameContent.Load<Texture2D>(TextureHelper.Sprites.TestImage), "Create Save")
             {
                 Action = () =>
                 {
@@ -119,7 +119,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             // Back Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.8 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(SpriteTextureHelper.Sprites.EnemySprite), "Back")
+                Game.GameContent.Load<Texture2D>(TextureHelper.Sprites.EnemySprite), "Back")
             {
                 Action = () =>
                 {

@@ -14,7 +14,7 @@ namespace PurpleStyrofoam.Rendering.Menus
         public Rectangle MenuRectangle { get; private set; }
         Vector2 StringLocation;
         Texture2D menuTexture;
-        SpriteFont font = Game.GameContent.Load<SpriteFont>(SpriteTextureHelper.Fonts.Default);
+        SpriteFont font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
         string Text;
         public MenuItem(Rectangle rect, Texture2D texture = null, string text = "")
         {
