@@ -13,7 +13,35 @@ namespace PurpleStyrofoam.Helpers
         {
             return new Dialogue[] {
                 new Dialogue(PlayerManager.basePlayerSpriteName, 
-                "Lorem Ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat vivamus at augue eget arcu. Pretium nibh ipsum consequat nisl vel pretium lectus quam id. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Integer quis auctor elit sed vulputate mi sit amet. Nunc sed id semper risus in hendrerit gravida. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Diam sollicitudin tempor id eu nisl nunc. Eu turpis egestas pretium aenean pharetra magna ac placerat. Consectetur lorem donec massa sapien. Proin sed libero enim sed faucibus turpis in eu mi. Rhoncus dolor purus non enim. Viverra suspendisse potenti nullam ac. Tellus at urna condimentum mattis. Blandit libero volutpat sed cras. Pulvinar etiam non quam lacus suspendisse faucibus interdum posuere lorem. Blandit aliquam etiam erat velit. Ut pharetra sit amet aliquam id diam.", DIALOGUELOCATION.RIGHT)
+                "Captain Vor", "Look at them, they come to this place when they know they are not pure. Tenno use the keys, but they are mere tresspassers. " +
+                "Only I, Vor, know the true power of the void. I was cut in half, destroyed, but through its Janus Key, the Void called to me. " +
+                "It brought me here and here I was reborn. We cannot blame these creatures, they are being led by a false prophet, an imposter who knows not the secrets of the void. " +
+                "Behold the Tenno, come to scavenge and desecrate this sacred realm. My brothers, did I not tell of this day? Did I not prophesize this moment? " +
+                "Now I will stop them. Now I am changed, reborn through the energy of the Janus Key. Forever bound to the void. " +
+                "Let it be known, if the Tenno want true salvation, they will lay down their arms, and wait for the baptism of my Janus key. " +
+                "It is time. I will teach these trespassers the redemptive power of my Janus key. They will learn it's simple truth. " +
+                "The Tenno are lost, and they will resist. But I, Vor, will cleanse this palce of their impurity.",
+                DIALOGUELOCATION.RIGHT, DIALOGUESPEED.MEDIUM),
+
+                new Dialogue(PlayerManager.jumpingDPlayerSprite,
+                "Tenno (Rhino Prime)", "Be quiet, Vor. I'm sick of this speech. Give me my argon crystals already.",
+                DIALOGUELOCATION.LEFT, DIALOGUESPEED.SLOW),
+
+                new Dialogue(PlayerManager.basePlayerSpriteName,
+                "Captain Vor", "Silence Tenno, for you are lo--",
+                DIALOGUELOCATION.RIGHT, DIALOGUESPEED.VERYSLOW),
+
+                new Dialogue(PlayerManager.basePlayerSpriteName,
+                "Captain Vor", "*dies*",
+                DIALOGUELOCATION.RIGHT, DIALOGUESPEED.FAST),
+
+                new Dialogue(PlayerManager.jumpingSPlayerSprite,
+                "Tenno (Gauss)", "Finally, some silence...",
+                DIALOGUELOCATION.LEFT, DIALOGUESPEED.VERYFAST),
+
+                new Dialogue(PlayerManager.movingPlayerSprite,
+                "Tenno (Titania)", "Only one argon?! Come ON!",
+                DIALOGUELOCATION.LEFT, DIALOGUESPEED.INSTANT)
             };
         }
     }

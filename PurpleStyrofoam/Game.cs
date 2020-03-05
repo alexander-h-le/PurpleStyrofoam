@@ -34,7 +34,8 @@ namespace PurpleStyrofoam
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
+            graphics.HardwareModeSwitch = false;
             graphics.ApplyChanges();
             GameContent = this.Content;
         }
@@ -110,7 +111,7 @@ namespace PurpleStyrofoam
             KeyHelper.Update();
             RenderHandler.Update();
             MouseHandler.Update();
-            if (KeyHelper.CheckTap(Keys.NumPad9)) DialogueHandler.Start(TestHelper.GetTestDialogues());
+            if (KeyHelper.CheckTap(Keys.Tab)) DialogueHandler.Start(TestHelper.GetTestDialogues());
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
