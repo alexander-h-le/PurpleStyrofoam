@@ -19,7 +19,7 @@ namespace PurpleStyrofoam
         public int MaxMana { get; set; }
         public string CurrentSave { get; set; }
         public GameClass Class { get; set; }
-        public List<Item> Inventory { get; }
+        public InventoryManager Inventory { get; }
         public Weapon EquippedWeapon { get; set; }
 
         public static string basePlayerSpriteName = "playerSprite";

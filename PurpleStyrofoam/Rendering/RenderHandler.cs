@@ -83,6 +83,7 @@ namespace PurpleStyrofoam.Rendering
             player.SpriteRectangle.X = newX;
             player.SpriteRectangle.Y = newY;
             Game.PlayerCharacter = player;
+            MenuHandler.AllPopUps.Add(((PlayerManager)Game.PlayerCharacter.Manager).Inventory);
         }
 
         private static void LoadGameTextures()

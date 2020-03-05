@@ -111,7 +111,7 @@ namespace PurpleStyrofoam
             KeyHelper.Update();
             RenderHandler.Update();
             MouseHandler.Update();
-            if (KeyHelper.CheckTap(Keys.Tab)) DialogueHandler.Start(TestHelper.GetTestDialogues());
+            if (KeyHelper.CheckTap(Keys.OemTilde)) DialogueHandler.Start(TestHelper.GetTestDialogues());
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);

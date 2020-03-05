@@ -51,7 +51,6 @@
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Items\Armors\Armor.cs" />
-    <Compile Include="Items\InventoryHandler.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Materials\Material.cs" />
     <Compile Include="Items\Miscellaneous Items\Companions\Companion.cs" />
@@ -107,6 +106,7 @@
     <Compile Include="Rendering\Text\Dialogue.cs" />
     <Compile Include="Rendering\Animations\Animation.cs" />
     <Compile Include="Rendering\Text\DialogueHandler.cs" />
+    <Compile Include="Managers\InventoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
