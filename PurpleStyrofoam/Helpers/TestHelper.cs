@@ -41,7 +41,7 @@ namespace PurpleStyrofoam.Helpers
 
                 new Dialogue(PlayerManager.movingPlayerSprite,
                 "Tenno (Titania)", "Only one argon?! Come ON!",
-                DIALOGUELOCATION.LEFT, DIALOGUESPEED.INSTANT)
+                DIALOGUELOCATION.MIDDLE, DIALOGUESPEED.INSTANT)
             };
         }
     }

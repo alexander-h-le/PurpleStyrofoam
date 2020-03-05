@@ -41,7 +41,6 @@ namespace PurpleStyrofoam
             Health = MaxHealth;
             MaxMana = 100;
             Mana = MaxMana;
-            Inventory = new List<Item>();
         }
     }
 }

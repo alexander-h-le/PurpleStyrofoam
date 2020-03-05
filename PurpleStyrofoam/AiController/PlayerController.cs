@@ -20,10 +20,16 @@ namespace PurpleStyrofoam.AiController
     public class PlayerController : AnimatedSprite
     {
         public bool InAir { get; private set; }
+        private Action ItemMovement;
 
         public PlayerController(PlayerManager manager) 
             : base(PlayerManager.basePlayerSpriteName, 1, 1, 100, 100, new PlayerControlledAI(), manager)
         {
+            ItemMovement = () =>
+            {
+                ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
+                    SpriteRectangle.Left - ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Width;
+            };
         }
 
         public override void Update()
@@ -90,10 +96,29 @@ namespace PurpleStyrofoam.AiController
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
             SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
             SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
-            if (KeyHelper.CheckHeld(Keys.A)) ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
-                    SpriteRectangle.Left - ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Width;
-            else ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
+            CheckItemSpriteDirection();
+            ItemMovement();
+
             ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y;
+        }
+
+        private void CheckItemSpriteDirection()
+        {
+            if (KeyHelper.CheckHeld(Keys.A))
+            {
+                ItemMovement = () =>
+                {
+                    ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
+                        SpriteRectangle.Left - ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Width;
+                };
+            }
+            else if (KeyHelper.CheckHeld(Keys.D))
+            {
+                ItemMovement = () =>
+                {
+                    ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
+                };
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus.FullScreenMenus;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
+using PurpleStyrofoam.Rendering.Text;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,7 +53,7 @@ namespace PurpleStyrofoam.Rendering.Menus
             {
                 if (menu.ShouldClose())
                 {
-                    RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
+                    if (DialogueHandler.ActiveDialogue == null) RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
                     break;
                 }
                 if (menu.ShouldOpen())

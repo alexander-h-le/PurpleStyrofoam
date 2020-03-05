@@ -16,7 +16,8 @@ namespace PurpleStyrofoam.Rendering.Text
             if (KeyHelper.CheckTap(Keys.Enter))
             {
                 if (DialogueIndex < Dialogues.Length - 1)
-                    ActiveDialogue = Dialogues[++DialogueIndex];
+                    if (!ActiveDialogue.IsCompleted()) ActiveDialogue.QuickComplete();
+                    else ActiveDialogue = Dialogues[++DialogueIndex];
                 else
                 {
                     RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;

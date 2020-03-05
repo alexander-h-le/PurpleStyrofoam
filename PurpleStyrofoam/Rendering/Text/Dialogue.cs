@@ -100,6 +100,16 @@ namespace PurpleStyrofoam.Rendering.Text
             }
             return newString;
         }
+
+        public void QuickComplete()
+        {
+            CurrentDialogueText = DialogueText;
+        }
+
+        public Boolean IsCompleted()
+        {
+            return CurrentDialogueText == DialogueText;
+        }
     }
 
     public enum DIALOGUELOCATION
