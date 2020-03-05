@@ -13,7 +13,18 @@ namespace PurpleStyrofoam.Rendering.Text
         public static void Update()
         {
             ActiveDialogue.Update();
-            if (KeyHelper.CheckTap(Keys.Enter)) ActiveDialogue = Dialogues[++DialogueIndex];
+            if (KeyHelper.CheckTap(Keys.Enter))
+            {
+                if (DialogueIndex < Dialogues.Length - 1)
+                    ActiveDialogue = Dialogues[++DialogueIndex];
+                else
+                {
+                    RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
+                    ActiveDialogue = null;
+                    Dialogues = new Dialogue[] { };
+                    DialogueIndex = 0;
+                }
+            }
         }
 
         public static void Draw(SpriteBatch sp)
@@ -24,6 +35,7 @@ namespace PurpleStyrofoam.Rendering.Text
         public static void Start(Dialogue[] dias)
         {
             DialogueIndex = 0;
+            Dialogues = dias;
             ActiveDialogue = dias[DialogueIndex];
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
         }

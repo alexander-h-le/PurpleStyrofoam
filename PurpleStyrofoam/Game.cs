@@ -13,6 +13,7 @@ using PurpleStyrofoam.AiController.AIs;
 using System;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Helpers;
+using PurpleStyrofoam.Rendering.Text;
 
 namespace PurpleStyrofoam
 {
@@ -109,6 +110,7 @@ namespace PurpleStyrofoam
             KeyHelper.Update();
             RenderHandler.Update();
             MouseHandler.Update();
+            if (KeyHelper.CheckTap(Keys.NumPad9)) DialogueHandler.Start(TestHelper.GetTestDialogues());
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);

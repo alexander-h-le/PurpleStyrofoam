@@ -52,7 +52,7 @@ namespace PurpleStyrofoam.AiController
                         ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:
-                        MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
+                        if (MenuHandler.ActivePopUp != null) MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
                         break;
                     default:
                         break;

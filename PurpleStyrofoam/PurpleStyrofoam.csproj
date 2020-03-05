@@ -49,6 +49,7 @@
     <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Items\Armors\Armor.cs" />
     <Compile Include="Items\InventoryHandler.cs" />
     <Compile Include="Items\Item.cs" />
@@ -181,8 +182,6 @@
     <Folder Include="Items\Weapons\Ranged\Throwing\" />
     <Folder Include="Items\Weapons\Ranged\Tomes\" />
     <Folder Include="Items\Weapons\Ranged\Wands\" />
-    <Folder Include="Rendering\Text\" />
-    <Folder Include="Rendering\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

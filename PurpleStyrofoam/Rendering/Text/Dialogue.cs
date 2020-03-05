@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Helpers;
@@ -16,25 +17,46 @@ namespace PurpleStyrofoam.Rendering.Text
         Vector2 Position;
         Rectangle TextureImagePosition;
 
-        readonly Vector2 TextBoxPosition = new Vector2(0f,(float) (0.7*Game.ScreenSize.Y));
+        Rectangle TextBoxPosition;
         Rectangle TextNamePosition;
 
         // TODO: Add sound
 
         int CurrentCharCount;
 
-        public Dialogue(string image, string name, string text, Rectangle imgPos)
+        public Dialogue(string image, string name, string text, DIALOGUELOCATION imgPos)
         {
+            font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
+
             // Taking input
             DisplayImage = Game.GameContent.Load<Texture2D>(image);
-            DialogueText = text;
+            DialogueText = StringBreaker(text);
             DialogueCharacterName = name;
-            TextureImagePosition = imgPos;
+            switch (imgPos)
+            {
+                case DIALOGUELOCATION.LEFT:
+                    TextureImagePosition = new Rectangle((int)RenderHandler.ScreenOffset.X, (int)RenderHandler.ScreenOffset.Y, 
+                        (int)(Game.ScreenSize.X / 3), (int)Game.ScreenSize.Y);
+                    break;
+                case DIALOGUELOCATION.MIDDLE:
+                    TextureImagePosition = new Rectangle((int)RenderHandler.ScreenOffset.X + (int)(Game.ScreenSize.X / 3), (int)RenderHandler.ScreenOffset.Y, 
+                        (int)(Game.ScreenSize.X / 3), (int)Game.ScreenSize.Y);
+                    break;
+                case DIALOGUELOCATION.RIGHT:
+                    TextureImagePosition = new Rectangle((int)RenderHandler.ScreenOffset.X + (int)(Game.ScreenSize.X - (Game.ScreenSize.X / 3)), (int)RenderHandler.ScreenOffset.Y, 
+                        (int)Game.ScreenSize.X, (int)Game.ScreenSize.Y);
+                    break;
+            }
 
             // Setting up instance variables
             CurrentCharCount = 0;
-            font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
-            TextNamePosition = new Rectangle(new Point(0, (int) TextBoxPosition.Y - 10), font.MeasureString(DialogueCharacterName).ToPoint());
+            TextBoxPosition = new Rectangle((int) RenderHandler.ScreenOffset.X, (int) ((0.7 * Game.ScreenSize.Y) + RenderHandler.ScreenOffset.Y), 
+                                            (int)Game.ScreenSize.X, (int)(0.3 * Game.ScreenSize.Y));
+            Point temp = font.MeasureString(DialogueCharacterName).ToPoint();
+            TextNamePosition = new Rectangle(new Point((int)RenderHandler.ScreenOffset.X, (int) TextBoxPosition.Y - temp.Y), temp);
+            Update();
+
+            Debug.WriteLine(DialogueText);
         }
 
         public void Draw(SpriteBatch sp)
@@ -43,50 +65,38 @@ namespace PurpleStyrofoam.Rendering.Text
             sp.Draw(DisplayImage, TextureImagePosition, Color.White);
 
             // Acutal Text Box position
-            sp.Draw(TextureHelper.Blank(Color.Black), TextBoxPosition, Color.Black);
-            string[] words = GetFoldedString();
-            for (int i = 0; i < words.Length; i++)
-            {
-                sp.DrawString(font, words[i], new Vector2(TextBoxPosition.X, TextBoxPosition.Y + (10 * i)), Color.White);
-            }
+            sp.Draw(TextureHelper.Blank(Color.Black), TextBoxPosition, Color.White);
+            sp.DrawString(font, CurrentDialogueText, TextBoxPosition.Location.ToVector2() + new Vector2(10,10), Color.White);
 
             // Name Tag position
-            sp.Draw(TextureHelper.Blank(Color.Black), TextNamePosition, Color.Black);
+            sp.Draw(TextureHelper.Blank(Color.Black), TextNamePosition, Color.White);
+            sp.DrawString(font, DialogueCharacterName, TextNamePosition.Location.ToVector2(), Color.White);
         }
 
         public void Update()
         {
-            if (CurrentCharCount != DialogueText.Length - 1) CurrentCharCount++;
+            if (CurrentCharCount < DialogueText.Length) CurrentCharCount++;
             CurrentDialogueText = DialogueText.Substring(0, CurrentCharCount);
         }
 
-        public string[] GetFoldedString()
+        string StringBreaker(string input)
         {
-            string[] arr = CurrentDialogueText.Split(' ');
-            List<String> strings = new List<string>();
-
-            int tempTotalLength = 0;
-            int index = 0;
-            string temp = "";
-            while (index < arr.Length)
+            string newString = "";
+            int lines = (int)Math.Ceiling((font.MeasureString(input).X + 10) / Game.ScreenSize.X);
+            int insertionPointIndex = input.Length / lines;
+            for (int i = 0; i < lines; i++)
             {
-                while (tempTotalLength < Game.ScreenSize.X)
-                {
-                    tempTotalLength += (int)font.MeasureString(arr[index]).X;
-                    temp += arr[index] + " ";
-                }
-                index++;
-                strings.Add(temp);
-                temp = "";
+                int start = insertionPointIndex * i;
+                int length = insertionPointIndex;
+                if (start + length <= input.Length)
+                    newString += input.Substring(start, length) + "\n";
             }
-            return strings.ToArray();
+            return newString;
         }
     }
 
-    public static class LOCATION
+    public enum DIALOGUELOCATION
     {
-        public static Rectangle LEFT = new Rectangle(0, 0, (int)(Game.ScreenSize.X/3), (int)Game.ScreenSize.Y);
-        public static Rectangle MIDDLE = new Rectangle((int)(Game.ScreenSize.X / 3), 0, (int)(Game.ScreenSize.X / 3), (int)Game.ScreenSize.Y);
-        public static Rectangle RIGHT = new Rectangle((int) (Game.ScreenSize.X - (Game.ScreenSize.X / 3)), 0, (int) Game.ScreenSize.X, (int) Game.ScreenSize.Y);
+        LEFT, MIDDLE, RIGHT
     }
 }

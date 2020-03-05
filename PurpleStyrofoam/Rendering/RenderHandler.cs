@@ -126,8 +126,8 @@ namespace PurpleStyrofoam.Rendering
                     break;
                 case GAMESTATE.PAUSED:
                     MenuHandler.CheckKeys();
-                    MenuHandler.Update();
-                    DialogueHandler.Update();
+                    if (DialogueHandler.ActiveDialogue != null) DialogueHandler.Update();
+                    else MenuHandler.Update();
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
@@ -174,10 +174,10 @@ namespace PurpleStyrofoam.Rendering
             switch (CurrentGameState)
             {
                 case GAMESTATE.ACTIVE:
-                    FindOffset(out xMove, out yMove);
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     ScreenOffset.X = (Game.PlayerCharacter.SpriteRectangle.X) - XOffset;
                     ScreenOffset.Y = (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
+                    FindOffset(out xMove, out yMove);
+                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     selectedMap.DrawMap(sp, (spr) => {
                         foreach (MapObject i in extras) i.Draw(spr);
                         foreach (AnimatedSprite item in allCharacterSprites) item.Draw(spr);
@@ -187,10 +187,12 @@ namespace PurpleStyrofoam.Rendering
                     PlayerInfoUI.Draw(sp);
                     break;
                 case GAMESTATE.MAINMENU:
-                    sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
+                    sp.Begin(SpriteSortMode.Deferred);
                     if (MenuHandler.ActiveFullScreenMenu != null) MenuHandler.DrawFullScreenMenu(sp);
                     break;
                 case GAMESTATE.PAUSED:
+                    ScreenOffset.X = (Game.PlayerCharacter.SpriteRectangle.X) - XOffset;
+                    ScreenOffset.Y = (Game.PlayerCharacter.SpriteRectangle.Y) - YOffset;
                     FindOffset(out xMove, out yMove);
                     sp.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix.CreateTranslation(xMove, yMove, 0));
                     selectedMap.DrawMap(sp, (spr) => {
@@ -199,7 +201,7 @@ namespace PurpleStyrofoam.Rendering
                         foreach (Projectile item in allProjectiles) item.Draw(spr);
                         foreach (ItemSprite item in allItemSprites) item.Draw(spr);
                     });
-                    DialogueHandler.Draw(sp);
+                    if (DialogueHandler.ActiveDialogue != null) DialogueHandler.Draw(sp);
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
                     break;
                 default:
@@ -210,18 +212,26 @@ namespace PurpleStyrofoam.Rendering
 
         private static void FindOffset(out int XMovement, out int YMovement)
         {
-            if (ScreenOffset.X < selectedMap.maxBounds.Left) XMovement = selectedMap.maxBounds.Left;
+            if (ScreenOffset.X <= selectedMap.maxBounds.Left)
+            {
+                XMovement = selectedMap.maxBounds.Left;
+                ScreenOffset.X = 0;
+            } else if (ScreenOffset.X >= selectedMap.maxBounds.Right)
+            {
+                XMovement = selectedMap.maxBounds.Right;
+                ScreenOffset.X = selectedMap.maxBounds.Right - Game.ScreenSize.X;
+            } else XMovement = (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
 
-            else if (ScreenOffset.X > selectedMap.maxBounds.Right) XMovement = selectedMap.maxBounds.Right;
 
-            else XMovement = (-Game.PlayerCharacter.SpriteRectangle.X) + XOffset;
-
-
-            if (ScreenOffset.Y < selectedMap.maxBounds.Top) YMovement = selectedMap.maxBounds.Top;
-
-            else if (ScreenOffset.Y > selectedMap.maxBounds.Bottom) YMovement = selectedMap.maxBounds.Bottom;
-
-            else YMovement = (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
+            if (ScreenOffset.Y <= selectedMap.maxBounds.Top)
+            {
+                YMovement = selectedMap.maxBounds.Top;
+                ScreenOffset.Y = 0;
+            } else if (ScreenOffset.Y >= selectedMap.maxBounds.Bottom)
+            {
+                YMovement = selectedMap.maxBounds.Bottom;
+                ScreenOffset.Y = selectedMap.maxBounds.Bottom - Game.ScreenSize.Y;
+            } else YMovement = (-Game.PlayerCharacter.SpriteRectangle.Y) + YOffset;
         }
     }
 

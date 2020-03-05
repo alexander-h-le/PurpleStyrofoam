@@ -47,7 +47,6 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             int i = 0;
             foreach (string f in Directory.GetFiles(GameSaveHandler.PathDirectory))
             {
-                Debug.WriteLine(Path.GetFileName(f));
                 GameSave save = GameSaveHandler.RetrieveGameSave(Path.GetFileName(f));
                 string gClass = save.player.Class.GetType().Name;
                 string DisplayText = Path.GetFileName(f) + " : " + gClass;

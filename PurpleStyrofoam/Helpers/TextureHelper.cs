@@ -22,6 +22,7 @@ namespace PurpleStyrofoam.Helpers
         {
             Texture2D tx = new Texture2D(Game.graphics.GraphicsDevice, 1, 1);
             tx.SetData(new[] { cl });
+            return tx;
         }
     }
 }
