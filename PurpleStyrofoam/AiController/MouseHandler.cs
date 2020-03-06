@@ -25,7 +25,6 @@ namespace PurpleStyrofoam.AiController
         public static Vector2 mousePos;
         public static void Update()
         {
-            newState = Mouse.GetState();
             mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
             if (newState.RightButton == ButtonState.Pressed)
             {
@@ -52,13 +51,14 @@ namespace PurpleStyrofoam.AiController
                         ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:
-                        if (MenuHandler.ActivePopUp != null) MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
+                        if (MenuHandler.ActivePopUp != null && oldState.LeftButton == ButtonState.Released) MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
                         break;
                     default:
                         break;
                 }
             }
             oldState = newState;
+            newState = Mouse.GetState();
         }
     }
 }

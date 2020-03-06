@@ -14,6 +14,7 @@ using System;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Rendering.Text;
+using PurpleStyrofoam.Items.Weapons.Melee.Swords;
 
 namespace PurpleStyrofoam
 {
@@ -34,7 +35,7 @@ namespace PurpleStyrofoam
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
+            graphics.ToggleFullScreen();
             graphics.HardwareModeSwitch = false;
             graphics.ApplyChanges();
             GameContent = this.Content;
@@ -49,6 +50,7 @@ namespace PurpleStyrofoam
         protected override void Initialize()
         {
             setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
+            // setScreenSize(1000, 1000);
             GameSaveHandler.Initialize();
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
@@ -96,7 +98,6 @@ namespace PurpleStyrofoam
             graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
             graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
             graphics.ApplyChanges();
-
         }
 
         public static bool ShouldClose = false;
@@ -112,9 +113,13 @@ namespace PurpleStyrofoam
             RenderHandler.Update();
             MouseHandler.Update();
             if (KeyHelper.CheckTap(Keys.OemTilde)) DialogueHandler.Start(TestHelper.GetTestDialogues());
+            if (KeyHelper.CheckTap(Keys.D0))
+            {
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new Flight());
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.LoadItems();
+            }
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;
-            setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
             base.Update(gameTime);
         }
 

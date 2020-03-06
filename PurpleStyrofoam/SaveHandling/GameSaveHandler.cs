@@ -4,6 +4,7 @@ using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Items;
 using PurpleStyrofoam.Items.Weapons;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
+using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
@@ -182,6 +183,7 @@ namespace PurpleStyrofoam.Rendering
             newSave.player = (PlayerManager) player.Manager;
             ((PlayerManager)newSave.player).Class = targetClass;
             ((PlayerManager)newSave.player).EquippedWeapon = equippedWeapon;
+            ((PlayerManager)newSave.player).Inventory = new InventoryManager();
 
             // ------------------------------------------------------------------------------------------------
 

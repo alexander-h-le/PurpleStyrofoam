@@ -28,6 +28,16 @@ namespace PurpleStyrofoam.Rendering
             Flipped = false;
             Visible = true;
         }
+        public ItemSprite(Texture2D textureIn, Vector2 origIn, int xIn = 0, int yIn = 0, float angleIn = 0.0f, float scale = 1.0f, int width = 50, int height = 50)
+        {
+            Texture = textureIn;
+            textureName = Texture.Name;
+            Origin = origIn;
+            Scale = scale;
+            ItemRectangle = new Rectangle(xIn, yIn, width, height);
+            Flipped = false;
+            Visible = true;
+        }
 
         public override void Draw(SpriteBatch sp)
         {
@@ -48,7 +58,7 @@ namespace PurpleStyrofoam.Rendering
 
         public override void Load()
         {
-            Texture = Game.GameContent.Load<Texture2D>(textureName);
+            if (Texture == null) Texture = Game.GameContent.Load<Texture2D>(textureName);
         }
     }
 }

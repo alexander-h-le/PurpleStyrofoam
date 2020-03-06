@@ -56,14 +56,11 @@ namespace PurpleStyrofoam.Rendering.Text
                 default:
                     break;
             }
-            Debug.WriteLine(TextNamePosition);
 
             // Setting up instance variables
             CurrentCharCount = 0;
             Speed = spe;
             Update();
-
-            Debug.WriteLine(DialogueText);
         }
 
         public void Draw(SpriteBatch sp)

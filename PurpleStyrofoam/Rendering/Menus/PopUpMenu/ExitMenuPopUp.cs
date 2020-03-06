@@ -68,7 +68,6 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
 
 
                 IsOpen = true;
-                MenuHandler.ActivePopUp = this;
                 return true;
             }
             return false;
@@ -85,7 +84,6 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
             {
                 IsOpen = false;
                 ForceClose = false;
-                MenuHandler.ActivePopUp = null;
                 return true;
             }
             return false;

@@ -18,9 +18,16 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            JObject item = JObject.Load(reader);
-            var type = item.Value<string>("type");
-            return (Item)Activator.CreateInstance(Type.GetType(type));
+            try 
+            { 
+                JObject item = JObject.Load(reader);
+                var type = item.Value<string>("type");
+                return (Item)Activator.CreateInstance(Type.GetType(type));
+            }
+            catch (JsonReaderException e)
+            {
+                return null;
+            }
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

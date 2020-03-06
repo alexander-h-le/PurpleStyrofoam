@@ -16,7 +16,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
 
         public override string Description => "Although it is considered a failed imitation of the legendary sword, Flight, its power is not to be pitied. Wielders of this powerful rapier have been known to finish fights faster than they started.";
 
-        public Lithiel() : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ItemSprite("Lithiel", new Vector2(0, 0))) {  }
+        public Lithiel() : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ItemSprite(PlayerManager.jumpingDPlayerSprite, new Vector2(0, 0))) {  }
 
         public override void OnInventoryUse()
         {

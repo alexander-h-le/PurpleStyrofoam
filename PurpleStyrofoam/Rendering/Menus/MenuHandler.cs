@@ -41,7 +41,7 @@ namespace PurpleStyrofoam.Rendering.Menus
         }
         public static void DrawPopUpMenu(SpriteBatch sp)
         {
-            ActivePopUp.Draw(sp);
+            if (ActivePopUp != null) ActivePopUp.Draw(sp);
         }
         public static void Update()
         {
@@ -53,11 +53,13 @@ namespace PurpleStyrofoam.Rendering.Menus
             {
                 if (menu.ShouldClose())
                 {
+                    ActivePopUp = null;
                     if (DialogueHandler.ActiveDialogue == null) RenderHandler.CurrentGameState = GAMESTATE.ACTIVE;
                     break;
                 }
                 if (menu.ShouldOpen())
                 {
+                    ActivePopUp = menu;
                     RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
                     break;
                 }

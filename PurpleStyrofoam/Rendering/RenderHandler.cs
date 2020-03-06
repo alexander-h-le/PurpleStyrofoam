@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
+using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
@@ -83,6 +84,8 @@ namespace PurpleStyrofoam.Rendering
             player.SpriteRectangle.X = newX;
             player.SpriteRectangle.Y = newY;
             Game.PlayerCharacter = player;
+            if (((PlayerManager)Game.PlayerCharacter.Manager).Inventory == null) ((PlayerManager)Game.PlayerCharacter.Manager).Inventory = new InventoryManager();
+            ((PlayerManager)Game.PlayerCharacter.Manager).Inventory.LoadItems();
             MenuHandler.AllPopUps.Add(((PlayerManager)Game.PlayerCharacter.Manager).Inventory);
         }
 
