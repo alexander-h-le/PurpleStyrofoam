@@ -35,9 +35,10 @@ namespace PurpleStyrofoam
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.ToggleFullScreen();
+            graphics.IsFullScreen = true;
             graphics.HardwareModeSwitch = false;
             graphics.ApplyChanges();
+            setScreenSize(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             GameContent = this.Content;
         }
 
@@ -49,8 +50,7 @@ namespace PurpleStyrofoam
         /// </summary>
         protected override void Initialize()
         {
-            setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
-            // setScreenSize(1000, 1000);
+            //setScreenSize(graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
             GameSaveHandler.Initialize();
             MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
             RenderHandler.Initialize();
@@ -95,8 +95,9 @@ namespace PurpleStyrofoam
         protected void setScreenSize(float w, float h)
         {
             ScreenSize = new Vector2(w,h);
-            graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
-            graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
+            graphics.GraphicsDevice.Viewport = new Viewport(0,0,(int)w,(int)h);
+            graphics.PreferredBackBufferWidth = (int) w;
+            graphics.PreferredBackBufferHeight = (int) h;
             graphics.ApplyChanges();
         }
 
