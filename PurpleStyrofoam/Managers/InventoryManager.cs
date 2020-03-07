@@ -11,6 +11,7 @@ using System.Diagnostics;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
 using PurpleStyrofoam.Items.Weapons.Melee.Rapiers;
 using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Rendering.Menus;
 
 namespace PurpleStyrofoam.Managers
 {
@@ -21,6 +22,7 @@ namespace PurpleStyrofoam.Managers
         Rectangle location;
         public InventoryManager()
         {
+            Open = false;
             if (Inventory == null)
             {
                 Inventory = new Item[107];
@@ -49,7 +51,10 @@ namespace PurpleStyrofoam.Managers
         }
 
         // Active updating is required due to player interaction with items.
-        readonly int ItemSideLength = (int)Game.ScreenSize.X / 30;
+        readonly int ItemSideLength = (int)Game.ScreenSize.X / 35;
+
+        public bool Open { get; set; }
+
         public void Update()
         {
             int SpaceBuffer = (int)Game.ScreenSize.X / 400;
@@ -143,13 +148,12 @@ namespace PurpleStyrofoam.Managers
                 if (i != null) i.Sprite.Load();
             }
         }
-
-        bool open = false;
         public bool ShouldOpen()
         {
-            if (KeyHelper.CheckTap(Keys.I) && !open)
+            if (MenuHandler.ActivePopUp != this) Open = false;
+            if (KeyHelper.CheckTap(Keys.I) && !Open)
             {
-                open = true;
+                Open = true;
                 return true;
             }
             return false;
@@ -157,9 +161,9 @@ namespace PurpleStyrofoam.Managers
 
         public bool ShouldClose()
         {
-            if (KeyHelper.CheckTap(Keys.I) && open)
+            if (KeyHelper.CheckTap(Keys.I) && Open)
             {
-                open = false;
+                Open = false;
                 return true;
             }
             return false;

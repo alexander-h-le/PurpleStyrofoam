@@ -16,11 +16,14 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
     public class ExitMenuPopUp : IPopUp
     {
         List<MenuItem> menuItems { get; set; }
+        public bool Open { get; set; }
+
         Rectangle PopUpRect;
         const int SizeX = 500;
         const int SizeY = 500;
         public ExitMenuPopUp()
         {
+            Open = false;
             menuItems = new List<MenuItem>();
         }
         public void ActionAtPosition(Vector2 pos)
@@ -43,10 +46,9 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
             }
         }
 
-        public bool IsOpen = false;
         public bool ShouldOpen()
         {
-            if (!IsOpen && KeyHelper.CheckTap(Keys.Escape))
+            if (!Open && KeyHelper.CheckTap(Keys.Escape))
             {
                 PopUpRect = new Rectangle((int)RenderHandler.ScreenOffset.X + ((int)Game.ScreenSize.X / 2) - (SizeX/2), 
                     (int)RenderHandler.ScreenOffset.Y + ((int)Game.ScreenSize.Y / 2) - (SizeY/2), 
@@ -62,12 +64,10 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
                         RenderHandler.CurrentGameState = GAMESTATE.MAINMENU;
                         GameSaveHandler.CreateSave(( (PlayerManager) Game.PlayerCharacter.Manager).CurrentSave);
                         MenuHandler.ActiveFullScreenMenu = new GameStartMenu();
-                        ForceClose = true;
+                        Open = false;
                     }
                 });
-
-
-                IsOpen = true;
+                Open = true;
                 return true;
             }
             return false;
@@ -77,13 +77,11 @@ namespace PurpleStyrofoam.Rendering.Menus.PopUpMenu
         {
         }
 
-        private bool ForceClose = false;
         public bool ShouldClose()
         {
-            if (IsOpen && (KeyHelper.CheckTap(Keys.Escape) || ForceClose))
+            if (Open && KeyHelper.CheckTap(Keys.Escape))
             {
-                IsOpen = false;
-                ForceClose = false;
+                Open = false;
                 return true;
             }
             return false;
