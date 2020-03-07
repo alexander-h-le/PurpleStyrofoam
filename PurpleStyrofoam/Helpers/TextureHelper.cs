@@ -11,6 +11,7 @@ namespace PurpleStyrofoam.Helpers
             public const string EnemySprite = "enemyTest";
             public const string TestImage = "testIMG";
             public const string Dog = "SmileyWalk";
+            public const string DialogueTestSprite = "DialogueTestSprite";
         }
 
         public static class Fonts

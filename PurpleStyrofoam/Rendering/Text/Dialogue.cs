@@ -18,13 +18,15 @@ namespace PurpleStyrofoam.Rendering.Text
         Rectangle TextBoxPosition;
         Rectangle TextNamePosition;
         DIALOGUESPEED Speed;
+        bool Flip;
 
         // TODO: Add sound
 
         int CurrentCharCount;
 
-        public Dialogue(string image, string name, string text, DIALOGUELOCATION imgPos, DIALOGUESPEED spe = DIALOGUESPEED.VERYFAST)
+        public Dialogue(string image, string name, string text, DIALOGUELOCATION imgPos, DIALOGUESPEED spe = DIALOGUESPEED.VERYFAST, bool flip = false)
         {
+            Flip = flip;
             font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
 
             // Taking input
