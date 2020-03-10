@@ -64,7 +64,7 @@ namespace PurpleStyrofoam.Rendering
         /// <returns>Returns whether or not the file could be found and successfully loaded</returns>
         public static bool LoadSave(string SaveName)
         {
-            RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
+            // RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             try
             {
                 using (StreamReader sr = File.OpenText(PathDirectory + SaveName))
@@ -75,6 +75,7 @@ namespace PurpleStyrofoam.Rendering
                         settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         settings.Converters.Add(new GameClassConverter());
                         settings.Converters.Add(new ItemConverter());
+                        settings.Converters.Add(new AnimatedSpriteConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
@@ -105,6 +106,7 @@ namespace PurpleStyrofoam.Rendering
                         settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         settings.Converters.Add(new GameClassConverter());
                         settings.Converters.Add(new ItemConverter());
+                        settings.Converters.Add(new AnimatedSpriteConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
@@ -154,6 +156,7 @@ namespace PurpleStyrofoam.Rendering
                 settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 settings.Converters.Add(new GameClassConverter());
                 settings.Converters.Add(new ItemConverter());
+                settings.Converters.Add(new AnimatedSpriteConverter());
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }
@@ -176,14 +179,13 @@ namespace PurpleStyrofoam.Rendering
             GAMESTATE prevGameState = RenderHandler.CurrentGameState;
             RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
 
-            RenderHandler.CurrentGameState = GAMESTATE.PAUSED;
             GameSave newSave = new GameSave();
             newSave.PlayerPosition = Position;
             newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
             newSave.player = (PlayerManager) player.Manager;
-            ((PlayerManager)newSave.player).Class = targetClass;
-            ((PlayerManager)newSave.player).EquippedWeapon = equippedWeapon;
-            ((PlayerManager)newSave.player).Inventory = new InventoryManager();
+            newSave.player.Class = targetClass;
+            newSave.player.EquippedWeapon = equippedWeapon;
+            newSave.player.Inventory = new InventoryManager();
 
             // ------------------------------------------------------------------------------------------------
 
@@ -194,6 +196,7 @@ namespace PurpleStyrofoam.Rendering
                 settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 settings.Converters.Add(new GameClassConverter());
                 settings.Converters.Add(new ItemConverter());
+                settings.Converters.Add(new AnimatedSpriteConverter());
                 JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                 jsonSerializer.Serialize(sw, newSave);
             }

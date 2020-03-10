@@ -79,11 +79,11 @@ namespace PurpleStyrofoam.Rendering
             allItemSprites = newItems != null ? newItems : new List<ItemSprite>();
             if ( ((PlayerManager) player.Manager).EquippedWeapon != null) allItemSprites.Add(((PlayerManager)player.Manager).EquippedWeapon.Sprite);
 
-            PlayerInfoUI.Initialize();
             LoadGameTextures();
             player.SpriteRectangle.X = newX;
             player.SpriteRectangle.Y = newY;
             Game.PlayerCharacter = player;
+            PlayerInfoUI.Initialize();
             if (((PlayerManager)Game.PlayerCharacter.Manager).Inventory == null) ((PlayerManager)Game.PlayerCharacter.Manager).Inventory = new InventoryManager();
             ((PlayerManager)Game.PlayerCharacter.Manager).Inventory.LoadItems();
             MenuHandler.AllPopUps.Add(((PlayerManager)Game.PlayerCharacter.Manager).Inventory);

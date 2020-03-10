@@ -14,6 +14,8 @@ namespace PurpleStyrofoam.Managers.Classes
     {
         PlayerController SpriteSource;
         CasterEMove t;
+        private const double MaxCooldown = 3.0;
+        private double CurrentCooldown = 0.0;
         public Caster()
         {
             SpriteSource = Game.PlayerCharacter;
@@ -23,24 +25,32 @@ namespace PurpleStyrofoam.Managers.Classes
             SpriteSource = (PlayerController)spIN;
         }
 
+        public override double CooldownPercentage()
+        {
+            return CurrentCooldown / MaxCooldown;
+        }
+
         public override void EAction()
         {
             if (t == null)
             {
-                t = new CasterEMove(SpriteSource.SpriteRectangle.Right, SpriteSource.SpriteRectangle.Top,
-                BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y), MouseHandler.mousePos, 5));
-                t.Velocity.Y = 0;
+                if (CurrentCooldown != MaxCooldown) return;
+                t = new CasterEMove(SpriteSource.SpriteRectangle.Right - (SpriteSource.SpriteRectangle.Width/2), SpriteSource.SpriteRectangle.Top,
+                BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y), MouseHandler.mousePos, 7)
+                );
+                // t.Velocity.Y = 0;
                 RenderHandler.allProjectiles.Add(t);
+                CurrentCooldown -= 0.01;
             } else
             {
-                if (t.CollidingR)
+                if (t.Colliding[2])
                 {
                     SpriteSource.SpriteRectangle.X = t.ProjRect.Right - SpriteSource.SpriteRectangle.Width;
-                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y;
+                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y + 2;
                 } else
                 {
                     SpriteSource.SpriteRectangle.X = t.ProjRect.X;
-                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y;
+                    SpriteSource.SpriteRectangle.Y = t.ProjRect.Y + 2;
                 }
                 t.Delete();
                 t = null;
@@ -50,6 +60,15 @@ namespace PurpleStyrofoam.Managers.Classes
         public override void RClick()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Update()
+        {
+            if (!(CurrentCooldown == MaxCooldown))
+            {
+                if (CurrentCooldown < 0) CurrentCooldown = MaxCooldown;
+                else CurrentCooldown -= 0.016;
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ namespace PurpleStyrofoam.Managers.Classes
     {
         public KnightHook projectile;
         PlayerController SpriteSource;
+        const double MaxCooldown = 3.0;
+        double CurrentCooldown = 0.0;
         public Knight()
         {
             SpriteSource = Game.PlayerCharacter;
@@ -25,14 +27,21 @@ namespace PurpleStyrofoam.Managers.Classes
             SpriteSource = (PlayerController) spIn;
         }
 
+        public override double CooldownPercentage()
+        {
+            return CurrentCooldown / MaxCooldown;
+        }
+
         public override void EAction()
         {
             if (projectile == null)
             {
+                if (CurrentCooldown != MaxCooldown) return;
                 projectile = new KnightHook(
                     SpriteSource.SpriteRectangle,
                     BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.X, SpriteSource.SpriteRectangle.Y),
                     MouseHandler.mousePos),0f, SpriteSource);
+                CurrentCooldown -= 0.01;
             } else if (projectile.Connected == KnightHook.CONNECTION.MAP)
             {
                 Vector2 newVect = BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.X, SpriteSource.SpriteRectangle.Y),
@@ -55,6 +64,15 @@ namespace PurpleStyrofoam.Managers.Classes
         public override void RClick()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Update()
+        {
+            if (!(CurrentCooldown == MaxCooldown))
+            {
+                if (CurrentCooldown < 0) CurrentCooldown = MaxCooldown;
+                else CurrentCooldown -= 0.016;
+            }
         }
     }
 }

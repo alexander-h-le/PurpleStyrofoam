@@ -24,15 +24,16 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
 
         const double ProjectileSpeedModifier = 40;
-        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target, double SpeedModifier = ProjectileSpeedModifier)
+        public static Vector2 GenerateVelocityVector(Vector2 source, Vector2 target,
+            double SpeedModifier = ProjectileSpeedModifier, double xModifier = 1.0, double yModifier = 1.0)
         {
             double x1 = target.X - source.X;
             double y1 = target.Y - source.Y;
             double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1));
             double angle = Math.Acos(x1 / hypotenuse);
             double normalizedHypotenuse = SpeedModifier;
-            double yResult = Math.Sin(angle) * normalizedHypotenuse;
-            double xResult = Math.Cos(angle) * normalizedHypotenuse;
+            double yResult = Math.Sin(angle) * normalizedHypotenuse * yModifier;
+            double xResult = Math.Cos(angle) * normalizedHypotenuse * xModifier;
             return new Vector2((float)(xResult), (float)(target.Y > source.Y ? yResult : -yResult));
 
         }

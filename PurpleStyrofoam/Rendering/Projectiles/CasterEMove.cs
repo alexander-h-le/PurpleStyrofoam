@@ -13,20 +13,17 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         Texture2D text = Game.GameContent.Load<Texture2D>("playerSpriteJumpingDynamic");
         public Rectangle ProjRect;
         public Vector2 Velocity;
-        public bool CollidingL;
-        public bool CollidingR;
+        public bool[] Colliding;
         public CasterEMove(int x, int y, Vector2 vel)
         {
             ProjRect = new Rectangle(x,y,25,25);
             Velocity = vel;
-            CollidingL = false;
-            CollidingR = false;
+            Colliding = new bool[] { false, false, false, false };
         }
         public override void DetectCollision() 
         {
             bool[] ar = CollisionDetection.DetectCollisionArrayMap(ProjRect);
-            CollidingL = ar[3];
-            CollidingR = ar[2];
+            Colliding = ar;
         }
         public override void Draw(SpriteBatch sp)
         {
@@ -46,10 +43,12 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         public override void Update()
         {
             DetectCollision();
-            if (!(CollidingL || CollidingR))
+            if (!Colliding.Contains(true))
             {
                 ProjRect.X += (int)Velocity.X;
-                if (Velocity.X != 0) Velocity.X += Velocity.X > 0 ? -0.02f : 0.02f;
+                ProjRect.Y += (int)Velocity.Y;
+                if (Velocity.Y != 0) Velocity.Y += Velocity.Y > 0 ? -0.05f : 0.05f;
+                if (Velocity.X != 0) Velocity.X += Velocity.X > 0 ? -0.015f : 0.015f;
             }
         }
     }

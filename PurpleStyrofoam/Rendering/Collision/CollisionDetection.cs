@@ -35,7 +35,11 @@ namespace PurpleStyrofoam.Rendering
             return false;
         }
 
-        //bool array = {NORTH,SOUTH,EAST,WEST}
+        /// <summary>
+        /// {North South East West}
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
         public static bool[] DetectCollisionArrayMap(Rectangle rect)
         {
             bool East = false;

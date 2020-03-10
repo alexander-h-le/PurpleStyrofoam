@@ -31,7 +31,7 @@ namespace PurpleStyrofoam.Rendering
             try { sp.Draw(texture, new Rectangle((int)location.X, (int)location.Y, width, height), Color.White); }
             catch (ArgumentNullException e)
             {
-                throw new Exception("Texture was not properly loaded at: " + e.ParamName);
+                throw new Exception("Texture was not properly loaded at: " + e.GetType().Name);
             }
         }
 
