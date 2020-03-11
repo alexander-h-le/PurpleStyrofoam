@@ -26,7 +26,6 @@ namespace PurpleStyrofoam.Rendering
     static class RenderHandler
     {
         public static List<AnimatedSprite> allCharacterSprites { get; private set; }
-        public static List<ItemSprite> allItemSprites { get; private set; }
         public static List<Projectile> allProjectiles { get; private set; }
 
         /// <summary>
@@ -49,7 +48,6 @@ namespace PurpleStyrofoam.Rendering
         public static void Initialize()
         {
             allCharacterSprites = new List<AnimatedSprite>();
-            allItemSprites = new List<ItemSprite>();
             allProjectiles = new List<Projectile>();
             purgeProjectiles = new List<Projectile>();
             purgeSprites = new List<AnimatedSprite>();
@@ -64,7 +62,7 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="player">The player information to be handed in</param>
         /// <param name="newX">The new player position</param>
         /// <param name="newY">The new player position</param>
-        public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0, List<AnimatedSprite> newSprites = null, List<ItemSprite> newItems = null)
+        public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0, List<AnimatedSprite> newSprites = null)
         {
 
             player.SpriteRectangle.X = newX;
@@ -73,7 +71,6 @@ namespace PurpleStyrofoam.Rendering
             Game.PlayerManager = (PlayerManager)Game.PlayerCharacter.Manager;
 
             allCharacterSprites.Clear();
-            allItemSprites.Clear();
             allProjectiles.Clear();
 
             selectedMap = newMap;
@@ -82,8 +79,6 @@ namespace PurpleStyrofoam.Rendering
             else if (selectedMap.sprites != null) allCharacterSprites.AddRange(selectedMap.sprites);
             if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
 
-            allItemSprites = newItems != null ? newItems : new List<ItemSprite>();
-            if (Game.PlayerManager.EquippedWeapon != null) allItemSprites.Add(Game.PlayerManager.EquippedWeapon.Sprite);
 
             LoadGameTextures();
             PlayerInfoUI.Initialize();
@@ -98,7 +93,7 @@ namespace PurpleStyrofoam.Rendering
             foreach (MapObject i in selectedMap.BackgroundLayer) i.Load();
             foreach (MapObject i in selectedMap.ActiveLayer) i.Load();
             foreach (MapObject i in selectedMap.ForegroundLayer) i.Load();
-            foreach (ItemSprite i in allItemSprites) i.Load();
+            if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.Load();
         }
 
 
@@ -125,6 +120,7 @@ namespace PurpleStyrofoam.Rendering
                         ObjectMapper.AddSpriteObject(sprite);
                     }
                     foreach (Projectile item in allProjectiles) item.Update();
+                    if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.Update();
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
                     PlayerInfoUI.Update();
@@ -189,7 +185,7 @@ namespace PurpleStyrofoam.Rendering
                         foreach (MapObject i in extras) i.Draw(spr);
                         foreach (AnimatedSprite item in allCharacterSprites) item.Draw(spr);
                         foreach (Projectile item in allProjectiles) item.Draw(spr);
-                        foreach (ItemSprite item in allItemSprites) item.Draw(spr);
+                        if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.Draw(spr);
                     });
                     PlayerInfoUI.Draw(sp);
                     break;
@@ -206,7 +202,7 @@ namespace PurpleStyrofoam.Rendering
                         foreach (MapObject i in extras) i.Draw(spr);
                         foreach (AnimatedSprite item in allCharacterSprites) item.Draw(spr);
                         foreach (Projectile item in allProjectiles) item.Draw(spr);
-                        foreach (ItemSprite item in allItemSprites) item.Draw(spr);
+                        if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.Draw(spr);
                     });
                     if (DialogueHandler.ActiveDialogue != null) DialogueHandler.Draw(sp);
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);

@@ -17,7 +17,7 @@ namespace PurpleStyrofoam.Managers.Classes
     {
         PlayerController SourceSprite;
         public double MaxCooldown = 2.50;
-        double CurrentCooldown = 0.0;
+        public double CurrentCooldown = 0.0;
         public Rogue()
         {
             SourceSprite = Game.PlayerCharacter;
@@ -36,7 +36,7 @@ namespace PurpleStyrofoam.Managers.Classes
         {
             if (CurrentCooldown != MaxCooldown) return;
             Game.PlayerCharacter.velocity = BasicProjectile.GenerateVelocityVector(new Vector2(Game.PlayerCharacter.SpriteRectangle.X, Game.PlayerCharacter.SpriteRectangle.Y),
-                MouseHandler.mousePos, 1000, yModifier: 3.0);
+                MouseHandler.mousePos, 1200);
             CurrentCooldown -= 0.01;
         }
 

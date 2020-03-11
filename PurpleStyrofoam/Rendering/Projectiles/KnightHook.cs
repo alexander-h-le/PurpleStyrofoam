@@ -31,7 +31,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             if (CollisionDetection.DetectCollisionSprites(SpriteSource, ProjRect, out ConnectedSprite))
             {
                 Connected = CONNECTION.SPRITE;
-            } else if (CollisionDetection.DetectCollisionMap(ProjRect))
+            } else if (CollisionDetection.DetectCollisionMap(ProjRect, out _))
             {
                 Connected = CONNECTION.MAP;
             }

@@ -15,6 +15,7 @@ using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 using PurpleStyrofoam.Helpers;
+using PurpleStyrofoam.Items.Weapons;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -34,7 +35,7 @@ namespace PurpleStyrofoam.AiController
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        ((PlayerManager)Game.PlayerCharacter.Manager).Class.RClick();
+                        Game.PlayerManager.Class.RClick();
                         break;
                     case GAMESTATE.PAUSED:
                         if (Game.PlayerManager.Inventory.Open) Game.PlayerManager.Inventory.InventoryUseAtPosition(mousePos);
@@ -51,7 +52,7 @@ namespace PurpleStyrofoam.AiController
                         if (oldState.LeftButton == ButtonState.Released) MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
                         break;
                     case (GAMESTATE.ACTIVE):
-                        ((PlayerManager)Game.PlayerCharacter.Manager).EquippedWeapon.OnLeftClick();
+                        ((Weapon)Game.PlayerManager.EquippedWeapon).OnLeftClick();
                         break;
                     case GAMESTATE.PAUSED:
                         if (MenuHandler.ActivePopUp != null && oldState.LeftButton == ButtonState.Released) MenuHandler.ActivePopUp.ActionAtPosition(mousePos);

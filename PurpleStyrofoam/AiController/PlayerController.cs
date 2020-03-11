@@ -34,36 +34,53 @@ namespace PurpleStyrofoam.AiController
 
         public override void Update()
         {
-            if (velocity.X != 0 || velocity.Y != 0) base.DetectCollision();
+            // Check if player is colliding with something. This will set the directional variables
+            base.DetectCollision();
+
+            // Update velocity if there is keyboard input
             CheckKeys();
+
+            // Update player animation
             animate.Update();
             if (animate.Finished() && animate.Texture.Name == TextureHelper.Sprites.Dog) animate.Switch(PlayerManager.jumpingSPlayerSprite, SpriteRectangle, 1, 1);
+
+            // Update the velocity and position of the player
             UpdateVelocity();
+
+            // Update the item position relative to player
+            if (((PlayerManager)Manager).EquippedWeapon != null)
+            {
+                ItemMovement();
+                ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y;
+            }
         }
         private const int moveSpeed = 20;
         private const int jumpSpeed = 1500;
         public void CheckKeys()
         {
-            if (South)
-            {
-                InAir = false;
-                velocity.Y = 0;
-            }
-            else
-            {
-                velocity.Y += 1;
-            }
+            if (South) InAir = false;
             if (RenderHandler.CurrentGameState == GAMESTATE.ACTIVE)
             {
                 if (KeyHelper.CheckHeld(Keys.A))
                 {
                     velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
+
+                    ItemMovement = () =>
+                    {
+                        ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
+                            SpriteRectangle.Left - Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Width;
+                    };
                 }
                 if (KeyHelper.CheckHeld(Keys.D))
                 {
                     velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
+
+                    ItemMovement = () =>
+                    {
+                        ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
+                    };
                 }
                 if (KeyHelper.CheckTap(Keys.Space))
                 {
@@ -76,7 +93,7 @@ namespace PurpleStyrofoam.AiController
                 }
                 //if (newState.IsKeyDown(Keys.S)) { }
                 if (KeyHelper.CheckTap(Keys.Q)){
-                    ((PlayerManager) Manager).EquippedWeapon.OnQAbility();
+                    ((PlayerManager)Manager).EquippedWeapon?.OnQAbility();
                 }
                 if (KeyHelper.CheckTap(Keys.E))
                 {
@@ -84,41 +101,27 @@ namespace PurpleStyrofoam.AiController
                 }
                 
             }
-            if (North) velocity.Y = -velocity.Y;
             if ((velocity.X > -1 && velocity.X < 1) && !InAir) animate.Switch(PlayerManager.basePlayerSpriteName, SpriteRectangle, 1,1);
         }
         public override void UpdateVelocity()
         {
-            velocity.Y -= velocity.Y < terminalVelocity.Y ?  gravity : 0;
-            velocity.X -= velocity.X == 0 ? 0 : velocity.X > 0 ? 5 : -5;
+            // Decrease Velocity
+
+            if (North && velocity.Y < 0) velocity.Y = 0;
+            else if (South && velocity.Y > 0) velocity.Y = 0;
+            else velocity.Y -= velocity.Y < terminalVelocity.Y ?  gravity : 0;
+
+
             if (East && velocity.X > 0) velocity.X = 0;
-            if (West && velocity.X < 0) velocity.X = 0;
+            else if (West && velocity.X < 0) velocity.X = 0;
+            else velocity.X -= velocity.X < 0 ? -5 : velocity.X > 0 ? 5 : 0;
+
+            // Check if velocity should change
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
+
+            // Add velocity to player speed
             SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
             SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
-            CheckItemSpriteDirection();
-            ItemMovement();
-
-            ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y;
-        }
-
-        private void CheckItemSpriteDirection()
-        {
-            if (KeyHelper.CheckHeld(Keys.A))
-            {
-                ItemMovement = () =>
-                {
-                    ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X =
-                        SpriteRectangle.Left - ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.Width;
-                };
-            }
-            else if (KeyHelper.CheckHeld(Keys.D))
-            {
-                ItemMovement = () =>
-                {
-                    ((PlayerManager)Manager).EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
-                };
-            }
         }
     }
 }

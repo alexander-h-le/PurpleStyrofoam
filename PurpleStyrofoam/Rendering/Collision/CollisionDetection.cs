@@ -10,15 +10,17 @@ namespace PurpleStyrofoam.Rendering
 {
     public static class CollisionDetection
     {
-        public static bool DetectCollisionMap(Rectangle rect)
+        public static bool DetectCollisionMap(Rectangle rect, out MapObject ConnectedObject)
         {
             foreach (MapObject map in FindObjectBuckets(rect))
             {
                 if (rect.Intersects(map.MapRectangle))
                 {
+                    ConnectedObject = map;
                     return true;
                 }
             }
+            ConnectedObject = null;
             return false;
         }
         public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)

@@ -8,7 +8,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 {
     public class BasicDagger : Dagger
     {
-        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite("playerSprite", new Vector2(0, 0)))
+        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite(TextureHelper.Sprites.TestImage, new Vector2(0, 0)))
         {
         }
 
@@ -25,7 +25,8 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 
         public override void OnQAbility()
         {
-            ((Rogue)Game.PlayerManager.Class).MaxCooldown = 0.0;
+            ((Rogue)Game.PlayerManager.Class).CurrentCooldown = 0.0;
+            ((Rogue)Game.PlayerManager.Class).MaxCooldown = 0.25;
         }
     }
 }

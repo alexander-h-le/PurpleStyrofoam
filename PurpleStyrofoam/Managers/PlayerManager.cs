@@ -20,15 +20,18 @@ namespace PurpleStyrofoam
         public string CurrentSave { get; set; }
         public GameClass Class { get; set; }
         public InventoryManager Inventory { get; set; }
-        public Weapon EquippedWeapon
-        {
+
+        private Weapon wep;
+        public Weapon EquippedWeapon { 
             get
             {
-                return (Weapon)Inventory.Items[0];
-            }
+                return wep;
+            } 
             set
             {
-                Inventory.Items[0] = value;
+                wep = value;
+                if (value == null) Inventory.Items[0] = new BlankItem();
+                else Inventory.Items[0] = value;
             }
         }
         public static string basePlayerSpriteName = "playerSprite";

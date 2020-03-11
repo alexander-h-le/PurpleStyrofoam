@@ -12,6 +12,7 @@ using PurpleStyrofoam.Items.Weapons.Melee.Swords;
 using PurpleStyrofoam.Items.Weapons.Melee.Rapiers;
 using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Rendering.Menus;
+using PurpleStyrofoam.Items.Weapons;
 
 namespace PurpleStyrofoam.Managers
 {
@@ -26,7 +27,7 @@ namespace PurpleStyrofoam.Managers
             if (Items == null)
             {
                 Items = new Item[107];
-                Items[(int)ITEMSLOTS.WEAPON] = new Lithiel(); // Weapon
+                Items[(int)ITEMSLOTS.WEAPON] = new BlankItem(); // Weapon
                 Items[(int)ITEMSLOTS.ARMOR_HELMET] = new BlankItem(); // Helmet
                 Items[(int)ITEMSLOTS.ARMOR_CHESTPLATE] = new BlankItem(); // Chestplate
                 Items[(int)ITEMSLOTS.ARMOR_LEGGINGS] = new BlankItem(); // Leggings
@@ -176,6 +177,7 @@ namespace PurpleStyrofoam.Managers
             {
                 if (checkRect.Intersects(Items[i].Sprite.ItemRectangle))
                 {
+                    // Delete an item
                     if (Items[i] is InventoryDeleteItem)
                     {
                         SelectedItem = null;
@@ -183,25 +185,37 @@ namespace PurpleStyrofoam.Managers
                     }
                     if (Items[i] is BlankItem)
                     {
+                        // Selected item and target are blank so do nothing
                         if (SelectedItem == null) continue;
+
+                        // Target is blank, but is holding item so put item in that blank slot
                         else
                         {
-                            Items[i] = SelectedItem;
+                            if (i == (int)ITEMSLOTS.WEAPON) Game.PlayerManager.EquippedWeapon = (Weapon) SelectedItem;
+                            else Items[i] = SelectedItem;
                             SelectedItem = null;
                             break;
                         }
                     }
+
+                    // There is nothing selected, but target has something so pick item up
                     if (SelectedItem == null)
                     {
                         SelectedItem = Items[i];
-                        Items[i] = new BlankItem();
+                        if (i == (int)ITEMSLOTS.WEAPON) Game.PlayerManager.EquippedWeapon = null;
+                        else Items[i] = new BlankItem();
                         break;
-                    } else
+                    }
+                    //} 
+
+                    // Something is selected and target has something so switch the items
+                    else
                     {
                         Item temp1 = SelectedItem;
                         Item temp2 = Items[i];
                         SelectedItem = temp2;
-                        Items[i] = temp1;
+                        if (i == (int)ITEMSLOTS.WEAPON) Game.PlayerManager.EquippedWeapon = (Weapon) temp1;
+                        else Items[i] = temp1;
                         break;
                     }
                 }

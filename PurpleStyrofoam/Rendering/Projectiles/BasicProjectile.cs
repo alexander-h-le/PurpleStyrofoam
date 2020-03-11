@@ -40,7 +40,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
         public override void DetectCollision()
         {
-            if (CollisionDetection.DetectCollisionMap(ProjectileRectangle))
+            if (CollisionDetection.DetectCollisionMap(ProjectileRectangle, out _))
             {
                 Delete();
             }
