@@ -36,6 +36,9 @@ namespace PurpleStyrofoam.AiController
                     case (GAMESTATE.ACTIVE):
                         ((PlayerManager)Game.PlayerCharacter.Manager).Class.RClick();
                         break;
+                    case GAMESTATE.PAUSED:
+                        if (Game.PlayerManager.Inventory.Open) Game.PlayerManager.Inventory.InventoryUseAtPosition(mousePos);
+                        break;
                     default:
                         break;
                 }

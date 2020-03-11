@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Diagnostics;
+using PurpleStyrofoam.Helpers;
 
 namespace PurpleStyrofoam.Rendering.Projectiles
 {
@@ -62,8 +63,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
 
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)
         {
-            target.Manager.AddDamage(-projectiledamage);
-            if (target.Manager.Health <= 0) target.AI.Delete();
+            DamageHelper.DamageTarget(-projectiledamage, target);
             Delete();
         }
 

@@ -16,7 +16,7 @@ namespace PurpleStyrofoam.Managers.Classes
     public class Rogue : GameClass
     {
         PlayerController SourceSprite;
-        const double MaxCooldown = 2.50;
+        public double MaxCooldown = 2.50;
         double CurrentCooldown = 0.0;
         public Rogue()
         {

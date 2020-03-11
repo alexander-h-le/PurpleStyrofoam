@@ -24,7 +24,7 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
                 var type = item.Value<string>("type");
                 return (Item)Activator.CreateInstance(Type.GetType(type));
             }
-            catch (JsonReaderException e)
+            catch
             {
                 return null;
             }

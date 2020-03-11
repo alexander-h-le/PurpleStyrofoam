@@ -30,6 +30,7 @@ namespace PurpleStyrofoam
         public static Vector2 ScreenSize;
         public static ContentManager GameContent;
         public static PlayerController PlayerCharacter;
+        public static PlayerManager PlayerManager;
         
         public Game()
         {

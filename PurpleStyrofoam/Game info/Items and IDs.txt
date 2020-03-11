@@ -97,10 +97,6 @@ Polearm - 5, Dagger - 5, Sword - 5, Rapier - 5, Axe - 5, Staff - 5, Throwing - 5
 	// A broken sword hilt. It seems to be beyond repair.
 	// No buffs, but you can still use the ability.
 
-025 Steel dagger // Dagger
-	// The quintessential dagger to any assassin.
-	// Basic ability
-
 026 Dagger of shocking // Dagger
 	// A dagger enchanted by a mage with the power to shock your opponents.
 	// when dash hits, electrocute enemy. Electrocuted enemies will shock nearby enemies.

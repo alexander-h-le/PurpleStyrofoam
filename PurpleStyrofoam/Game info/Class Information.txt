@@ -8,9 +8,9 @@ Random set maps like Warframe does.
 
 Wall Jumps?
 
-||||||||||||||||||||||||||          Warrior / Knight / Engener         |||||||||||||||||||||||||
+|||||||||||||||||||||||||| Knight |||||||||||||||||||||||||
 	Aerial combat? Chain attacks by throwing enemies up and attacking them in air
-Weapons: Sword (Quick), Polearm (Moderate), Axe (Slow)
+Weapons: Sword (Quick) - added, Polearm (Moderate) - added, Axe (Slow) - added
 Q Ability
 	Sword - Warcry? Call your inner chad and increase damage greatly for a short time.
 	Polearm - Stab. Press the ability to thrust the polearm forward dealing damage to all enemies in a straight line and stunning them for a short period.
@@ -18,7 +18,7 @@ Q Ability
 E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into an enemy or solid object. Press ability again to pull yourself to hook position.
 
 
-||||||||||||||||||||||||||       Mage / Caster / Sorcerer / Warlock / Wizard           ||||||||||||||||||||||||||
+||||||||||||||||||||||||||  Caster ||||||||||||||||||||||||||
 	Left click to shoot out selected element. Right click to change element
 		Fire, Ice, Wind, Earth
 
@@ -47,8 +47,8 @@ Q Ability
 E Ability: Go into ground and reappear farther in direction of cursor depending on how long you hold the ability
 
 
-||||||||||||||||||||||||           Rogue / Assassin / Mercenary / Thief                 ||||||||||||||||||||||||||
-Weapons: Throwing (Very quick), Dagger (Quick), Rapier (Moderate-fast)
+|||||||||||||||||||||||| Rogue ||||||||||||||||||||||||||
+Weapons: Throwing (Very quick), Dagger (Quick) - added, Rapier (Moderate-fast) - added
 Q Ability
 	Throwing - Flurry of attacks with throwing weapon?
 		Short Q cooldown. Every successful attack adds a damage stack that increases damage for basic attack and dash by __% (0.1 per stack?) for __ seconds until stack cools off
@@ -58,8 +58,8 @@ Q Ability
 E Ability: Shadow dash. Join with the shadows and dash towards cursor and through enemies dealing damage to any that are hit. 
 	You are impervious to projectiles and attacks during this period, but cannot cancel dash.
 
-|||||||||||||||||||||||                 Manipulator 			||||||||||||||||||||||||||||
-Weapons: Throwing (Very Quick), Sword (Quick), Tomes (Slow)
+|||||||||||||||||||||||  Manipulator ||||||||||||||||||||||||||||
+Weapons: Throwing (Very Quick), Sword (Quick) - added, Tomes (Slow)
 Special class with three cursors following them. Selecting different weapons will change left-click
 	Throwing: Cursors become boomerangs doing return dmg. Low damage per hit.
 	Sword: Cursors flutter out a short distance in front of them, creating essentially a longer sword swing.

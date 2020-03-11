@@ -21,7 +21,7 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
         {
             JObject item = JObject.Load(reader);
             return new AnimatedSprite(item["texture"].Value<string>(), 1, 1, item["X"].Value<int>(), item["Y"].Value<int>(), 
-                (AIBase) Activator.CreateInstance(Type.GetType(item["ai"].Value<string>())), item["manager"].ToObject<IManager>());
+                (AIBase) Activator.CreateInstance(Type.GetType(item["ai"].Value<string>())), item["manager"].ToObject<BaseManager>());
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

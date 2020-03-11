@@ -18,10 +18,6 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
 
         public Lithiel() : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ItemSprite(PlayerManager.jumpingDPlayerSprite, new Vector2(0, 0))) {  }
 
-        public override void OnInventoryUse()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void OnLeftClick()
         {

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Managers
 {
-    public interface IManager
+    public abstract class BaseManager
     {
-        int Health { get; set; }
-        int MaxHealth { get; set; }
-        void AddDamage(int amount);
+        public abstract int Health { get; set; }
+        public abstract int MaxHealth { get; set; }
     }
 }

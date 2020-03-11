@@ -6,27 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 {
-    class Fortz : Weapon
+    class Fortz : Dagger
     {
         public override int ID => 002;
 
         public override string Description => "One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight.";
-        public Fortz() : base("Fortz", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ItemSprite("Fortz", new Vector2(0, 0)))
+        public Fortz() : base("Fortz", 100, RARITY.LEGENDARY, new ItemSprite("Fortz", new Vector2(0, 0)))
         {
-        }
-
-        public override void OnInventoryUse()
-        {
-            throw new NotImplementedException();
         }
 
         public override void OnLeftClick()
         {
-            throw new NotImplementedException();
+            AnimatedSprite temp;
+            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
+            if (temp != null) RenderHandler.purgeSprites.Add(temp);
         }
 
         public override void OnQAbility()

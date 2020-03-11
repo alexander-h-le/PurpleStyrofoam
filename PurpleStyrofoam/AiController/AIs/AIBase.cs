@@ -15,9 +15,5 @@ namespace PurpleStyrofoam.AiController.AIs
         {
             SpriteSource = source;
         }
-        public virtual void Delete()
-        {
-            RenderHandler.purgeSprites.Add(SpriteSource);
-        }
     }
 }

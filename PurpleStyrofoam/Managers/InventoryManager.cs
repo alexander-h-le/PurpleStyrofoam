@@ -17,25 +17,25 @@ namespace PurpleStyrofoam.Managers
 {
     public class InventoryManager : IPopUp
     {
-        public Item[] Inventory;
+        public Item[] Items;
         private Item SelectedItem;
         Rectangle location;
         public InventoryManager()
         {
             Open = false;
-            if (Inventory == null)
+            if (Items == null)
             {
-                Inventory = new Item[107];
-                Inventory[(int)ITEMSLOTS.WEAPON] = new Lithiel(); // Weapon
-                Inventory[(int)ITEMSLOTS.ARMOR_HELMET] = new BlankItem(); // Helmet
-                Inventory[(int)ITEMSLOTS.ARMOR_CHESTPLATE] = new BlankItem(); // Chestplate
-                Inventory[(int)ITEMSLOTS.ARMOR_LEGGINGS] = new BlankItem(); // Leggings
-                Inventory[(int)ITEMSLOTS.ARMOR_BOOTS] = new BlankItem(); // Boots
-                Inventory[(int)ITEMSLOTS.COMPANION] = new BlankItem(); // Companion
-                Inventory[Inventory.Length - 1] = new InventoryDeleteItem(); // Trash
-                for (int i = 6; i < Inventory.Length-1; i++)
+                Items = new Item[107];
+                Items[(int)ITEMSLOTS.WEAPON] = new Lithiel(); // Weapon
+                Items[(int)ITEMSLOTS.ARMOR_HELMET] = new BlankItem(); // Helmet
+                Items[(int)ITEMSLOTS.ARMOR_CHESTPLATE] = new BlankItem(); // Chestplate
+                Items[(int)ITEMSLOTS.ARMOR_LEGGINGS] = new BlankItem(); // Leggings
+                Items[(int)ITEMSLOTS.ARMOR_BOOTS] = new BlankItem(); // Boots
+                Items[(int)ITEMSLOTS.COMPANION] = new BlankItem(); // Companion
+                Items[Items.Length - 1] = new InventoryDeleteItem(); // Trash
+                for (int i = 6; i < Items.Length-1; i++)
                 {
-                    Inventory[i] = new BlankItem();
+                    Items[i] = new BlankItem();
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace PurpleStyrofoam.Managers
         public void Draw(SpriteBatch sp)
         {
             sp.Draw(TextureHelper.Blank(Color.Brown), location, Color.White);
-            foreach (Item i in Inventory)
+            foreach (Item i in Items)
             {
                 if (i != null) i.Sprite.Draw(sp);
             }
@@ -67,52 +67,52 @@ namespace PurpleStyrofoam.Managers
 
             int _BufferFromTop = ItemSideLength + SpaceBuffer;
             // Set-Item setup
-            if (Inventory[(int)ITEMSLOTS.WEAPON] != null)
-                Inventory[(int)ITEMSLOTS.WEAPON].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.WEAPON] != null)
+                Items[(int)ITEMSLOTS.WEAPON].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
-            if (Inventory[(int)ITEMSLOTS.ARMOR_HELMET] != null)
-                Inventory[(int)ITEMSLOTS.ARMOR_HELMET].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.ARMOR_HELMET] != null)
+                Items[(int)ITEMSLOTS.ARMOR_HELMET].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop * 2, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
-            if (Inventory[(int)ITEMSLOTS.ARMOR_CHESTPLATE] != null)
-                Inventory[(int)ITEMSLOTS.ARMOR_CHESTPLATE].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.ARMOR_CHESTPLATE] != null)
+                Items[(int)ITEMSLOTS.ARMOR_CHESTPLATE].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop * 3, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
-            if (Inventory[(int)ITEMSLOTS.ARMOR_LEGGINGS] != null)
-                Inventory[(int)ITEMSLOTS.ARMOR_LEGGINGS].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.ARMOR_LEGGINGS] != null)
+                Items[(int)ITEMSLOTS.ARMOR_LEGGINGS].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop * 4, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
-            if (Inventory[(int)ITEMSLOTS.ARMOR_BOOTS] != null)
-                Inventory[(int)ITEMSLOTS.ARMOR_BOOTS].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.ARMOR_BOOTS] != null)
+                Items[(int)ITEMSLOTS.ARMOR_BOOTS].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop * 5, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
-            if (Inventory[(int)ITEMSLOTS.COMPANION] != null)
-                Inventory[(int)ITEMSLOTS.COMPANION].Sprite.ItemRectangle = new Rectangle(
+            if (Items[(int)ITEMSLOTS.COMPANION] != null)
+                Items[(int)ITEMSLOTS.COMPANION].Sprite.ItemRectangle = new Rectangle(
                     location.Left + (location.Width / 5), // X
                     location.Top + _BufferFromTop * 6, // Y
                     ItemSideLength, // Width
                     ItemSideLength); // Height
             if (SelectedItem != null) SelectedItem.Sprite.ItemRectangle.Location = MouseHandler.mousePos.ToPoint();
 
-            // Actual Inventory Setup
+            // Actual Items Setup
             int xPos = location.X + SpaceBuffer;
             int yPos = location.Y + ((int)Game.ScreenSize.X / 4);
-            for (int i = 6; i < Inventory.Length; i++)
+            for (int i = 6; i < Items.Length; i++)
             {
                 if (xPos + ItemSideLength + SpaceBuffer < location.Right)
                 {
-                    if (Inventory[i] != null) Inventory[i].Sprite.ItemRectangle = new Rectangle(xPos, yPos, ItemSideLength, ItemSideLength);
+                    if (Items[i] != null) Items[i].Sprite.ItemRectangle = new Rectangle(xPos, yPos, ItemSideLength, ItemSideLength);
                     xPos += ItemSideLength + SpaceBuffer;
                 }
                 else
@@ -124,17 +124,17 @@ namespace PurpleStyrofoam.Managers
         }
 
         /// <summary>
-        /// Attempts to add an item to the player's inventory
+        /// Attempts to add an item to the player's Items
         /// </summary>
         /// <param name="i">Item to be added</param>
-        /// <returns>True if successful, false if the inventory is full.</returns>
+        /// <returns>True if successful, false if the Items is full.</returns>
         public bool AddToInventory(Item i)
         {
-            for (int index = 6; index < Inventory.Length; index++)
+            for (int index = 6; index < Items.Length; index++)
             {
-                if (Inventory[index] is BlankItem)
+                if (Items[index] is BlankItem)
                 {
-                    Inventory[index] = i;
+                    Items[index] = i;
                     return true;
                 }
             }
@@ -143,7 +143,7 @@ namespace PurpleStyrofoam.Managers
 
         public void LoadItems()
         {
-            foreach (Item i in Inventory)
+            foreach (Item i in Items)
             {
                 if (i != null) i.Sprite.Load();
             }
@@ -172,40 +172,65 @@ namespace PurpleStyrofoam.Managers
         public void ActionAtPosition(Vector2 pos)
         {
             Rectangle checkRect = new Rectangle(pos.ToPoint(), new Point(2, 2));
-            for (int i = 0; i < Inventory.Length; i++)
+            for (int i = 0; i < Items.Length; i++)
             {
-                if (checkRect.Intersects(Inventory[i].Sprite.ItemRectangle))
+                if (checkRect.Intersects(Items[i].Sprite.ItemRectangle))
                 {
-                    if (Inventory[i] is InventoryDeleteItem)
+                    if (Items[i] is InventoryDeleteItem)
                     {
                         SelectedItem = null;
                         break;
                     }
-                    if (Inventory[i] is BlankItem)
+                    if (Items[i] is BlankItem)
                     {
                         if (SelectedItem == null) continue;
                         else
                         {
-                            Inventory[i] = SelectedItem;
+                            Items[i] = SelectedItem;
                             SelectedItem = null;
                             break;
                         }
                     }
                     if (SelectedItem == null)
                     {
-                        SelectedItem = Inventory[i];
-                        Inventory[i] = new BlankItem();
+                        SelectedItem = Items[i];
+                        Items[i] = new BlankItem();
                         break;
                     } else
                     {
                         Item temp1 = SelectedItem;
-                        Item temp2 = Inventory[i];
+                        Item temp2 = Items[i];
                         SelectedItem = temp2;
-                        Inventory[i] = temp1;
+                        Items[i] = temp1;
                         break;
                     }
                 }
             }
+        }
+
+        public bool SwitchItems(Item source, Item target)
+        {
+            int indexSource = -1;
+            int indexTo = -1;
+
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i] == source) indexSource = i;
+                if (Items[i] == target) indexTo = i;
+                if (indexSource > -1 && indexTo > -1) break;
+            }
+
+            if (indexSource == -1 || indexTo == -1) return false;
+
+            Items[indexSource] = target;
+            Items[indexTo] = source;
+
+            return true;
+        }
+
+        public void InventoryUseAtPosition(Vector2 pos)
+        {
+
         }
 
         public enum ITEMSLOTS

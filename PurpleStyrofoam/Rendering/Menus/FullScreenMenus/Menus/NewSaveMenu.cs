@@ -105,7 +105,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
                     else if (targetClass is Manipulator)
                         GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else if (targetClass is Rogue)
-                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new BasicDagger());
                     else
                     {
                         Errors = "Choose a class!";

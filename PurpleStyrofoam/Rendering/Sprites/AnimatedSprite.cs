@@ -27,9 +27,9 @@ namespace PurpleStyrofoam
         protected const float gravity = -20f;
         protected readonly Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
-        public IManager Manager;
+        public BaseManager Manager;
 
-        public AnimatedSprite(string TextureName, int rows, int columns, int xIn, int yIn, AIBase ai, IManager manIn)
+        public AnimatedSprite(string TextureName, int rows, int columns, int xIn, int yIn, AIBase ai, BaseManager manIn)
         {
             animate = new Animation(TextureName, rows, columns);
             AI = ai;
@@ -72,6 +72,11 @@ namespace PurpleStyrofoam
         {
             animate.Load();
             SpriteRectangle = new Rectangle(xy.X, xy.Y, animate.Texture.Width / animate.Columns, animate.Texture.Height / animate.Rows);
+        }
+
+        public void Delete()
+        {
+            RenderHandler.purgeSprites.Add(this);
         }
     }
 }

@@ -66,6 +66,12 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="newY">The new player position</param>
         public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0, List<AnimatedSprite> newSprites = null, List<ItemSprite> newItems = null)
         {
+
+            player.SpriteRectangle.X = newX;
+            player.SpriteRectangle.Y = newY;
+            Game.PlayerCharacter = player;
+            Game.PlayerManager = (PlayerManager)Game.PlayerCharacter.Manager;
+
             allCharacterSprites.Clear();
             allItemSprites.Clear();
             allProjectiles.Clear();
@@ -77,16 +83,13 @@ namespace PurpleStyrofoam.Rendering
             if (!allCharacterSprites.Contains(player)) allCharacterSprites.Add(player);
 
             allItemSprites = newItems != null ? newItems : new List<ItemSprite>();
-            if ( ((PlayerManager) player.Manager).EquippedWeapon != null) allItemSprites.Add(((PlayerManager)player.Manager).EquippedWeapon.Sprite);
+            if (Game.PlayerManager.EquippedWeapon != null) allItemSprites.Add(Game.PlayerManager.EquippedWeapon.Sprite);
 
             LoadGameTextures();
-            player.SpriteRectangle.X = newX;
-            player.SpriteRectangle.Y = newY;
-            Game.PlayerCharacter = player;
             PlayerInfoUI.Initialize();
-            if (((PlayerManager)Game.PlayerCharacter.Manager).Inventory == null) ((PlayerManager)Game.PlayerCharacter.Manager).Inventory = new InventoryManager();
-            ((PlayerManager)Game.PlayerCharacter.Manager).Inventory.LoadItems();
-            MenuHandler.AllPopUps.Add(((PlayerManager)Game.PlayerCharacter.Manager).Inventory);
+            if (Game.PlayerManager.Inventory == null) Game.PlayerManager.Inventory = new InventoryManager();
+            Game.PlayerManager.Inventory.LoadItems();
+            MenuHandler.AllPopUps.Add(Game.PlayerManager.Inventory);
         }
 
         private static void LoadGameTextures()

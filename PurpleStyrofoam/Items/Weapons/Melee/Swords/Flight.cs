@@ -10,18 +10,14 @@ using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
 {
-    class Flight : Weapon
+    class Flight : Sword
     {
         public override int ID => 003;
 
         public override string Description => "Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself.";
-        public Flight() : base("Flight", 100, ATTACKSPEED.FAST, RARITY.LEGENDARY, new ItemSprite("playerSprite", new Vector2(0,0)))
+        public Flight() : base("Flight", 100, RARITY.LEGENDARY, new ItemSprite("playerSprite", new Vector2(0,0)))
         {
 
-        }
-        public override void OnInventoryUse()
-        {
-            throw new NotImplementedException();
         }
 
         public override void OnLeftClick()

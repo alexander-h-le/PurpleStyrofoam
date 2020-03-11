@@ -11,26 +11,31 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam
 {
-    public class PlayerManager : IManager
+    public class PlayerManager : BaseManager
     {
-        public int Health { get; set; }
-        public int MaxHealth { get; set; }
+        public override int Health { get; set; }
+        public override int MaxHealth { get; set; }
         public int Mana { get; set;}
         public int MaxMana { get; set; }
         public string CurrentSave { get; set; }
         public GameClass Class { get; set; }
         public InventoryManager Inventory { get; set; }
-        public Weapon EquippedWeapon { get; set; }
-
+        public Weapon EquippedWeapon
+        {
+            get
+            {
+                return (Weapon)Inventory.Items[0];
+            }
+            set
+            {
+                Inventory.Items[0] = value;
+            }
+        }
         public static string basePlayerSpriteName = "playerSprite";
         public static string movingPlayerSprite = "playerSpriteMoving";
         public static string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";
         public static string jumpingSPlayerSprite = "playerSpriteJumpingStatic";
 
-        public void AddDamage(int amount)
-        {
-            Health += Health + amount < MaxHealth ? amount : 0;
-        }
         public void AddMana(int amount)
         {
             Mana += Mana + amount < MaxMana ? amount : 0;

@@ -184,8 +184,8 @@ namespace PurpleStyrofoam.Rendering
             newSave.ActiveMap = map.GetType().Namespace + "." + map.GetType().Name;
             newSave.player = (PlayerManager) player.Manager;
             newSave.player.Class = targetClass;
-            newSave.player.EquippedWeapon = equippedWeapon;
             newSave.player.Inventory = new InventoryManager();
+            newSave.player.EquippedWeapon = equippedWeapon;
 
             // ------------------------------------------------------------------------------------------------
 

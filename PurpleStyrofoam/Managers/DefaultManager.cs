@@ -6,20 +6,15 @@ using System.Threading.Tasks;
 
 namespace PurpleStyrofoam.Managers
 {
-    class DefaultManager : IManager
+    class DefaultManager : BaseManager
     {
-        public int Health { get; set; }
-        public int MaxHealth { get; set; }
+        public override int Health { get; set; }
+        public override int MaxHealth { get; set; }
 
         public DefaultManager()
         {
             MaxHealth = 100;
             Health = MaxHealth;
-        }
-
-        public void AddDamage(int amount)
-        {
-            Health += amount;
         }
     }
 }

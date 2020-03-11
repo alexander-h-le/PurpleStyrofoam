@@ -110,6 +110,13 @@
     <Compile Include="Rendering\Animations\Animation.cs" />
     <Compile Include="Rendering\Text\DialogueHandler.cs" />
     <Compile Include="Managers\InventoryManager.cs" />
+    <Compile Include="Items\Weapons\Melee\Daggers\BasicDagger.cs" />
+    <Compile Include="Helpers\DamageHelper.cs" />
+    <Compile Include="Items\Weapons\Melee\Axes\Axe.cs" />
+    <Compile Include="Items\Weapons\Melee\Daggers\Dagger.cs" />
+    <Compile Include="Items\Weapons\Melee\Polearms\Polearm.cs" />
+    <Compile Include="Items\Weapons\Melee\Rapiers\Rapier.cs" />
+    <Compile Include="Items\Weapons\Melee\Swords\Sword.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
