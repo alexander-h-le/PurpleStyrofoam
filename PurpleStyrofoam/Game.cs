@@ -15,6 +15,8 @@ using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Rendering.Text;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
+using PurpleStyrofoam.Items.Potions.Healing;
+using PurpleStyrofoam.Items.Potions.BuffPotions;
 
 namespace PurpleStyrofoam
 {
@@ -115,10 +117,19 @@ namespace PurpleStyrofoam
             RenderHandler.Update();
             MouseHandler.Update();
             if (KeyHelper.CheckTap(Keys.OemTilde)) DialogueHandler.Start(TestHelper.GetTestDialogues());
-            if (KeyHelper.CheckTap(Keys.D0))
+            if (KeyHelper.CheckTap(Keys.D2))
             {
-                ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new Flight());
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new RegularHealingPotion());
                 ((PlayerManager)PlayerCharacter.Manager).Inventory.LoadItems();
+            }
+            if (KeyHelper.CheckTap(Keys.D1))
+            {
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new RegularSpeedPotion());
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.LoadItems();
+            }
+            if (KeyHelper.CheckHeld(Keys.D0))
+            {
+                PlayerManager.Health--;
             }
             GameTimeMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
             GameTimeSeconds = gameTime.ElapsedGameTime.TotalSeconds;

@@ -84,6 +84,7 @@ namespace PurpleStyrofoam.Rendering
                         PlayerController chara = new PlayerController(save.player);
                         ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
                         ((PlayerManager)chara.Manager).CurrentSave = SaveName;
+
                         RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara, save.PlayerPosition.ToPoint());
                     }
                 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Buffs;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps;
@@ -44,6 +45,7 @@ namespace PurpleStyrofoam.Rendering.Menus
         static double HLength;
         static double MLength;
         const int BarLength = 400;
+        static SpriteFont font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
         public static void Draw(SpriteBatch sp)
         {
             //Health Bar
@@ -53,6 +55,20 @@ namespace PurpleStyrofoam.Rendering.Menus
             //Mana Bar
             sp.Draw(BarBackTexture, new Rectangle((int)Location.X, (int)Location.Y + 50, BarLength - 10, 25), Color.White);
             sp.Draw(ManaTexture, new Rectangle((int)Location.X, (int)Location.Y + 50, (int)MLength, 25), Color.White);
+
+            Rectangle BuffPosition = new Rectangle((int)Location.X, (int)Location.Y + 100, 50, 50);
+            //Buffs
+            foreach (Buff b in  Game.PlayerCharacter.Buffs.CurrentBuffs)
+            {
+                if (b.Texture != null) sp.Draw(b.Texture, BuffPosition , Color.White);
+                else sp.Draw(TextureHelper.Blank(Color.Bisque), BuffPosition, Color.White);
+
+
+                sp.DrawString(font, GameMathHelper.FramesToStringTime(b.Duration) , new Point(BuffPosition.X, BuffPosition.Bottom).ToVector2(), Color.White, 
+                    0f, new Vector2(), 0.7f, SpriteEffects.None, 1);
+
+                BuffPosition.X += 10 + BuffPosition.Width;
+            }
 
             //Ability Bar
             sp.Draw(TextureHelper.Blank(Color.DarkOliveGreen), AbilityBarLocation, Color.White);

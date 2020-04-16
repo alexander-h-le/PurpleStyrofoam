@@ -41,11 +41,15 @@ namespace PurpleStyrofoam.Managers
             }
         }
 
+        const float ItemRarityTransparency = 0.5f;
         public void Draw(SpriteBatch sp)
         {
-            sp.Draw(TextureHelper.Blank(Color.Brown), location, Color.White);
+            sp.Draw(TextureHelper.Blank(Color.Black), location, Color.White);
             foreach (Item i in Items)
             {
+                if (i is BlankItem) sp.Draw(TextureHelper.Blank(Color.Black), i.Sprite.ItemRectangle, Color.White);
+                else sp.Draw(TextureHelper.Blank(i.Rarity), i.Sprite.ItemRectangle, Color.White * ItemRarityTransparency);
+
                 if (i != null) i.Sprite.Draw(sp);
             }
             if (SelectedItem != null) SelectedItem.Sprite.Draw(sp);
@@ -57,6 +61,18 @@ namespace PurpleStyrofoam.Managers
         public bool Open { get; set; }
 
         public void Update()
+        {
+            SetupItemDisplay();
+            foreach (Item i in Items)
+            {
+                i.Sprite.animate.Angle = 0.0f;
+                i.Sprite.animate.Origin = new Vector2(0, 0);
+                i.Sprite.Visible = true;
+                i.Update();
+            }
+        }
+
+        public void SetupItemDisplay()
         {
             int SpaceBuffer = (int)Game.ScreenSize.X / 400;
             location = new Rectangle(
@@ -154,6 +170,7 @@ namespace PurpleStyrofoam.Managers
             if (MenuHandler.ActivePopUp != this) Open = false;
             if (KeyHelper.CheckTap(Keys.I) && !Open)
             {
+                LoadItems();
                 Open = true;
                 return true;
             }
@@ -165,6 +182,15 @@ namespace PurpleStyrofoam.Managers
             if (KeyHelper.CheckTap(Keys.I) && Open)
             {
                 Open = false;
+                foreach (Item i in Items)
+                {
+                    i.Sprite.Visible = false;
+                    if (i is Weapon)
+                    {
+                        i.Sprite.ItemRectangle.Width = (int)((Weapon)i).Size.X;
+                        i.Sprite.ItemRectangle.Height = (int)((Weapon)i).Size.Y;
+                    }
+                }
                 return true;
             }
             return false;
@@ -202,6 +228,7 @@ namespace PurpleStyrofoam.Managers
                     if (SelectedItem == null)
                     {
                         SelectedItem = Items[i];
+                        SelectedItem.Sprite.Load();
                         if (i == (int)ITEMSLOTS.WEAPON) Game.PlayerManager.EquippedWeapon = null;
                         else Items[i] = new BlankItem();
                         break;
@@ -214,6 +241,7 @@ namespace PurpleStyrofoam.Managers
                         Item temp1 = SelectedItem;
                         Item temp2 = Items[i];
                         SelectedItem = temp2;
+                        SelectedItem.Sprite.Load();
                         if (i == (int)ITEMSLOTS.WEAPON) Game.PlayerManager.EquippedWeapon = (Weapon) temp1;
                         else Items[i] = temp1;
                         break;
@@ -244,7 +272,23 @@ namespace PurpleStyrofoam.Managers
 
         public void InventoryUseAtPosition(Vector2 pos)
         {
+            Rectangle checkRect = new Rectangle(pos.ToPoint(), new Point(2, 2));
+            foreach (Item i in Items)
+            {
+                if (i.Sprite.ItemRectangle.Intersects(checkRect)) i.OnInventoryUse();
+            }
+        }
 
+        public void DeleteItem(Item item)
+        {
+            for (int i = 6; i < Items.Length; i++)
+            {
+                if (Items[i] == item)
+                {
+                    Items[i] = new BlankItem();
+                    break;
+                }
+            }
         }
 
         public enum ITEMSLOTS

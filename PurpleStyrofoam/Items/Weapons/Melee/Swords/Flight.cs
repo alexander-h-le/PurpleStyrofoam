@@ -15,9 +15,9 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
         public override int ID => 003;
 
         public override string Description => "Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself.";
-        public Flight() : base("Flight", 100, RARITY.LEGENDARY, new ItemSprite("playerSprite"))
+        public Flight() : base("Flight", 100, RARITY.SECRET, new ItemSprite("Swords/Flight", 60, 60))
         {
-
+            KnockBack = 1f;
         }
 
         public override void OnQAbility()

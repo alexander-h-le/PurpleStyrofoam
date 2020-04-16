@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PurpleStyrofoam.Buffs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace PurpleStyrofoam.Managers
 {
     public abstract class BaseManager
     {
-        public abstract int Health { get; set; }
-        public abstract int MaxHealth { get; set; }
+        public int Health { get; set; }
+        public int MaxHealth { get; set; }
     }
 }

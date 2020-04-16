@@ -46,7 +46,10 @@ namespace PurpleStyrofoam.AiController
                         RenderHandler.allCharacterSprites.Add(temp);
                         break;
                     case GAMESTATE.PAUSED:
-                        if (Game.PlayerManager.Inventory.Open) Game.PlayerManager.Inventory.InventoryUseAtPosition(mousePos);
+                        if (oldState.RightButton == ButtonState.Released)
+                        {
+                            if (Game.PlayerManager.Inventory.Open) Game.PlayerManager.Inventory.InventoryUseAtPosition(mousePos);
+                        }
                         break;
                     default:
                         break;

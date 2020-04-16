@@ -14,7 +14,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Polearms
     {
         public override int ID => 001;
         public override string Description => "A legendary spear, wielded by countless heroes of the past. With its attunement to lightning, it strikes down its foes with a current strong enough to ionize the very air around it. ";
-        public Ichival() : base("Ichival", 100, RARITY.LEGENDARY, new ItemSprite("Ichival"))
+        public Ichival() : base("Ichival", 100, RARITY.EPIC, new ItemSprite("Ichival", 80, 80))
         {
         }
 

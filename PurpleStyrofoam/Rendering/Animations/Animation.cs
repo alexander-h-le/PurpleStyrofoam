@@ -32,14 +32,17 @@ namespace PurpleStyrofoam.Rendering.Animations
 
         public void Draw(SpriteBatch sp, Rectangle location)
         {
+            if (Texture == null) Load();
             int width = Texture.Width / Columns;
             int height = Texture.Height / Rows;
             int row = (int)((double)CurrentFrame / Columns);
             int column = CurrentFrame % Columns;
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
-
-            try { sp.Draw(Texture, location, sourceRectangle, Color.White, Angle, Origin, 
-                Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1); }
+            try
+            {
+                sp.Draw(Texture, location, sourceRectangle, Color.White, Angle, Origin,
+                Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
+            }
             catch (ArgumentNullException)
             {
                 throw new Exception("Texture was not properly loaded at: " + this);

@@ -128,6 +128,42 @@
 /processorParam:TextureFormat=Color
 /build:playerSpriteMoving.png
 
+#begin Potions/BuffPotions/RegularSpeed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Potions/BuffPotions/RegularSpeed.png
+
+#begin Potions/Healing/GreaterHealth.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Potions/Healing/GreaterHealth.png
+
+#begin Potions/Healing/RegularHealth.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Potions/Healing/RegularHealth.png
+
 #begin SmileyWalk.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -169,6 +205,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Swords/BasicSword.png
+
+#begin Swords/Flight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Swords/Flight.png
 
 #begin testBackground.jpg
 /importer:TextureImporter

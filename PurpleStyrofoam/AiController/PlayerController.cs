@@ -51,7 +51,7 @@ namespace PurpleStyrofoam.AiController
             if (Game.PlayerManager.EquippedWeapon != null)
             {
                 ItemMovement();
-                Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y + (Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Width/2);
+                Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y + (SpriteRectangle.Width/2);
             }
         }
         private const int moveSpeed = 20;
@@ -66,7 +66,7 @@ namespace PurpleStyrofoam.AiController
                     velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
                     animate.Flipped = true;
-                    Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = true;
+                    if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = true;
 
                     ItemMovement = () =>
                     {
@@ -79,7 +79,7 @@ namespace PurpleStyrofoam.AiController
                     velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
                     animate.Flipped = false;
-                    Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = false;
+                    if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = false;
 
                     ItemMovement = () =>
                     {

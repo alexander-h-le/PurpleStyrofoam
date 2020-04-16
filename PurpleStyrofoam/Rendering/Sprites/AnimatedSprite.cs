@@ -11,6 +11,7 @@ using System.Diagnostics;
 using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Rendering.Animations;
+using PurpleStyrofoam.Buffs;
 
 namespace PurpleStyrofoam
 {
@@ -25,9 +26,10 @@ namespace PurpleStyrofoam
         public Animation animate;
         public Vector2 velocity;
         protected const float gravity = -20f;
-        protected readonly Vector2 terminalVelocity = new Vector2(400,700);
+        public Vector2 terminalVelocity = new Vector2(400,700);
         public AIBase AI;
         public BaseManager Manager;
+        public BuffHandler Buffs;
 
         public AnimatedSprite(string TextureName, int rows, int columns, int xIn, int yIn, AIBase ai, BaseManager manIn)
         {
@@ -35,6 +37,7 @@ namespace PurpleStyrofoam
             AI = ai;
             xy = new Point(xIn,yIn);
             Manager = manIn;
+            Buffs = new BuffHandler();
         }
         public void DetectCollision()
         {

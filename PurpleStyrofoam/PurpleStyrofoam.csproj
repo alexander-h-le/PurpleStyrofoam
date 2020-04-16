@@ -48,6 +48,8 @@
     <Compile Include="AiController\AIs\PlayerControlledAI.cs" />
     <Compile Include="AiController\MouseHandler.cs" />
     <Compile Include="AiController\PlayerController.cs" />
+    <Compile Include="Buffs\Buff.cs" />
+    <Compile Include="Buffs\BuffHandler.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Helpers\GameMathHelper.cs" />
     <Compile Include="Helpers\SoundHelper.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Materials\Material.cs" />
     <Compile Include="Items\Miscellaneous Items\Companions\Companion.cs" />
+    <Compile Include="Items\Potions\BuffPotions\RegularSpeedPotion.cs" />
+    <Compile Include="Items\Potions\Healing\RegularHealingPotion.cs" />
     <Compile Include="Items\Potions\Potion.cs" />
     <Compile Include="Items\Weapons\Melee\Axes\Erot.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\Fortz.cs" />
@@ -71,7 +75,7 @@
     <Compile Include="Managers\Classes\Manipulator.cs" />
     <Compile Include="Managers\Classes\Rogue.cs" />
     <Compile Include="Managers\DefaultManager.cs" />
-    <Compile Include="Managers\IManager.cs" />
+    <Compile Include="Managers\BaseManager.cs" />
     <Compile Include="Maps\BaseMap.cs" />
     <Compile Include="Maps\Dungeon Areas\CathedralRuinsFBoss.cs" />
     <Compile Include="Maps\Dungeon Areas\DungeonArea.cs" />

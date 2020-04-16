@@ -8,7 +8,7 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 {
     public class BasicDagger : Dagger
     {
-        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite("Daggers/BasicDagger"))
+        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite("Daggers/BasicDagger", 30,30))
         {
         }
 

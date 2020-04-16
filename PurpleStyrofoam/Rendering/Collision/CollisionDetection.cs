@@ -23,7 +23,7 @@ namespace PurpleStyrofoam.Rendering
             ConnectedObject = null;
             return false;
         }
-        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)
+        public static bool DetectCollisionSprite(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)
         {
             foreach (AnimatedSprite sprite in FindSprites(rect))
             {
@@ -35,6 +35,21 @@ namespace PurpleStyrofoam.Rendering
             }
             connectedSprite = null;
             return false;
+        }
+
+        public static bool DetectCollisionSprites(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite[] connectedSprite)
+        {
+            List<AnimatedSprite> connected = new List<AnimatedSprite>();
+            foreach (AnimatedSprite sprite in FindSprites(rect))
+            {
+                if (sprite != SpriteSource && sprite.SpriteRectangle.Intersects(rect))
+                {
+                    connected.Add(sprite);
+                }
+            }
+            connectedSprite = connected.ToArray();
+            if (connectedSprite.Length > 0) return true;
+            else return false;
         }
 
         /// <summary>

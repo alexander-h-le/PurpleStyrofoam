@@ -10,13 +10,13 @@ using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Rapiers
 {
-    class Lithiel : Weapon
+    class Lithiel : Rapier
     {
         public override int ID => 004;
 
         public override string Description => "Although it is considered a failed imitation of the legendary sword, Flight, its power is not to be pitied. Wielders of this powerful rapier have been known to finish fights faster than they started.";
 
-        public Lithiel() : base("Lithiel", 100, ATTACKSPEED.MODERATE, RARITY.LEGENDARY, new ItemSprite(PlayerManager.jumpingDPlayerSprite)) {  }
+        public Lithiel() : base("Lithiel", 100, RARITY.EPIC, new ItemSprite(PlayerManager.jumpingDPlayerSprite, 50 ,50)) {  }
 
 
 

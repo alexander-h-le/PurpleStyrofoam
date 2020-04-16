@@ -80,7 +80,9 @@ namespace PurpleStyrofoam.Rendering
             LoadGameTextures();
             PlayerInfoUI.Initialize();
             if (Game.PlayerManager.Inventory == null) Game.PlayerManager.Inventory = new InventoryManager();
+            if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.Inventory.Items[0] = Game.PlayerManager.EquippedWeapon;
             Game.PlayerManager.Inventory.LoadItems();
+            MenuHandler.AllPopUps.RemoveAll((x) => x is InventoryManager);
             MenuHandler.AllPopUps.Add(Game.PlayerManager.Inventory);
 
             Game.PlayerCharacter.SpriteRectangle.Location = pos;
@@ -115,6 +117,7 @@ namespace PurpleStyrofoam.Rendering
                     foreach (AnimatedSprite sprite in allCharacterSprites)
                     {
                         sprite.Update();
+                        sprite.Buffs.Update();
                         ObjectMapper.DeleteSpriteObject(sprite);
                         ObjectMapper.AddSpriteObject(sprite);
                     }

@@ -28,7 +28,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
         public override void DetectCollision()
         {
-            if (CollisionDetection.DetectCollisionSprites(SpriteSource, ProjRect, out ConnectedSprite))
+            if (CollisionDetection.DetectCollisionSprite(SpriteSource, ProjRect, out ConnectedSprite))
             {
                 Connected = CONNECTION.SPRITE;
             } else if (CollisionDetection.DetectCollisionMap(ProjRect, out _))

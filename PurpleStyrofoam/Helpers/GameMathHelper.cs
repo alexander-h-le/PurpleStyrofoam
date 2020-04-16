@@ -69,6 +69,33 @@ namespace PurpleStyrofoam.Helpers
             return (float) (Math.PI / 180) * degree;
         }
 
+        public static string FramesToStringTime(int amt)
+        {
+            int seconds = (int) (amt / 60);
+            int minutes = 0;
+            int hours = 0;
+            string time = "";
+            if (seconds >= 60)
+            {
+                minutes = seconds / 60;
+                seconds = seconds % 60;
+                if (minutes >= 60)
+                {
+                    hours = minutes / 60;
+                    minutes = minutes % 60;
+                }
+            }
+            if (hours > 0) time += hours + "h ";
+            if (minutes > 0) time += minutes + "m ";
+            time += seconds + "s";
+            return time;
+        }
+
+        public static int TimeToFrames(int seconds)
+        {
+            return (int) (seconds * 60);
+        }
+
         public class PIConstants
         {
             public static float PI_45 = (float)(Math.PI / 4);

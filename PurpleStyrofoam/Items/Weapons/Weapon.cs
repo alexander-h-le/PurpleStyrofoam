@@ -15,49 +15,54 @@ namespace PurpleStyrofoam.Items.Weapons
 
         private Type[] EquippableClass;
 
-        protected Weapon(string nameIn, int damage, float atkspd, RARITY levelIn, ItemSprite imageIn, params Type[] EquippableBy) : base(nameIn, levelIn, imageIn)
+        protected Weapon(string nameIn, int damage, float atkspd, Color levelIn, ItemSprite imageIn, Vector2 ItemSize, params Type[] EquippableBy) : base(nameIn, levelIn, imageIn)
         {
             Damage = damage;
             AttackSpeed = atkspd;
             EquippableClass = EquippableBy;
+            Size = ItemSize;
         }
 
-        public int Damage { get; } // Get the item's damage.
+        public int Damage { get; set; } // Get the item's damage.
+
+        public Vector2 Size { get; set; }
+        public float KnockBack = 1f;
 
         /// <summary>
         /// Called when player first left clicks
         /// </summary>
-        public void OnLeftClickStart()
-        {
+        public virtual void OnLeftClickStart() { }
 
-        }
-
-        public void DuringLeftClick()
+        protected AnimatedSprite[] oldSprites = new AnimatedSprite[0];
+        public virtual void DuringLeftClick()
         {
-            AnimatedSprite temp;
-            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
-            DamageHelper.DamageTarget(-Damage, temp);
+            AnimatedSprite[] newSprites;
+            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out newSprites);
             float charDir = Game.PlayerCharacter.velocity.X / Game.PlayerCharacter.velocity.X;
-            if (temp != null)
+            float LaunchVelocity = 500f * KnockBack;
+            foreach (AnimatedSprite i in newSprites)
             {
-                temp.SpriteRectangle.Y -= 10;
+                if (oldSprites.Contains(i)) continue;
+
+                DamageHelper.DamageTarget(-Damage, i);
+                i.SpriteRectangle.Y -= 10;
                 if (Game.PlayerCharacter.velocity.X != 0)
                 {
-                    temp.velocity += new Vector2(Game.PlayerCharacter.velocity.X + (100 * charDir), -350);
+                    i.velocity += new Vector2(Game.PlayerCharacter.velocity.X + (LaunchVelocity * charDir), -350);
                 }
                 else
                 {
-                    temp.velocity += new Vector2(Game.PlayerCharacter.animate.Flipped ? -400 : 400, -350);
+                    i.velocity += new Vector2(Game.PlayerCharacter.animate.Flipped ? -LaunchVelocity : LaunchVelocity, -350);
                 }
             }
+            oldSprites = newSprites;
         }
 
         /// <summary>
-        /// called when the swing animation is over.
+        /// Called when the swing animation is over. If you are overriding this method, make sure to empty the <code>oldSprites</code> array.
         /// </summary>
-        public void OnLeftClickEnd()
-        {
-
+        public virtual void OnLeftClickEnd() {
+            oldSprites = new AnimatedSprite[0];
         }
         public abstract void OnQAbility(); // Will be called when player presses Q
         public float AttackSpeed { get; set; }
