@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,6 +14,9 @@ namespace PurpleStyrofoam.Rendering.Animations
         int CurrentFrame;
         int TotalFrames;
         public Boolean Paused;
+        public float Angle;
+        public Vector2 Origin;
+        public bool Flipped;
         public Animation(string texture, int rows, int columns)
         {
             image = texture;
@@ -21,6 +25,9 @@ namespace PurpleStyrofoam.Rendering.Animations
             CurrentFrame = 0;
             TotalFrames = Rows * Columns;
             Paused = true;
+            Origin = new Vector2(0, 0);
+            Angle = 0;
+            Flipped = false;
         }
 
         public void Draw(SpriteBatch sp, Rectangle location)
@@ -31,10 +38,11 @@ namespace PurpleStyrofoam.Rendering.Animations
             int column = CurrentFrame % Columns;
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
 
-            try { sp.Draw(Texture, location, sourceRectangle, Color.White); }
-            catch (ArgumentNullException e)
+            try { sp.Draw(Texture, location, sourceRectangle, Color.White, Angle, Origin, 
+                Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1); }
+            catch (ArgumentNullException)
             {
-                throw new Exception("Texture was not properly loaded at: " + e.InnerException);
+                throw new Exception("Texture was not properly loaded at: " + this);
             }
         }
 
@@ -63,6 +71,21 @@ namespace PurpleStyrofoam.Rendering.Animations
             SpriteRect.Width = Texture.Width / Columns;
             SpriteRect.Height = Texture.Height / Rows;
             Play();
+        }
+
+        public void Rotate(float Radians)
+        {
+            Angle += Radians;
+        }
+
+        public int CurrentAngleInDegrees()
+        {
+            return (int) Math.Round( (180/Math.PI) * Angle );
+        }
+
+        public float CurrentAngleInRadians()
+        {
+            return Angle;
         }
 
         public Boolean Finished()

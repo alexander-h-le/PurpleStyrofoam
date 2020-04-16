@@ -49,6 +49,8 @@ namespace PurpleStyrofoam
             if (velocity.X != 0 || velocity.Y != 0) DetectCollision();
             if (South) velocity.Y = 0;
             if (North) velocity.Y = -velocity.Y;
+            if (East && velocity.X > 0) velocity.X = 0;
+            if (West && velocity.X < 0) velocity.X = 0;
             UpdateVelocity();
             AI.NextMove();
         }

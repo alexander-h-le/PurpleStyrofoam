@@ -62,11 +62,8 @@ namespace PurpleStyrofoam.Rendering
         /// <param name="player">The player information to be handed in</param>
         /// <param name="newX">The new player position</param>
         /// <param name="newY">The new player position</param>
-        public static void InitiateChange(BaseMap newMap, PlayerController player, int newX = 0, int newY = 0, List<AnimatedSprite> newSprites = null)
+        public static void InitiateChange(BaseMap newMap, PlayerController player, Point pos, List<AnimatedSprite> newSprites = null)
         {
-
-            player.SpriteRectangle.X = newX;
-            player.SpriteRectangle.Y = newY;
             Game.PlayerCharacter = player;
             Game.PlayerManager = (PlayerManager)Game.PlayerCharacter.Manager;
 
@@ -85,6 +82,8 @@ namespace PurpleStyrofoam.Rendering
             if (Game.PlayerManager.Inventory == null) Game.PlayerManager.Inventory = new InventoryManager();
             Game.PlayerManager.Inventory.LoadItems();
             MenuHandler.AllPopUps.Add(Game.PlayerManager.Inventory);
+
+            Game.PlayerCharacter.SpriteRectangle.Location = pos;
         }
 
         private static void LoadGameTextures()

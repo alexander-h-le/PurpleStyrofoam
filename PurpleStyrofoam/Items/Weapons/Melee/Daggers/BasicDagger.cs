@@ -8,20 +8,13 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
 {
     public class BasicDagger : Dagger
     {
-        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite(TextureHelper.Sprites.TestImage, new Vector2(0, 0)))
+        public BasicDagger() : base("Steel Dagger", 10, RARITY.COMMON, new ItemSprite("Daggers/BasicDagger"))
         {
         }
 
         public override int ID => 025;
 
         public override string Description => "The quintessential tool for any assassin.";
-
-        public override void OnLeftClick()
-        {
-            AnimatedSprite temp;
-            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
-            DamageHelper.DamageTarget(-Damage, temp);
-        }
 
         public override void OnQAbility()
         {

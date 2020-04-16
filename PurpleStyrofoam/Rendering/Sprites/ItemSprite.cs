@@ -6,59 +6,89 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using PurpleStyrofoam.Rendering.Animations;
+using PurpleStyrofoam.Helpers;
+using System.Diagnostics;
 
 namespace PurpleStyrofoam.Rendering
 {
     public class ItemSprite : GameObject
     {
-        public Texture2D Texture { get; private set; }
-        private string textureName;
         public Rectangle ItemRectangle;
-        public float Angle { get; set; }
-        public Vector2 Origin { get; set; }
-        public float Scale { get; set; }
-        public bool Flipped { get; set; }
-        public bool Visible { get; set; }
-        public ItemSprite(string TextureName, Vector2 origIn, int xIn = 0, int yIn = 0, float angleIn = 0.0f, float scale = 1.0f, int width = 50, int height = 50)
-        {
-            textureName = TextureName;
-            Origin = origIn;
-            Scale = scale;
-            ItemRectangle = new Rectangle(xIn, yIn, width, height);
-            Flipped = false;
-            Visible = true;
+        public Animation animate;
+        float RotationRate;
+
+        public Action OnStart;
+        public Action DuringSwing;
+        public Action OnEnd;
+        public bool Flipped { 
+            get
+            {
+                return animate.Flipped;
+            }
+            set
+            {
+                animate.Flipped = value;
+            }
         }
-        public ItemSprite(Texture2D textureIn, Vector2 origIn, int xIn = 0, int yIn = 0, float angleIn = 0.0f, float scale = 1.0f, int width = 50, int height = 50)
+        public bool Visible { get; set; }
+        public ItemSprite(string TextureName, int width = 50, int height = 50, int rows = 1, int columns = 1)
         {
-            Texture = textureIn;
-            textureName = Texture.Name;
-            Origin = origIn;
-            Scale = scale;
-            ItemRectangle = new Rectangle(xIn, yIn, width, height);
+            ItemRectangle = new Rectangle(0, 0, width, height);
+            animate = new Animation(TextureName, rows, columns);
             Flipped = false;
-            Visible = true;
+            RotationRate = 0.0f;
+            Visible = false;
+
+            OnStart = DuringSwing = OnEnd = () => { };
         }
 
         public override void Draw(SpriteBatch sp)
         {
-            try {
-                if (Visible) sp.Draw(Texture, new Vector2(ItemRectangle.X, ItemRectangle.Y), ItemRectangle, Color.White, Angle, Origin, Scale,
-                     Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1.0f);
-            }
-            catch (ArgumentNullException e)
-            {
-                throw new Exception("Texture was not properly loaded at: " + e.ParamName);
-            }
+            if (Visible) animate.Draw(sp, ItemRectangle);
         }
 
+        bool StopSwing = false;
         public override void Update()
         {
-            return;
+            if (Visible && !StopSwing)
+            {
+                animate.Rotate(RotationRate);
+                DuringSwing();
+                AngleCheck();
+            }
+            else
+            {
+                OnEnd();
+                Visible = false;
+            }
         }
 
         public override void Load()
         {
-            if (Texture == null) Texture = Game.GameContent.Load<Texture2D>(textureName);
+            animate.Load();
+        }
+
+        Action AngleCheck = () => { };
+        public void StartAnimation(float rotateRate)
+        {
+            if (Visible) return;
+            if (animate.Flipped)
+            {
+                animate.Origin = new Vector2(animate.Texture.Width, animate.Texture.Height);
+                RotationRate = -rotateRate;
+                animate.Angle = GameMathHelper.PIConstants.PI_45;
+                AngleCheck = () => { StopSwing = animate.Angle < -GameMathHelper.PIConstants.PI_45; };
+            } else
+            {
+                animate.Origin = new Vector2(0, animate.Texture.Height);
+                RotationRate = rotateRate;
+                animate.Angle = -GameMathHelper.PIConstants.PI_45;
+                AngleCheck = () => { StopSwing = animate.Angle > GameMathHelper.PIConstants.PI_45; };
+            }
+            StopSwing = false;
+            Visible = true;
+            OnStart();
         }
     }
 }

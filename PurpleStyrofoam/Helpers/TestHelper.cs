@@ -12,7 +12,7 @@ namespace PurpleStyrofoam.Helpers
         public static Dialogue[] GetTestDialogues()
         {
             return new Dialogue[] {
-                new Dialogue(TextureHelper.Sprites.Dog, 
+                new Dialogue(TextureHelper.Sprites.EnemySprite, 
                 "Captain Vor", "Look at them, they come to this place when they know they are not pure. Tenno use the keys, but they are mere tresspassers. " +
                 "Only I, Vor, know the true power of the void. I was cut in half, destroyed, but through its Janus Key, the Void called to me. " +
                 "It brought me here and here I was reborn. We cannot blame these creatures, they are being led by a false prophet, an imposter who knows not the secrets of the void. " +

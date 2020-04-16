@@ -140,7 +140,8 @@ namespace PurpleStyrofoam.Rendering
         {
             foreach (int index in GetObjectHashId(input.SpriteRectangle))
             {
-                BucketSprite[index].Add(input);
+                try { BucketSprite[index].Add(input); }
+                catch (KeyNotFoundException) { input.Delete(); break; }
             }
         }
 
@@ -160,7 +161,8 @@ namespace PurpleStyrofoam.Rendering
         {
             foreach (int index in GetObjectHashId(input.SpriteRectangle))
             {
-                BucketSprite[index].Remove(input);
+                try { BucketSprite[index].Remove(input); }
+                catch (KeyNotFoundException) { continue; }
             }
         }
     }

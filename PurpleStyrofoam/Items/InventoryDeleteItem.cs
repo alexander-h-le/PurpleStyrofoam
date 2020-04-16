@@ -15,7 +15,7 @@ namespace PurpleStyrofoam.Items
 
         public override string Description => "lol";
 
-        public InventoryDeleteItem() : base("Delete Item", RARITY.SPECIAL, new ItemSprite(TextureHelper.Blank(Color.DarkRed), new Vector2(0,0))) { }
+        public InventoryDeleteItem() : base("Delete Item", RARITY.SPECIAL, new ItemSprite(TextureHelper.Sprites.EnemySprite)) { }
 
         public override void OnInventoryUse()
         {

@@ -5,7 +5,7 @@ using System;
 
 namespace PurpleStyrofoam.Helpers
 {
-    public static class MathHelper
+    public static class GameMathHelper
     {
         /// <summary>
         /// Gives the angle in radians to make object look at certain point
@@ -57,6 +57,23 @@ namespace PurpleStyrofoam.Helpers
             double deltaX = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.X - objectIn.ItemRectangle.X;
             double deltaY = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.Y - objectIn.ItemRectangle.Y;
             return (float)Math.Atan2(deltaY, deltaX);
+        }
+
+        public static int RadianToDegree(float radian)
+        {
+            return (int) Math.Round( (180/Math.PI) * radian );
+        }
+
+        public static float DegreeToRadian(int degree)
+        {
+            return (float) (Math.PI / 180) * degree;
+        }
+
+        public class PIConstants
+        {
+            public static float PI_45 = (float)(Math.PI / 4);
+            public static float PI_90 = (float)(Math.PI / 2);
+            public static float PI_270 = (float)((Math.PI * 3) / 2);
         }
     }
 }

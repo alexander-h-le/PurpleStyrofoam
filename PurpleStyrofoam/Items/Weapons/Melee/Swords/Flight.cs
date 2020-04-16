@@ -15,16 +15,9 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
         public override int ID => 003;
 
         public override string Description => "Flight, a legendary sword given to humans by the god of wind himself. It is able to be swung without fatigue, and can control the very wind itself.";
-        public Flight() : base("Flight", 100, RARITY.LEGENDARY, new ItemSprite("playerSprite", new Vector2(0,0)))
+        public Flight() : base("Flight", 100, RARITY.LEGENDARY, new ItemSprite("playerSprite"))
         {
 
-        }
-
-        public override void OnLeftClick()
-        {
-            AnimatedSprite temp;
-            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
-            if (temp != null) RenderHandler.purgeSprites.Add(temp);
         }
 
         public override void OnQAbility()
@@ -32,6 +25,5 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Swords
             // Increase attack speed and attacks during this period throw an extra slash of wind that pierce infinitely and travels until it hits a wall/floor.
             throw new NotImplementedException();
         }
-
     }
 }

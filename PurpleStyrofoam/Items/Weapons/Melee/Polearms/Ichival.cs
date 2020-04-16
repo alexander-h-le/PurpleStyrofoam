@@ -14,13 +14,8 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Polearms
     {
         public override int ID => 001;
         public override string Description => "A legendary spear, wielded by countless heroes of the past. With its attunement to lightning, it strikes down its foes with a current strong enough to ionize the very air around it. ";
-        public Ichival() : base("Ichival", 100, RARITY.LEGENDARY, new ItemSprite("Ichival", new Vector2(0, 0)))
+        public Ichival() : base("Ichival", 100, RARITY.LEGENDARY, new ItemSprite("Ichival"))
         {
-        }
-
-        public override void OnLeftClick()
-        {
-            throw new NotImplementedException();
         }
 
         public override void OnQAbility()
@@ -28,6 +23,5 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Polearms
             //Thrust out spear to hurt enemies. Any enemies beyond the tip in a small area that the spear didnt hit get electrocuted.
             throw new NotImplementedException();
         }
-
     }
 }

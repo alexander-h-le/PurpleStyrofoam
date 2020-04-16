@@ -15,7 +15,7 @@ namespace PurpleStyrofoam.Items
 
         public override string Description => "No Item";
 
-        public BlankItem() : base("Blank Item", RARITY.SPECIAL, new ItemSprite(TextureHelper.Blank(Color.Black), new Vector2(0,0))) { }
+        public BlankItem() : base("Blank Item", RARITY.SPECIAL, new ItemSprite(TextureHelper.Sprites.EnemySprite)) { }
 
         public override void OnInventoryUse()
         {

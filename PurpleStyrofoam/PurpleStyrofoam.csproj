@@ -49,7 +49,8 @@
     <Compile Include="AiController\MouseHandler.cs" />
     <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Helpers\GameMathHelper.cs" />
+    <Compile Include="Helpers\SoundHelper.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Items\Armors\Armor.cs" />
     <Compile Include="Items\BlankItem.cs" />

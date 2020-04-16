@@ -31,6 +31,8 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public static string PathDirectory;
 
+        static JsonSerializerSettings settings;
+
         /// <summary>
         /// Starts up GameSaveHandler. Ran along with other initialize methods, but this is only run once.
         /// </summary>
@@ -43,6 +45,12 @@ namespace PurpleStyrofoam.Rendering
             else if (Environment.OSVersion.VersionString.Contains("Windows")) dash = "\\";
 
             PathDirectory = Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dash + "PurpleStyrofoamGameFolder").FullName + dash;
+
+            settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            settings.Converters.Add(new GameClassConverter());
+            settings.Converters.Add(new ItemConverter());
+            settings.Converters.Add(new AnimatedSpriteConverter());
         }
 
         /// <summary>
@@ -71,17 +79,12 @@ namespace PurpleStyrofoam.Rendering
                 {
                     using (JsonTextReader reader = new JsonTextReader(sr))
                     {
-                        var settings = new JsonSerializerSettings();
-                        settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        settings.Converters.Add(new GameClassConverter());
-                        settings.Converters.Add(new ItemConverter());
-                        settings.Converters.Add(new AnimatedSpriteConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
                         ((PlayerManager)chara.Manager).Class.AddSpriteSource(chara);
                         ((PlayerManager)chara.Manager).CurrentSave = SaveName;
-                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara, (int)save.PlayerPosition.X, (int)save.PlayerPosition.Y);
+                        RenderHandler.InitiateChange(LoadMapFromName(save.ActiveMap), chara, save.PlayerPosition.ToPoint());
                     }
                 }
             } catch (Exception e)
@@ -102,11 +105,6 @@ namespace PurpleStyrofoam.Rendering
                 {
                     using (JsonTextReader reader = new JsonTextReader(sr))
                     {
-                        var settings = new JsonSerializerSettings();
-                        settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        settings.Converters.Add(new GameClassConverter());
-                        settings.Converters.Add(new ItemConverter());
-                        settings.Converters.Add(new AnimatedSpriteConverter());
                         JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
                         GameSave save = jsonSerializer.Deserialize<GameSave>(reader);
                         PlayerController chara = new PlayerController(save.player);
@@ -147,17 +145,7 @@ namespace PurpleStyrofoam.Rendering
 
             // ------------------------------------------------------------------------------------------------
 
-            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave));
-            using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
-            {
-                var settings = new JsonSerializerSettings();
-                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                settings.Converters.Add(new GameClassConverter());
-                settings.Converters.Add(new ItemConverter());
-                settings.Converters.Add(new AnimatedSpriteConverter());
-                JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
-                jsonSerializer.Serialize(sw, newSave);
-            }
+            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave, settings));
             RenderHandler.CurrentGameState = prevGameState;
 
             // ------------------------------------------------------------------------------------------------
@@ -188,17 +176,7 @@ namespace PurpleStyrofoam.Rendering
 
             // ------------------------------------------------------------------------------------------------
 
-            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave));
-            using (StreamWriter sw = File.CreateText(PathDirectory + SaveName))
-            {
-                var settings = new JsonSerializerSettings();
-                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                settings.Converters.Add(new GameClassConverter());
-                settings.Converters.Add(new ItemConverter());
-                settings.Converters.Add(new AnimatedSpriteConverter());
-                JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
-                jsonSerializer.Serialize(sw, newSave);
-            }
+            File.WriteAllText(PathDirectory + SaveName, JsonConvert.SerializeObject(newSave, settings));
             RenderHandler.CurrentGameState = prevGameState;
 
             // ------------------------------------------------------------------------------------------------

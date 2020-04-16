@@ -16,15 +16,8 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
         public override int ID => 002;
 
         public override string Description => "One of the few remaining weapons made from Shadowstone. It is rumored that this weapon is sharp enough to pierce a soul, and is invisible to all but the wielder, even in plain sight.";
-        public Fortz() : base("Fortz", 100, RARITY.LEGENDARY, new ItemSprite("Fortz", new Vector2(0, 0)))
+        public Fortz() : base("Fortz", 100, RARITY.LEGENDARY, new ItemSprite("Fortz"))
         {
-        }
-
-        public override void OnLeftClick()
-        {
-            AnimatedSprite temp;
-            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out temp);
-            if (temp != null) RenderHandler.purgeSprites.Add(temp);
         }
 
         public override void OnQAbility()
@@ -32,6 +25,5 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Daggers
             // Blade dance, but enemies a frozen by fear and screen gets darker.
             throw new NotImplementedException();
         }
-
     }
 }

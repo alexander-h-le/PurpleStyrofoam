@@ -35,7 +35,15 @@ namespace PurpleStyrofoam.AiController
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        Game.PlayerManager.Class.RClick();
+                        // Game.PlayerManager.Class.RClick();
+                        AnimatedSprite temp;
+                        temp = new AnimatedSprite(TextureHelper.Sprites.EnemySprite, 1,1, (int)mousePos.X, (int)mousePos.Y, 
+                            new BasicAI(Game.PlayerCharacter), new DefaultManager());
+                        temp.AI.SupplyAI(temp);
+                        temp.Load();
+                        temp.SpriteRectangle.Width = 50;
+                        temp.SpriteRectangle.Height = 50;
+                        RenderHandler.allCharacterSprites.Add(temp);
                         break;
                     case GAMESTATE.PAUSED:
                         if (Game.PlayerManager.Inventory.Open) Game.PlayerManager.Inventory.InventoryUseAtPosition(mousePos);
@@ -49,13 +57,21 @@ namespace PurpleStyrofoam.AiController
                 switch (RenderHandler.CurrentGameState)
                 {
                     case GAMESTATE.MAINMENU:
-                        if (oldState.LeftButton == ButtonState.Released) MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
+                        if (oldState.LeftButton == ButtonState.Released)
+                        {
+                            SoundHelper.PlaySoundEffect("Sounds/ButtonClick");
+                            MenuHandler.ActiveFullScreenMenu.ActionAtPosition(newState);
+                        }
                         break;
                     case (GAMESTATE.ACTIVE):
-                        ((Weapon)Game.PlayerManager.EquippedWeapon).OnLeftClick();
+                        if (oldState.LeftButton == ButtonState.Released) ((Weapon)Game.PlayerManager.EquippedWeapon)?.LeftClick();
                         break;
                     case GAMESTATE.PAUSED:
-                        if (MenuHandler.ActivePopUp != null && oldState.LeftButton == ButtonState.Released) MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
+                        if (MenuHandler.ActivePopUp != null && oldState.LeftButton == ButtonState.Released)
+                        {
+                            SoundHelper.PlaySoundEffect("Sounds/ButtonClick");
+                            MenuHandler.ActivePopUp.ActionAtPosition(mousePos);
+                        }
                         break;
                     default:
                         break;

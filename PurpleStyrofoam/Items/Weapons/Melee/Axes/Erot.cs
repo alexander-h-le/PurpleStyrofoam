@@ -16,14 +16,9 @@ namespace PurpleStyrofoam.Items.Weapons.Melee.Axes
         public override int ID => 005;
 
         public override string Description => "A forgotten weapon, lost to the tides of time. Wielding it gives you power strong enough to tear through the veils of reality";
-        public Erot() : base("Erot", 100, RARITY.LEGENDARY, new ItemSprite("Erot", new Vector2(0, 0)))
+        public Erot() : base("Erot", 100, RARITY.LEGENDARY, new ItemSprite("Erot"))
         {
 
-        }
-
-        public override void OnLeftClick()
-        {
-            throw new NotImplementedException();
         }
 
         public override void OnQAbility()
