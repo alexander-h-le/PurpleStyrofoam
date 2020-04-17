@@ -19,6 +19,8 @@ namespace PurpleStyrofoam.Items.Potions.Healing
 
         public override string EffectDescription => "Heals 50 HP";
 
+        public override int Duration => 0;
+
         public override void OnInventoryUse()
         {
             Game.PlayerManager.Health = 

@@ -14,6 +14,7 @@ namespace PurpleStyrofoam.Items.Potions
         {
         }
 
+        public abstract int Duration { get; }
         public abstract string EffectDescription { get; }
     }
 }

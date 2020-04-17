@@ -58,6 +58,7 @@
     <Compile Include="Items\BlankItem.cs" />
     <Compile Include="Items\InventoryDeleteItem.cs" />
     <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemStack.cs" />
     <Compile Include="Items\Materials\Material.cs" />
     <Compile Include="Items\Miscellaneous Items\Companions\Companion.cs" />
     <Compile Include="Items\Potions\BuffPotions\RegularSpeedPotion.cs" />

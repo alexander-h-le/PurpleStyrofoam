@@ -13,6 +13,8 @@ using PurpleStyrofoam.Items.Weapons.Melee.Rapiers;
 using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.Items.Weapons;
+using PurpleStyrofoam.Items.Potions;
+using PurpleStyrofoam.Items.Armors;
 
 namespace PurpleStyrofoam.Managers
 {
@@ -20,7 +22,11 @@ namespace PurpleStyrofoam.Managers
     {
         public Item[] Items;
         private Item SelectedItem;
+        private static Item HoverItem;
         Rectangle location;
+
+        private string[] ItemInformation;
+
         public InventoryManager()
         {
             Open = false;
@@ -53,6 +59,7 @@ namespace PurpleStyrofoam.Managers
                 if (i != null) i.Sprite.Draw(sp);
             }
             if (SelectedItem != null) SelectedItem.Sprite.Draw(sp);
+            DrawItemInfo(sp);
         }
 
         // Active updating is required due to player interaction with items.
@@ -63,6 +70,7 @@ namespace PurpleStyrofoam.Managers
         public void Update()
         {
             SetupItemDisplay();
+            CheckHovering();
             foreach (Item i in Items)
             {
                 i.Sprite.animate.Angle = 0.0f;
@@ -147,12 +155,48 @@ namespace PurpleStyrofoam.Managers
         /// <returns>True if successful, false if the Items is full.</returns>
         public bool AddToInventory(Item i)
         {
-            for (int index = 6; index < Items.Length; index++)
+            if (i is Armor || i is Weapon)
             {
-                if (Items[index] is BlankItem)
+                for (int index = 6; index < Items.Length; index++)
                 {
-                    Items[index] = i;
-                    return true;
+                    if (Items[index] is BlankItem)
+                    {
+                        Items[index] = i;
+                        return true;
+                    }
+                }
+
+            } else
+            {
+                // Find the first Stack of item
+                for (int index = 6; index < Items.Length; index++)
+                {
+                    if (Items[index] is ItemStack)
+                    {
+                        Debug.WriteLine("pp");
+                        if (((ItemStack)Items[index]).AddToStack(i)) return true;
+                    }
+                }
+                // If none found, find a dupe and create a stack
+                for (int index = 6; index < Items.Length; index++)
+                {
+                    if (Items[index].Equals(i))
+                    {
+                        List<Item> temp = new List<Item>();
+                        temp.Add(i);
+                        temp.Add(Items[index]);
+                        Items[index] = new ItemStack(temp);
+                        return true;
+                    }
+                }
+                // If there isn't any, add it regularly to inventory.
+                for (int index = 6; index < Items.Length; index++)
+                {
+                    if (Items[index] is BlankItem)
+                    {
+                        Items[index] = i;
+                        return true;
+                    }
                 }
             }
             return false;
@@ -194,6 +238,68 @@ namespace PurpleStyrofoam.Managers
                 return true;
             }
             return false;
+        }
+
+        public void CheckHovering()
+        {
+            Rectangle mouse = new Rectangle(MouseHandler.mousePos.ToPoint(), new Point(2, 2));
+            foreach (Item i in Items)
+            {
+                if (i is BlankItem) continue;
+                if (i.Sprite.ItemRectangle.Intersects(mouse))
+                {
+                    HoverItem = i;
+                    break;
+                }
+                else HoverItem = null;
+            }
+        }
+
+        const float TransparencyLevel = 0.5f;
+        public void DrawItemInfo(SpriteBatch sp)
+        {
+            if (HoverItem != null)
+            {
+                if (HoverItem is ItemStack)
+                {
+                    List<Item> stack = ((ItemStack)HoverItem).items;
+                    ItemInformation = new string[]
+                    {
+                        HoverItem.ID + " - " + HoverItem.Name + " (x" + stack.Count + ")",
+                        stack[0] is Weapon ? "Damage: " + ((Weapon) stack[0]).Damage.ToString() : "",
+                        stack[0] is Potion ? "Effect: " + ((Potion) stack[0]).EffectDescription : "",
+                        stack[0] is Potion ? "Duration: " + GameMathHelper.FramesToStringTime(((Potion) stack[0]).Duration) : "",
+                        "Description: " + HoverItem.Description
+                    };
+                } else
+                {
+                    ItemInformation = new string[]
+                    {
+                        HoverItem.ID + " - " + HoverItem.Name,
+                        HoverItem is Weapon ? "Damage: " + ((Weapon) HoverItem).Damage.ToString() : "",
+                        HoverItem is Potion ? "Effect: " + ((Potion) HoverItem).EffectDescription : "",
+                        HoverItem is Potion ? "Duration: " + GameMathHelper.FramesToStringTime(((Potion) HoverItem).Duration) : "",
+                        "Description: " + HoverItem.Description
+                    };
+                }
+
+                Point position = MouseHandler.mousePos.ToPoint();
+                SpriteFont font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
+
+                sp.Draw(TextureHelper.Blank(Color.Black), position.ToVector2(), new Rectangle(position,
+                        (font.MeasureString(ItemInformation[0]) * new Vector2(0.7f, 1f) ).ToPoint()), Color.White * TransparencyLevel);
+                sp.DrawString(font, ItemInformation[0] , position.ToVector2(), Color.LightGray, 0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
+                float yPos = position.Y + font.MeasureString(ItemInformation[0]).Y;
+                for (int i = 1; i < ItemInformation.Length; i++)
+                {
+                    if (ItemInformation[i].Length == 0) continue;
+                    sp.Draw(TextureHelper.Blank(Color.Black), new Vector2(position.X, yPos), new Rectangle(new Point(position.X, (int)yPos), 
+                        (font.MeasureString(ItemInformation[i]) * new Vector2(0.7f, 1f)).ToPoint()), Color.White * TransparencyLevel);
+                    sp.DrawString(font, ItemInformation[i], new Vector2(position.X, yPos), 
+                        Color.LightGray, 0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
+                    yPos += font.MeasureString(ItemInformation[i]).Y;
+                }
+            }
         }
 
         public void ActionAtPosition(Vector2 pos)
@@ -283,10 +389,17 @@ namespace PurpleStyrofoam.Managers
         {
             for (int i = 6; i < Items.Length; i++)
             {
-                if (Items[i] == item)
+                if (Items[i] is ItemStack)
                 {
-                    Items[i] = new BlankItem();
-                    break;
+                    if (((ItemStack)Items[i]).items[0].Equals(item)) ((ItemStack)Items[i]).items.Remove(item);
+                }
+                else
+                {
+                    if (Items[i] == item)
+                    {
+                        Items[i] = new BlankItem();
+                        break;
+                    }
                 }
             }
         }

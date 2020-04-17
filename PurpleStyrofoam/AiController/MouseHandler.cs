@@ -67,7 +67,8 @@ namespace PurpleStyrofoam.AiController
                         }
                         break;
                     case (GAMESTATE.ACTIVE):
-                        if (oldState.LeftButton == ButtonState.Released) ((Weapon)Game.PlayerManager.EquippedWeapon)?.LeftClick();
+                        if (oldState.LeftButton == ButtonState.Released) { }
+                        ((Weapon)Game.PlayerManager.EquippedWeapon)?.LeftClick();
                         break;
                     case GAMESTATE.PAUSED:
                         if (MenuHandler.ActivePopUp != null && oldState.LeftButton == ButtonState.Released)

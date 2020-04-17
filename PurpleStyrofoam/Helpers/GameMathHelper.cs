@@ -71,6 +71,8 @@ namespace PurpleStyrofoam.Helpers
 
         public static string FramesToStringTime(int amt)
         {
+            if (amt == 0) return "Instantaneous";
+
             int seconds = (int) (amt / 60);
             int minutes = 0;
             int hours = 0;

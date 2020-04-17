@@ -22,12 +22,14 @@ namespace PurpleStyrofoam.Items.Potions.BuffPotions
 
         public override string Description => "you go fast";
 
+        public override int Duration => GameMathHelper.TimeToFrames(10);
+
         public override void OnInventoryUse()
         {
             float original = Game.PlayerCharacter.terminalVelocity.X;
             if (Game.PlayerCharacter.Buffs.AddBuff(new Buff(
                 "Speed",
-                GameMathHelper.TimeToFrames(60),
+                Duration,
                 () =>
                 {
                     Game.PlayerCharacter.terminalVelocity.X = 800;

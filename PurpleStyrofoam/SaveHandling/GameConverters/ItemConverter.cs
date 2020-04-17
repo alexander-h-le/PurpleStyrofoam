@@ -22,7 +22,17 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
             { 
                 JObject item = JObject.Load(reader);
                 var type = item.Value<string>("type");
-                return (Item)Activator.CreateInstance(Type.GetType(type));
+                if (type.Equals("PurpleStyrofoam.Items.ItemStack"))
+                {
+                    List<Item> items = new List<Item>();
+                    for (int i = 0; i < item.Value<int>("count"); i++)
+                    {
+                        items.Add((Item)Activator.CreateInstance(Type.GetType(item.Value<string>("item"))));
+                    }
+                    ItemStack stack = new ItemStack(items);
+                    return stack;
+                }
+                else return (Item)Activator.CreateInstance(Type.GetType(type));
             }
             catch
             {
@@ -33,7 +43,14 @@ namespace PurpleStyrofoam.SaveHandling.GameConverters
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             JObject o = new JObject();
-            o.AddFirst(new JProperty("type", new JValue(value.GetType().Namespace + "." + value.GetType().Name)));
+            if (value is ItemStack)
+            {
+                Item item = ((ItemStack)value).items[0];
+                o.AddFirst(new JProperty("type", new JValue(value.GetType().Namespace + "." + value.GetType().Name)));
+                o.Add(new JProperty("item", new JValue(item.GetType().Namespace + "." + item.GetType().Name)));
+                o.Add(new JProperty("count", new JValue(((ItemStack)value).items.Count)));
+            }
+            else o.AddFirst(new JProperty("type", new JValue(value.GetType().Namespace + "." + value.GetType().Name)));
             o.WriteTo(writer);
         }
     }

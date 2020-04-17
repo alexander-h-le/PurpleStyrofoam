@@ -8,7 +8,7 @@ using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items
 {
-    public abstract class Item
+    public abstract class Item : IEquatable<Item>
     {
         public string Name { get; set; } // The name that will be displayed to the player
         public abstract int ID { get; } // The ID that the code will refer to it by
@@ -23,6 +23,11 @@ namespace PurpleStyrofoam.Items
             Sprite = imageIn;
         }
         public virtual void Update() { }
+
+        public bool Equals(Item other)
+        {
+            return Name.Equals(other.Name);
+        }
     }
 
     public class RARITY // Rarity levels
