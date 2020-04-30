@@ -16,6 +16,7 @@ using PurpleStyrofoam.Maps;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 using PurpleStyrofoam.Rendering.Menus;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
+using PurpleStyrofoam.Rendering.Sprites;
 using PurpleStyrofoam.Rendering.Text;
 
 namespace PurpleStyrofoam.Rendering
@@ -122,6 +123,8 @@ namespace PurpleStyrofoam.Rendering
                         ObjectMapper.AddSpriteObject(sprite);
                     }
                     foreach (Projectile item in allProjectiles) item.Update();
+                    foreach (MapInteractable i in selectedMap.InteractableLayer) i.MapAction?.Invoke();
+                    foreach (TimerHelper t in TimerHelper.Timers) t.Update();
                     if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.Update();
                     if (purgeProjectiles.Count != 0) DeleteProjectiles();
                     if (purgeSprites.Count != 0) DeleteSprites();
@@ -133,6 +136,7 @@ namespace PurpleStyrofoam.Rendering
                     MenuHandler.CheckKeys();
                     if (DialogueHandler.ActiveDialogue != null) DialogueHandler.Update();
                     else MenuHandler.Update();
+                    PlayerInfoUI.Update();
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);
@@ -208,6 +212,7 @@ namespace PurpleStyrofoam.Rendering
                     });
                     if (DialogueHandler.ActiveDialogue != null) DialogueHandler.Draw(sp);
                     if (MenuHandler.ActivePopUp != null) MenuHandler.DrawPopUpMenu(sp);
+                    PlayerInfoUI.Draw(sp);
                     break;
                 default:
                     throw new NotSupportedException("Game has entered an invalid gamestate: " + CurrentGameState);

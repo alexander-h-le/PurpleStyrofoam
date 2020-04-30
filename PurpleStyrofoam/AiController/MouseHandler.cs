@@ -16,6 +16,7 @@ using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Rendering.Menus.PopUpMenu;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Items.Weapons;
+using PurpleStyrofoam.Rendering.Sprites;
 
 namespace PurpleStyrofoam.AiController
 {
@@ -24,9 +25,11 @@ namespace PurpleStyrofoam.AiController
         private static MouseState oldState;
         private static MouseState newState;
         public static Vector2 mousePos;
+        public static Rectangle mousePosRect;
         public static void Update()
         {
             mousePos = new Vector2((int)RenderHandler.ScreenOffset.X + newState.X, (int)RenderHandler.ScreenOffset.Y + newState.Y);
+            mousePosRect = new Rectangle((int)mousePos.X, (int)mousePos.Y, 1, 1);
             if (newState.RightButton == ButtonState.Pressed)
             {
 
@@ -35,15 +38,12 @@ namespace PurpleStyrofoam.AiController
                     case GAMESTATE.MAINMENU:
                         break;
                     case (GAMESTATE.ACTIVE):
-                        // Game.PlayerManager.Class.RClick();
-                        AnimatedSprite temp;
-                        temp = new AnimatedSprite(TextureHelper.Sprites.EnemySprite, 1,1, (int)mousePos.X, (int)mousePos.Y, 
-                            new BasicAI(Game.PlayerCharacter), new DefaultManager());
-                        temp.AI.SupplyAI(temp);
-                        temp.Load();
-                        temp.SpriteRectangle.Width = 50;
-                        temp.SpriteRectangle.Height = 50;
-                        RenderHandler.allCharacterSprites.Add(temp);
+                        if (oldState.RightButton == ButtonState.Released)
+                        {
+                            List<MapObject> mapObjs = CollisionDetection.DetectCollisionMaps(new Rectangle(mousePos.ToPoint(), new Point(2, 2)));
+                            foreach (MapObject map in mapObjs) if (map is MapInteractable) ((MapInteractable)map).ClickAction?.Invoke();
+                            // else Game.PlayerManager.Class.RClick();
+                        }
                         break;
                     case GAMESTATE.PAUSED:
                         if (oldState.RightButton == ButtonState.Released)

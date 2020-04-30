@@ -12,6 +12,7 @@ using PurpleStyrofoam.AiController.AIs;
 using PurpleStyrofoam.Managers;
 using PurpleStyrofoam.Rendering.Animations;
 using PurpleStyrofoam.Buffs;
+using PurpleStyrofoam.Rendering.Text;
 
 namespace PurpleStyrofoam
 {
@@ -30,6 +31,7 @@ namespace PurpleStyrofoam
         public AIBase AI;
         public BaseManager Manager;
         public BuffHandler Buffs;
+        public DamageIndicator damageIndicator;
 
         public AnimatedSprite(string TextureName, int rows, int columns, int xIn, int yIn, AIBase ai, BaseManager manIn)
         {
@@ -38,6 +40,7 @@ namespace PurpleStyrofoam
             xy = new Point(xIn,yIn);
             Manager = manIn;
             Buffs = new BuffHandler();
+            damageIndicator = new DamageIndicator();
         }
         public void DetectCollision()
         {
@@ -56,6 +59,7 @@ namespace PurpleStyrofoam
             if (West && velocity.X < 0) velocity.X = 0;
             UpdateVelocity();
             AI.NextMove();
+            damageIndicator.Update(SpriteRectangle);
         }
 
         public virtual void UpdateVelocity()
@@ -67,10 +71,25 @@ namespace PurpleStyrofoam
             SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
 
+        public void AddHealth(int amt)
+        {
+            if (Manager.Health + amt <= Manager.MaxHealth)
+            {
+                if (Manager.Health + amt > 0)
+                {
+                    Manager.Health += amt;
+                    if (amt > 0) damageIndicator.NewDamage(amt, Color.Green);
+                    else damageIndicator.NewDamage(amt, Color.Red);
+                }
+                else Manager.Health = 0;
+            }
+            else Manager.Health = Manager.MaxHealth;
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             animate.Draw(spriteBatch, SpriteRectangle);
+            damageIndicator.Draw(spriteBatch);
         }
 
         public override void Load()

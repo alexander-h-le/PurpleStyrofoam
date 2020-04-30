@@ -25,6 +25,14 @@ namespace PurpleStyrofoam.Rendering
             height = hIn;
             MapRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
         }
+        public MapObject(Texture2D text, Vector2 locationIn, int wIn, int hIn)
+        {
+            texture = text;
+            location = locationIn;
+            width = wIn;
+            height = hIn;
+            MapRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+        }
 
         public override void Draw(SpriteBatch sp)
         {
@@ -42,7 +50,7 @@ namespace PurpleStyrofoam.Rendering
 
         public override void Load()
         {
-            texture = Game.GameContent.Load<Texture2D>(TextureName);
+            if (texture == null) texture = Game.GameContent.Load<Texture2D>(TextureName);
         }
     }
 }

@@ -53,6 +53,8 @@ namespace PurpleStyrofoam.AiController
                 ItemMovement();
                 Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y + (SpriteRectangle.Width/2);
             }
+
+            damageIndicator.Update(SpriteRectangle);
         }
         private const int moveSpeed = 20;
         private const int jumpSpeed = 1500;

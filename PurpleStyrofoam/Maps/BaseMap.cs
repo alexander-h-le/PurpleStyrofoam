@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PurpleStyrofoam.Rendering;
+using PurpleStyrofoam.Rendering.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,6 +15,7 @@ namespace PurpleStyrofoam.Maps
     public abstract class BaseMap
     {
         public abstract MapObject[] BackgroundLayer { get; set; }
+        public abstract MapInteractable[] InteractableLayer { get; set; }
         public abstract MapObject[] ActiveLayer { get; set; }
         public abstract MapObject[] ForegroundLayer { get; set; }
         public abstract List<AnimatedSprite> sprites { get; set; }
@@ -27,6 +29,13 @@ namespace PurpleStyrofoam.Maps
         public void DrawBackground(SpriteBatch sp)
         {
             foreach (MapObject item in BackgroundLayer)
+            {
+                item.Draw(sp);
+            }
+        }
+        public void DrawInteractables(SpriteBatch sp)
+        {
+            foreach (MapObject item in InteractableLayer)
             {
                 item.Draw(sp);
             }
@@ -49,6 +58,7 @@ namespace PurpleStyrofoam.Maps
         public void DrawMap(SpriteBatch sp, Action<SpriteBatch> insert) 
         {
             DrawBackground(sp);
+            DrawInteractables(sp);
             Draw(sp);
             insert(sp);
             DrawForeground(sp);

@@ -20,14 +20,14 @@ namespace PurpleStyrofoam.Buffs
         {
             foreach (Buff b in CurrentBuffs)
             {
-                b.During();
+                b.During?.Invoke();
                 b.Duration--;
                 if (b.Duration <= 0) EndingBuffs.Add(b);
             }
 
             foreach (Buff b in EndingBuffs)
             {
-                b.OnEnd();
+                b.OnEnd?.Invoke();
                 CurrentBuffs.Remove(b);
             }
 
@@ -36,10 +36,35 @@ namespace PurpleStyrofoam.Buffs
 
         public bool AddBuff(Buff b)
         {
-            if (CurrentBuffs.Contains(b)) return false;
+            if (CurrentBuffs.Contains(b))
+            {
+                Buff current = CurrentBuffs.Find((x) => x.Equals(b));
+                if (current != null) if (current.Duration < b.Duration) current.Duration = b.Duration;
+                return false;
+            }
             else CurrentBuffs.Add(b);
-            b.OnStart();
+            b.OnStart?.Invoke();
             return true;
+        }
+
+        public bool RemoveBuff(Buff b)
+        {
+            if (CurrentBuffs.Contains(b))
+            {
+                EndingBuffs.Add(b);
+                return true;
+            }
+            else return false;
+        }
+        public bool RemoveBuff(string name)
+        {
+            Buff b = CurrentBuffs.Find((x) => x.Name.Equals(name));
+            if (b != null)
+            {
+                EndingBuffs.Add(b);
+                return true;
+            }
+            else return false;
         }
     }
 }

@@ -117,15 +117,17 @@ namespace PurpleStyrofoam
             RenderHandler.Update();
             MouseHandler.Update();
             if (KeyHelper.CheckTap(Keys.OemTilde)) DialogueHandler.Start(TestHelper.GetTestDialogues());
+            if (KeyHelper.CheckTap(Keys.D3))
+            {
+                ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new Flight());
+            }
             if (KeyHelper.CheckTap(Keys.D2))
             {
                 ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new RegularHealingPotion());
-                ((PlayerManager)PlayerCharacter.Manager).Inventory.LoadItems();
             }
             if (KeyHelper.CheckTap(Keys.D1))
             {
                 ((PlayerManager)PlayerCharacter.Manager).Inventory.AddToInventory(new RegularSpeedPotion());
-                ((PlayerManager)PlayerCharacter.Manager).Inventory.LoadItems();
             }
             if (KeyHelper.CheckHeld(Keys.D0))
             {

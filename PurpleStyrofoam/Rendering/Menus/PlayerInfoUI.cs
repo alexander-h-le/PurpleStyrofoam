@@ -39,9 +39,7 @@ namespace PurpleStyrofoam.Rendering.Menus
                 );
         }
 
-        static Texture2D HealthTexture = Game.GameContent.Load<Texture2D>("playerSpriteMoving");
         static Texture2D BarBackTexture = Game.GameContent.Load<Texture2D>("BarBack");
-        static Texture2D ManaTexture = Game.GameContent.Load<Texture2D>("playerSprite");
         static double HLength;
         static double MLength;
         const int BarLength = 400;
@@ -49,23 +47,34 @@ namespace PurpleStyrofoam.Rendering.Menus
         public static void Draw(SpriteBatch sp)
         {
             //Health Bar
-            sp.Draw(BarBackTexture, new Rectangle((int)Location.X, (int)Location.Y, BarLength-10, 25), Color.White);
-            sp.Draw(HealthTexture, new Rectangle((int)Location.X, (int)Location.Y, (int)HLength,25), Color.White);
+            sp.Draw(BarBackTexture, new Rectangle((int)Location.X, (int)Location.Y, BarLength, 25), Color.White);
+            sp.Draw(TextureHelper.Blank(Color.Red), new Rectangle((int)Location.X, (int)Location.Y, (int)HLength,25), Color.White);
+            sp.DrawString(font, Game.PlayerManager.Health + "/" + Game.PlayerManager.MaxHealth, Location, Color.White,
+                0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
 
             //Mana Bar
-            sp.Draw(BarBackTexture, new Rectangle((int)Location.X, (int)Location.Y + 50, BarLength - 10, 25), Color.White);
-            sp.Draw(ManaTexture, new Rectangle((int)Location.X, (int)Location.Y + 50, (int)MLength, 25), Color.White);
+            sp.Draw(BarBackTexture, new Rectangle((int)Location.X, (int)Location.Y + 50, BarLength, 25), Color.White);
+            sp.Draw(TextureHelper.Blank(Color.Blue), new Rectangle((int)Location.X, (int)Location.Y + 50, (int)MLength, 25), Color.White);
+            sp.DrawString(font, Game.PlayerManager.Mana + "/" + Game.PlayerManager.MaxMana, new Vector2(Location.X, Location.Y + 50), Color.White,
+                0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
 
-            Rectangle BuffPosition = new Rectangle((int)Location.X, (int)Location.Y + 100, 50, 50);
+            Rectangle BuffPosition = new Rectangle((int)Location.X, (int)Location.Y + 100, 30, 30);
             //Buffs
             foreach (Buff b in  Game.PlayerCharacter.Buffs.CurrentBuffs)
             {
                 if (b.Texture != null) sp.Draw(b.Texture, BuffPosition , Color.White);
-                else sp.Draw(TextureHelper.Blank(Color.Bisque), BuffPosition, Color.White);
-
+                else sp.Draw(TextureHelper.QuickTexture(TextureHelper.Sprites.DialogueTestSprite), BuffPosition, Color.White);
 
                 sp.DrawString(font, GameMathHelper.FramesToStringTime(b.Duration) , new Point(BuffPosition.X, BuffPosition.Bottom).ToVector2(), Color.White, 
-                    0f, new Vector2(), 0.7f, SpriteEffects.None, 1);
+                    0f, new Vector2(), 0.5f, SpriteEffects.None, 1);
+
+                if (MouseHandler.mousePosRect.Intersects(BuffPosition))
+                {
+                    Vector2 size = font.MeasureString(b.Name) * 0.5f;
+                    sp.Draw(TextureHelper.Blank(Color.Black), new Rectangle(MouseHandler.mousePos.ToPoint(), size.ToPoint()), Color.White*0.5f);
+                    sp.DrawString(font, b.Name, MouseHandler.mousePos,
+                        Color.White, 0f, new Vector2(), 0.5f, SpriteEffects.None, 1);
+                }
 
                 BuffPosition.X += 10 + BuffPosition.Width;
             }
@@ -73,12 +82,22 @@ namespace PurpleStyrofoam.Rendering.Menus
             //Ability Bar
             sp.Draw(TextureHelper.Blank(Color.DarkOliveGreen), AbilityBarLocation, Color.White);
             sp.Draw(TextureHelper.Blank(Color.Turquoise),
-                new Rectangle(AbilityBarLocation.Right - (AbilityBarLocation.Width / 4), AbilityBarLocation.Y, AbilityBarLocation.Width / 4 , AbilityBarLocation.Height),
+                new Rectangle(AbilityBarLocation.Left, AbilityBarLocation.Y, AbilityBarLocation.Width / 4 , AbilityBarLocation.Height),
                 Color.White); // Q Ability
+
             sp.Draw(TextureHelper.Blank(Color.Pink),
-                new Rectangle(AbilityBarLocation.Left, AbilityBarLocation.Y, AbilityBarLocation.Width / 4,
-                    (int)(AbilityBarLocation.Height * Manager.Class.CooldownPercentage())),
-                Color.White); // E Ability
+                new Rectangle(AbilityBarLocation.Right - (AbilityBarLocation.Width / 4), AbilityBarLocation.Y, AbilityBarLocation.Width / 4,
+                    AbilityBarLocation.Height), Color.White); // E Ability
+            if (Manager.Class.CooldownPercentage() < 1.0)
+            {
+                sp.Draw(TextureHelper.Blank(Color.Black),
+                new Rectangle(
+                    AbilityBarLocation.Right - (AbilityBarLocation.Width / 4), // X
+                    AbilityBarLocation.Bottom - (int)(AbilityBarLocation.Height * Manager.Class.CooldownPercentage()), // Y
+                    AbilityBarLocation.Width / 4, // Width
+                    (int)(AbilityBarLocation.Height * Manager.Class.CooldownPercentage())), // Height
+                Color.White * 0.5f); // E Ability Cover
+            }
         }
         public static void Update()
         {

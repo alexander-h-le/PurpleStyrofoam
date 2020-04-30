@@ -162,6 +162,7 @@ namespace PurpleStyrofoam.Managers
                     if (Items[index] is BlankItem)
                     {
                         Items[index] = i;
+                        LoadItems();
                         return true;
                     }
                 }
@@ -173,8 +174,11 @@ namespace PurpleStyrofoam.Managers
                 {
                     if (Items[index] is ItemStack)
                     {
-                        Debug.WriteLine("pp");
-                        if (((ItemStack)Items[index]).AddToStack(i)) return true;
+                        if (((ItemStack)Items[index]).AddToStack(i))
+                        {
+                            LoadItems();
+                            return true;
+                        }
                     }
                 }
                 // If none found, find a dupe and create a stack
@@ -186,6 +190,7 @@ namespace PurpleStyrofoam.Managers
                         temp.Add(i);
                         temp.Add(Items[index]);
                         Items[index] = new ItemStack(temp);
+                        LoadItems();
                         return true;
                     }
                 }
@@ -195,6 +200,7 @@ namespace PurpleStyrofoam.Managers
                     if (Items[index] is BlankItem)
                     {
                         Items[index] = i;
+                        LoadItems();
                         return true;
                     }
                 }
@@ -286,15 +292,19 @@ namespace PurpleStyrofoam.Managers
                 Point position = MouseHandler.mousePos.ToPoint();
                 SpriteFont font = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default);
 
-                sp.Draw(TextureHelper.Blank(Color.Black), position.ToVector2(), new Rectangle(position,
-                        (font.MeasureString(ItemInformation[0]) * new Vector2(0.7f, 1f) ).ToPoint()), Color.White * TransparencyLevel);
-                sp.DrawString(font, ItemInformation[0] , position.ToVector2(), Color.LightGray, 0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
+                float width = 0;
+                foreach (string str in ItemInformation)
+                {
+                    width = width < font.MeasureString(str).X ? (int)font.MeasureString(str).X : width;
+                }
+                width *= 0.7f;
+
                 float yPos = position.Y + font.MeasureString(ItemInformation[0]).Y;
-                for (int i = 1; i < ItemInformation.Length; i++)
+                for (int i = 0; i < ItemInformation.Length; i++)
                 {
                     if (ItemInformation[i].Length == 0) continue;
-                    sp.Draw(TextureHelper.Blank(Color.Black), new Vector2(position.X, yPos), new Rectangle(new Point(position.X, (int)yPos), 
-                        (font.MeasureString(ItemInformation[i]) * new Vector2(0.7f, 1f)).ToPoint()), Color.White * TransparencyLevel);
+                    sp.Draw(TextureHelper.Blank(Color.Black), new Vector2(position.X, yPos), new Rectangle(position.X, (int)yPos, 
+                        (int)width, (int)font.MeasureString(ItemInformation[i]).Y), Color.White * TransparencyLevel);
                     sp.DrawString(font, ItemInformation[i], new Vector2(position.X, yPos), 
                         Color.LightGray, 0f, new Vector2(), 0.7f, SpriteEffects.None, 1f);
                     yPos += font.MeasureString(ItemInformation[i]).Y;
@@ -391,7 +401,8 @@ namespace PurpleStyrofoam.Managers
             {
                 if (Items[i] is ItemStack)
                 {
-                    if (((ItemStack)Items[i]).items[0].Equals(item)) ((ItemStack)Items[i]).items.Remove(item);
+                    if (((ItemStack)Items[i]).items.Count == 1) Items[i] = new BlankItem();
+                    else if (((ItemStack)Items[i]).items[0].Equals(item)) ((ItemStack)Items[i]).items.Remove(item);
                 }
                 else
                 {

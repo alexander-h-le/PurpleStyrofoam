@@ -15,7 +15,7 @@ namespace PurpleStyrofoam.Buffs
 
         public Texture2D Texture;
 
-        public Buff(string name, int dur, Action start, Action during, Action end, Texture2D texture = null)
+        public Buff(string name, int dur, Action start = null, Action during = null, Action end = null, Texture2D texture = null)
         {
             Name = name;
             Duration = dur;

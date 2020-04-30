@@ -54,6 +54,7 @@
     <Compile Include="Helpers\GameMathHelper.cs" />
     <Compile Include="Helpers\SoundHelper.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="Helpers\TimerHelper.cs" />
     <Compile Include="Items\Armors\Armor.cs" />
     <Compile Include="Items\BlankItem.cs" />
     <Compile Include="Items\InventoryDeleteItem.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Rendering\Menus\PopUpMenu\ExitMenuPopUp.cs" />
     <Compile Include="Rendering\Projectiles\CasterEMove.cs" />
     <Compile Include="Rendering\Projectiles\KnightHook.cs" />
+    <Compile Include="Rendering\Sprites\MapInteractable.cs" />
+    <Compile Include="Rendering\Text\DamageIndicator.cs" />
     <Compile Include="SaveHandling\GameConverters\AnimatedSpriteConverter.cs" />
     <Compile Include="SaveHandling\GameConverters\GameClassConverter.cs" />
     <Compile Include="SaveHandling\GameConverters\ItemConverter.cs" />

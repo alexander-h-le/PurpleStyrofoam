@@ -25,5 +25,10 @@ namespace PurpleStyrofoam.Helpers
             tx.SetData(new[] { cl });
             return tx;
         }
+
+        public static Texture2D QuickTexture(string name)
+        {
+            return Game.GameContent.Load<Texture2D>(name);
+        }
     }
 }

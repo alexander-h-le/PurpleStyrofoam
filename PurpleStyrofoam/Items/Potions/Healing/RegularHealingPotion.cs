@@ -23,10 +23,7 @@ namespace PurpleStyrofoam.Items.Potions.Healing
 
         public override void OnInventoryUse()
         {
-            Game.PlayerManager.Health = 
-                Game.PlayerManager.Health + 50 <= Game.PlayerManager.MaxHealth ? 
-                Game.PlayerManager.Health + 50 : 
-                Game.PlayerManager.MaxHealth;
+            Game.PlayerCharacter.AddHealth(50);
             Game.PlayerManager.Inventory.DeleteItem(this);
         }
     }

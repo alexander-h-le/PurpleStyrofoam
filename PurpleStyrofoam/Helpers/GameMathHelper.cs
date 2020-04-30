@@ -72,6 +72,7 @@ namespace PurpleStyrofoam.Helpers
         public static string FramesToStringTime(int amt)
         {
             if (amt == 0) return "Instantaneous";
+            if (amt <= 2) return "";
 
             int seconds = (int) (amt / 60);
             int minutes = 0;
@@ -95,7 +96,12 @@ namespace PurpleStyrofoam.Helpers
 
         public static int TimeToFrames(int seconds)
         {
-            return (int) (seconds * 60);
+            return (seconds * 60);
+        }
+
+        public static int TimeToFrames(double seconds)
+        {
+            return (int) Math.Round(seconds * 60);
         }
 
         public class PIConstants

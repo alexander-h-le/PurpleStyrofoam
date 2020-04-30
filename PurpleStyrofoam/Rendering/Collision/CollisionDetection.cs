@@ -23,6 +23,15 @@ namespace PurpleStyrofoam.Rendering
             ConnectedObject = null;
             return false;
         }
+        public static List<MapObject> DetectCollisionMaps(Rectangle rect)
+        {
+            List<MapObject> objects = new List<MapObject>();
+            foreach (MapObject map in FindObjectBuckets(rect))
+            {
+                if (rect.Intersects(map.MapRectangle) && !objects.Contains(map)) objects.Add(map);
+            }
+            return objects;
+        }
         public static bool DetectCollisionSprite(AnimatedSprite SpriteSource, Rectangle rect, out AnimatedSprite connectedSprite)
         {
             foreach (AnimatedSprite sprite in FindSprites(rect))
@@ -67,6 +76,7 @@ namespace PurpleStyrofoam.Rendering
             int CenterY = rect.Bottom - (rect.Height / 2);
             foreach (MapObject map in FindObjectBuckets(rect))
             {
+                if (RenderHandler.selectedMap.InteractableLayer.Contains(map)) continue;
                 if (rect.Intersects(map.MapRectangle))
                 {
                     if ((East || West) && (North || South)) break;
@@ -130,6 +140,20 @@ namespace PurpleStyrofoam.Rendering
             }
             return new bool[] { North, South, East, West };
         }
+
+        public static List<AnimatedSprite> GetNearby(Rectangle source, int range)
+        {
+            Rectangle Check = new Rectangle(source.X-range, source.Y-range, 
+                source.Width + (2*range), source.Height + (2*range));
+
+            List<AnimatedSprite> nearby = new List<AnimatedSprite>();
+            foreach (AnimatedSprite i in FindSprites(Check)) 
+                if (!nearby.Contains(i) && i.SpriteRectangle.Intersects(Check)) 
+                    nearby.Add(i);
+
+            return nearby;
+        }
+
         public static List<MapObject> FindObjectBuckets(Rectangle rect)
         {
             List<MapObject> mapObjects = new List<MapObject>();

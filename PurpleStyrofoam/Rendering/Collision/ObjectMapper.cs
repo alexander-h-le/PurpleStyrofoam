@@ -30,7 +30,7 @@ namespace PurpleStyrofoam.Rendering
         /// </summary>
         public static int Columns { get; set; }
 
-        private const int bucketlength = 100;
+        private const int bucketlength = 50;
 
         /// <summary>
         /// Maps all the objects in a given map to the readable table.
@@ -54,7 +54,15 @@ namespace PurpleStyrofoam.Rendering
                 }
             }
 
-            foreach(MapObject mapO in map.ActiveLayer)
+            foreach (MapObject mapO in map.InteractableLayer)
+            {
+                foreach (int index in GetObjectHashId(mapO.MapRectangle))
+                {
+                    BucketMap[index].Add(mapO);
+                }
+            }
+
+            foreach (MapObject mapO in map.ActiveLayer)
             {
                 foreach(int index in GetObjectHashId(mapO.MapRectangle))
                 {
@@ -132,7 +140,7 @@ namespace PurpleStyrofoam.Rendering
         {
             foreach (int index in GetObjectHashId(input.MapRectangle))
             {
-                BucketMap[index].Add(input);
+                if (!BucketMap[index].Contains(input)) BucketMap[index].Add(input);
             }
         }
 
@@ -140,7 +148,7 @@ namespace PurpleStyrofoam.Rendering
         {
             foreach (int index in GetObjectHashId(input.SpriteRectangle))
             {
-                try { BucketSprite[index].Add(input); }
+                try { if (!BucketSprite[index].Contains(input)) BucketSprite[index].Add(input); }
                 catch (KeyNotFoundException) { input.Delete(); break; }
             }
         }
