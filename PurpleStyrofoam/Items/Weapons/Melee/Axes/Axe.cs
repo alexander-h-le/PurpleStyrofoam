@@ -5,7 +5,7 @@ using PurpleStyrofoam.Rendering;
 
 namespace PurpleStyrofoam.Items.Weapons.Melee.Axes
 {
-    public abstract class Axe : Weapon
+    public abstract class Axe : Melee
     {
 
         public Axe(string name, int damage, Color rarity, ItemSprite sprite) : base(name, damage, ATTACKSPEED.SLOW, rarity, sprite, new Vector2(55, 55), typeof(Knight))

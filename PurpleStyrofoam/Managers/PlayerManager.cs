@@ -31,6 +31,9 @@ namespace PurpleStyrofoam
                 else Inventory.Items[0] = new BlankItem();
             }
         }
+
+        public override int Damage { get => 0; protected set { } }
+
         public static string basePlayerSpriteName = "playerSprite";
         public static string movingPlayerSprite = "playerSpriteMoving";
         public static string jumpingDPlayerSprite = "playerSpriteJumpingDynamic";

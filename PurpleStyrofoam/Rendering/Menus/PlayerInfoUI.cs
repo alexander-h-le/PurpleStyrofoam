@@ -62,21 +62,24 @@ namespace PurpleStyrofoam.Rendering.Menus
             //Buffs
             foreach (Buff b in  Game.PlayerCharacter.Buffs.CurrentBuffs)
             {
-                if (b.Texture != null) sp.Draw(b.Texture, BuffPosition , Color.White);
-                else sp.Draw(TextureHelper.QuickTexture(TextureHelper.Sprites.DialogueTestSprite), BuffPosition, Color.White);
+                if (b.Texture != null)
+                {
+                    sp.Draw(b.Texture, BuffPosition, Color.White);
 
-                sp.DrawString(font, GameMathHelper.FramesToStringTime(b.Duration) , new Point(BuffPosition.X, BuffPosition.Bottom).ToVector2(), Color.White, 
+                    sp.DrawString(font, GameMathHelper.FramesToStringTime(b.Duration), new Point(BuffPosition.X, BuffPosition.Bottom).ToVector2(), Color.White,
                     0f, new Vector2(), 0.5f, SpriteEffects.None, 1);
 
-                if (MouseHandler.mousePosRect.Intersects(BuffPosition))
-                {
-                    Vector2 size = font.MeasureString(b.Name) * 0.5f;
-                    sp.Draw(TextureHelper.Blank(Color.Black), new Rectangle(MouseHandler.mousePos.ToPoint(), size.ToPoint()), Color.White*0.5f);
-                    sp.DrawString(font, b.Name, MouseHandler.mousePos,
-                        Color.White, 0f, new Vector2(), 0.5f, SpriteEffects.None, 1);
-                }
+                    if (MouseHandler.mousePosRect.Intersects(BuffPosition))
+                    {
+                        string displayString = b.Name + "\n" + b.Description;
+                        Vector2 size = font.MeasureString(displayString) * 0.5f;
+                        sp.Draw(TextureHelper.Blank(Color.Black), new Rectangle(MouseHandler.mousePos.ToPoint(), size.ToPoint()), Color.White * 0.5f);
+                        sp.DrawString(font, displayString, MouseHandler.mousePos,
+                            Color.White, 0f, new Vector2(), 0.5f, SpriteEffects.None, 1);
+                    }
 
-                BuffPosition.X += 10 + BuffPosition.Width;
+                    BuffPosition.X += 10 + BuffPosition.Width;
+                }
             }
 
             //Ability Bar

@@ -8,6 +8,7 @@ using PurpleStyrofoam.AiController;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Items.Weapons.Melee.Daggers;
 using PurpleStyrofoam.Items.Weapons.Melee.Swords;
+using PurpleStyrofoam.Items.Weapons.Ranged.Wands;
 using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Maps.Dungeon_Areas;
 
@@ -68,17 +69,6 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
                 }
             });
 
-            // Manipulator Class Button
-            menuItems.Add(new MenuItem(
-                new Rectangle(new Point(LeftStart, (int)(0.5 * Game.ScreenSize.Y)), IconSize),
-                Game.GameContent.Load<Texture2D>(PlayerManager.jumpingSPlayerSprite), "Manipulator")
-            {
-                Action = () =>
-                {
-                    targetClass = new Manipulator();
-                }
-            });
-
             // Rogue Class Button
             menuItems.Add(new MenuItem(
                 new Rectangle(new Point(LeftStart, (int)(0.6 * Game.ScreenSize.Y)), IconSize),
@@ -101,9 +91,7 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
                     if (targetClass is Knight)
                         GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
                     else if (targetClass is Caster)
-                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
-                    else if (targetClass is Manipulator)
-                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Flight());
+                        GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new Iythil());
                     else if (targetClass is Rogue)
                         GameSaveHandler.CreateSave(saveID, player, new Vector2(100, 100), new CathedralRuinsFBoss(), targetClass, new BasicDagger());
                     else
@@ -111,7 +99,6 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
                         Errors = "Choose a class!";
                         return;
                     }
-                    Debug.WriteLine(saveID);
                     GameSaveHandler.LoadSave(saveID);
                 }
             });

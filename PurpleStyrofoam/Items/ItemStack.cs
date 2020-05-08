@@ -21,8 +21,6 @@ namespace PurpleStyrofoam.Items
 
         public bool AddToStack(Item i)
         {
-            Debug.WriteLine(items[0].Name);
-            Debug.WriteLine(i.Name);
             if (items[0].Equals(i)) items.Add(i);
             else return false;
             return true;

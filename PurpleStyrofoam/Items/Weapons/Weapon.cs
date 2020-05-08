@@ -34,29 +34,7 @@ namespace PurpleStyrofoam.Items.Weapons
         public virtual void OnLeftClickStart() { }
 
         protected AnimatedSprite[] oldSprites = new AnimatedSprite[0];
-        public virtual void DuringLeftClick()
-        {
-            AnimatedSprite[] newSprites;
-            CollisionDetection.DetectCollisionSprites(Game.PlayerCharacter, Sprite.ItemRectangle, out newSprites);
-            float charDir = Game.PlayerCharacter.velocity.X / Game.PlayerCharacter.velocity.X;
-            float LaunchVelocity = 500f * KnockBack;
-            foreach (AnimatedSprite i in newSprites)
-            {
-                if (oldSprites.Contains(i)) continue;
-
-                DamageHelper.DamageTarget(-Damage, i);
-                i.SpriteRectangle.Y -= 10;
-                if (Game.PlayerCharacter.velocity.X != 0)
-                {
-                    i.velocity += new Vector2(Game.PlayerCharacter.velocity.X + (LaunchVelocity * charDir), -350);
-                }
-                else
-                {
-                    i.velocity += new Vector2(Game.PlayerCharacter.animate.Flipped ? -LaunchVelocity : LaunchVelocity, -350);
-                }
-            }
-            oldSprites = newSprites;
-        }
+        public virtual void DuringLeftClick() {}
 
         /// <summary>
         /// Called when the swing animation is over. If you are overriding this method, make sure to empty the <code>oldSprites</code> array.

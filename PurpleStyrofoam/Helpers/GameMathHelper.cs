@@ -14,11 +14,13 @@ namespace PurpleStyrofoam.Helpers
         /// <param name="xIn">The target X position</param>
         /// <param name="yIn">The target Y position</param>
         /// <returns>Returns angle in radians</returns>
-        public static float LookAtXY(Vector2 source, int xIn, int yIn)
+        public static float LookAtXY(Point source, Point target)
         {
-            double deltaX = xIn - source.X;
-            double deltaY = yIn - source.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
+            double x1 = target.X - source.X; // Get X distance
+            double y1 = target.Y - source.Y; // Get Y distance
+            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1)); // Get hypotenuse
+            float angle = (float)Math.Acos(x1 / hypotenuse);
+            return y1 > 0 ? angle : -angle;
         }
 
         /// <summary>
@@ -28,36 +30,13 @@ namespace PurpleStyrofoam.Helpers
         /// <returns>Returns angle in radians</returns>
         public static float LookAtMouse(Vector2 source)
         {
-            double deltaX = MouseHandler.mousePos.X - source.X;
-            double deltaY = MouseHandler.mousePos.Y - source.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
+            double x1 = MouseHandler.mousePos.X - source.X; // Get X distance
+            double y1 = MouseHandler.mousePos.Y - source.Y; // Get Y distance
+            double hypotenuse = Math.Sqrt((x1 * x1) + (y1 * y1)); // Get hypotenuse
+            float angle = (float)Math.Acos(x1 / hypotenuse);
+            return y1 > 0 ? angle : -angle;
         }
 
-        /// <summary>
-        /// Gives the angle in radians to make an <c>ItemSprite</c> look at a sprite
-        /// </summary>
-        /// <param name="objectIn">The <c>ItemSprite</c> source</param>
-        /// <param name="objectToSee">The <c>AnimatedSprite</c> to look at</param>
-        /// <returns>Returns the angle in radians</returns>
-        public static float LookAtSprite(ItemSprite objectIn, AnimatedSprite objectToSee)
-        {
-            double deltaX = objectToSee.SpriteRectangle.X - objectIn.ItemRectangle.X;
-            double deltaY = objectToSee.SpriteRectangle.Y - objectIn.ItemRectangle.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
-        }
-
-        /// <summary>
-        /// Give the angle in radians to make an <c>ItemSprite</c> look at a sprite
-        /// </summary>
-        /// <param name="objectIn">The <c>ItemSprite</c> source</param>
-        /// <param name="characterSpriteName">The name of the sprite to be looked at</param>
-        /// <returns>Returns the angle in radians</returns>
-        public static float LookAtSprite(ItemSprite objectIn, string characterSpriteName)
-        {
-            double deltaX = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.X - objectIn.ItemRectangle.X;
-            double deltaY = RenderHandler.allCharacterSprites.Find(x => x.GetType().Name == characterSpriteName).SpriteRectangle.Y - objectIn.ItemRectangle.Y;
-            return (float)Math.Atan2(deltaY, deltaX);
-        }
 
         public static int RadianToDegree(float radian)
         {
@@ -102,6 +81,26 @@ namespace PurpleStyrofoam.Helpers
         public static int TimeToFrames(double seconds)
         {
             return (int) Math.Round(seconds * 60);
+        }
+
+        public static string NumToRomanNumeral(int amt)
+        {
+            if (amt < 4) return SingleDigitToNumeral(amt);
+            else if (amt < 6) return SingleDigitToNumeral(amt - 5) + "V";
+            else if (amt < 9) return "V" + SingleDigitToNumeral(amt - 5);
+            else if (amt == 9) return "IX";
+            else if (amt == 10) return "X";
+            else return "X... ?";
+        }
+
+        private static string SingleDigitToNumeral(int amt)
+        {
+            string temp = "";
+            for (int i = 0; i < amt; i++)
+            {
+                temp += "I";
+            }
+            return temp;
         }
 
         public class PIConstants

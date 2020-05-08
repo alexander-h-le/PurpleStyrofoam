@@ -9,6 +9,10 @@ using Microsoft.Xna.Framework;
 using PurpleStyrofoam.Rendering.Animations;
 using PurpleStyrofoam.Helpers;
 using System.Diagnostics;
+using PurpleStyrofoam.Managers.Classes;
+using PurpleStyrofoam.Items.Weapons.Ranged;
+using PurpleStyrofoam.AiController;
+using PurpleStyrofoam.Items;
 
 namespace PurpleStyrofoam.Rendering
 {
@@ -17,6 +21,7 @@ namespace PurpleStyrofoam.Rendering
         public Rectangle ItemRectangle;
         public Animation animate;
         float RotationRate;
+        float SwingCooldown;
 
         public Action OnStart;
         public Action DuringSwing;
@@ -39,6 +44,7 @@ namespace PurpleStyrofoam.Rendering
             Flipped = false;
             RotationRate = 0.0f;
             Visible = false;
+            SwingCooldown = 0f;
 
             OnStart = DuringSwing = OnEnd = () => { };
         }
@@ -53,8 +59,10 @@ namespace PurpleStyrofoam.Rendering
         {
             if (Visible && !StopSwing)
             {
+                ItemLocation();
                 animate.Rotate(RotationRate);
                 DuringSwing();
+                SwingCooldown -= 0.005f;
                 AngleCheck();
             }
             else
@@ -70,21 +78,62 @@ namespace PurpleStyrofoam.Rendering
         }
 
         Action AngleCheck = () => { };
+        Action ItemLocation = () => { };
         public void StartAnimation(float rotateRate)
         {
             if (Visible) return;
-            if (animate.Flipped)
+            if (SwingCooldown > 0) return;
+
+            if (MouseHandler.mousePos.X > Game.PlayerCharacter.SpriteRectangle.Center.X)
             {
-                animate.Origin = new Vector2(animate.Texture.Width, animate.Texture.Height);
-                RotationRate = -rotateRate;
-                animate.Angle = GameMathHelper.PIConstants.PI_45;
-                AngleCheck = () => { StopSwing = animate.Angle < -GameMathHelper.PIConstants.PI_45; };
+                ItemLocation = () =>
+                {
+                    ItemRectangle.X = Game.PlayerCharacter.SpriteRectangle.Right;
+                };
+                Game.PlayerCharacter.animate.Flipped = false;
+                animate.Flipped = false;
             } else
             {
-                animate.Origin = new Vector2(0, animate.Texture.Height);
-                RotationRate = rotateRate;
-                animate.Angle = -GameMathHelper.PIConstants.PI_45;
-                AngleCheck = () => { StopSwing = animate.Angle > GameMathHelper.PIConstants.PI_45; };
+                ItemLocation = () =>
+                {
+                    ItemRectangle.X = Game.PlayerCharacter.SpriteRectangle.Left;
+                }; 
+                Game.PlayerCharacter.animate.Flipped = true;
+                animate.Flipped = true;
+            }
+
+            if (Game.PlayerManager.EquippedWeapon is Ranged)
+            {
+                if (animate.Flipped)
+                {
+                    animate.Origin = new Vector2(animate.Texture.Width, animate.Texture.Height);
+                    animate.Angle = GameMathHelper.LookAtMouse(new Vector2(ItemRectangle.Right, ItemRectangle.Bottom)) - GameMathHelper.PIConstants.PI_45 + (float) Math.PI;
+                }
+                else
+                {
+                    animate.Origin = new Vector2(0, animate.Texture.Height);
+                    animate.Angle = GameMathHelper.LookAtMouse(new Vector2(ItemRectangle.Left, ItemRectangle.Bottom)) + GameMathHelper.PIConstants.PI_45;
+                }
+                RotationRate = 0f;
+                AngleCheck = () => { StopSwing = SwingCooldown <= 0; };
+                SwingCooldown = 0.3f - rotateRate;
+
+            } else
+            {
+                if (animate.Flipped)
+                {
+                    animate.Origin = new Vector2(animate.Texture.Width, animate.Texture.Height);
+                    RotationRate = -rotateRate;
+                    animate.Angle = GameMathHelper.PIConstants.PI_45;
+                    AngleCheck = () => { StopSwing = animate.Angle < -GameMathHelper.PIConstants.PI_45; };
+                }
+                else
+                {
+                    animate.Origin = new Vector2(0, animate.Texture.Height);
+                    RotationRate = rotateRate;
+                    animate.Angle = -GameMathHelper.PIConstants.PI_45;
+                    AngleCheck = () => { StopSwing = animate.Angle > GameMathHelper.PIConstants.PI_45; };
+                }
             }
             StopSwing = false;
             Visible = true;

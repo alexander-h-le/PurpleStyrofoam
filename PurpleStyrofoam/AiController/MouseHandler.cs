@@ -41,8 +41,10 @@ namespace PurpleStyrofoam.AiController
                         if (oldState.RightButton == ButtonState.Released)
                         {
                             List<MapObject> mapObjs = CollisionDetection.DetectCollisionMaps(new Rectangle(mousePos.ToPoint(), new Point(2, 2)));
-                            foreach (MapObject map in mapObjs) if (map is MapInteractable) ((MapInteractable)map).ClickAction?.Invoke();
-                            // else Game.PlayerManager.Class.RClick();
+                            if (mapObjs.Count == 0) Game.PlayerManager.Class.RClick();
+                            foreach (MapObject map in mapObjs) 
+                                if (map is MapInteractable) ((MapInteractable)map).ClickAction?.Invoke();
+                                    else Game.PlayerManager.Class.RClick();
                         }
                         break;
                     case GAMESTATE.PAUSED:

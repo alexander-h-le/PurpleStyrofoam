@@ -94,20 +94,20 @@ namespace PurpleStyrofoam.Rendering
                 for (int x = rect.Left; x < rect.Right; x+= bucketlength)
                 {
                     int num = GetColumn(x) + ((GetRow(y) > 0 ? GetRow(y) - 1: 0) * Columns);
-                    items.Add(num);
+                    if (BucketMap.ContainsKey(num)) items.Add(num);
                 }
             }
             //TopRight
             int TR = GetColumn(rect.Right) + ((GetRow(rect.Top) > 0 ? GetRow(rect.Top) - 1 : 0) * Columns);
-            if (!items.Contains(TR)) items.Add(TR);
+            if (!items.Contains(TR) && BucketMap.ContainsKey(TR)) items.Add(TR);
 
             //BottomLeft
             int BL = GetColumn(rect.Left) + ((GetRow(rect.Bottom) > 0 ? GetRow(rect.Bottom) - 1 : 0) * Columns);
-            if (!items.Contains(BL)) items.Add(BL);
+            if (!items.Contains(BL) && BucketMap.ContainsKey(BL)) items.Add(BL);
 
             //BottomRight
             int BR = GetColumn(rect.Right) + ((GetRow(rect.Bottom) > 0 ? GetRow(rect.Bottom) - 1 : 0) * Columns);
-            if (!items.Contains(BR)) items.Add(BR);
+            if (!items.Contains(BR) && BucketMap.ContainsKey(BR)) items.Add(BR);
 
             return items;
         }

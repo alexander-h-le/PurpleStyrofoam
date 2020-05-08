@@ -50,6 +50,19 @@
     <Compile Include="AiController\PlayerController.cs" />
     <Compile Include="Buffs\Buff.cs" />
     <Compile Include="Buffs\BuffHandler.cs" />
+    <Compile Include="Buffs\CommonBuffs\AttackSpeedBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\BurningBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\DamageReductionBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\DefenseReductionBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\FrostbittenBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\FrozenBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\HealthBoostBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\InvincibleBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\JumpBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\RegenerationBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\SlowBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\SpeedBuff.cs" />
+    <Compile Include="Buffs\CommonBuffs\WindyBuff.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Helpers\GameMathHelper.cs" />
     <Compile Include="Helpers\SoundHelper.cs" />
@@ -67,14 +80,20 @@
     <Compile Include="Items\Potions\Potion.cs" />
     <Compile Include="Items\Weapons\Melee\Axes\Erot.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\Fortz.cs" />
+    <Compile Include="Items\Weapons\Melee\Melee.cs" />
     <Compile Include="Items\Weapons\Melee\Polearms\Ichival.cs" />
     <Compile Include="Items\Weapons\Melee\Rapiers\Lithiel.cs" />
     <Compile Include="Items\Weapons\Melee\Swords\Flight.cs" />
+    <Compile Include="Items\Weapons\Ranged\Ranged.cs" />
+    <Compile Include="Items\Weapons\Ranged\Staves\Staff.cs" />
+    <Compile Include="Items\Weapons\Ranged\Throwing\Throwing.cs" />
+    <Compile Include="Items\Weapons\Ranged\Tomes\Tomes.cs" />
+    <Compile Include="Items\Weapons\Ranged\Wands\Iythil.cs" />
+    <Compile Include="Items\Weapons\Ranged\Wands\Wand.cs" />
     <Compile Include="Items\Weapons\Weapon.cs" />
     <Compile Include="Managers\Classes\Caster.cs" />
     <Compile Include="Managers\Classes\GameClass.cs" />
     <Compile Include="Managers\Classes\Knight.cs" />
-    <Compile Include="Managers\Classes\Manipulator.cs" />
     <Compile Include="Managers\Classes\Rogue.cs" />
     <Compile Include="Managers\DefaultManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
@@ -84,6 +103,7 @@
     <Compile Include="Maps\Hubs\Hub.cs" />
     <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Rendering\GameObject.cs" />
+    <Compile Include="Rendering\Projectiles\CasterProjectile.cs" />
     <Compile Include="Rendering\Sprites\AnimatedSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,7 +140,6 @@
     <Compile Include="Rendering\Text\DialogueHandler.cs" />
     <Compile Include="Managers\InventoryManager.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\BasicDagger.cs" />
-    <Compile Include="Helpers\DamageHelper.cs" />
     <Compile Include="Items\Weapons\Melee\Axes\Axe.cs" />
     <Compile Include="Items\Weapons\Melee\Daggers\Dagger.cs" />
     <Compile Include="Items\Weapons\Melee\Polearms\Polearm.cs" />
@@ -198,10 +217,6 @@
   <ItemGroup>
     <Folder Include="Items\Armors\Heavy\" />
     <Folder Include="Items\Armors\Light\" />
-    <Folder Include="Items\Weapons\Ranged\Staves\" />
-    <Folder Include="Items\Weapons\Ranged\Throwing\" />
-    <Folder Include="Items\Weapons\Ranged\Tomes\" />
-    <Folder Include="Items\Weapons\Ranged\Wands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

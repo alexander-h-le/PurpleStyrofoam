@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,11 +40,22 @@ namespace PurpleStyrofoam.Buffs
             if (CurrentBuffs.Contains(b))
             {
                 Buff current = CurrentBuffs.Find((x) => x.Equals(b));
-                if (current != null) if (current.Duration < b.Duration) current.Duration = b.Duration;
+                if (current != null)
+                {
+                    if (current.Level < b.Level)
+                    {
+                        CurrentBuffs[CurrentBuffs.IndexOf(current)] = b;
+                    }
+
+                    if (current.Duration < b.Duration) current.Duration = b.Duration;
+                }
                 return false;
             }
-            else CurrentBuffs.Add(b);
-            b.OnStart?.Invoke();
+            else
+            {
+                CurrentBuffs.Add(b);
+                b.OnStart?.Invoke();
+            }
             return true;
         }
 
@@ -65,6 +77,42 @@ namespace PurpleStyrofoam.Buffs
                 return true;
             }
             else return false;
+        }
+
+        public bool RemoveBuff(Type t)
+        {
+            Buff b = CurrentBuffs.Find( (x) => x.GetType() == t );
+            if (b != null)
+            {
+                EndingBuffs.Add(b);
+                return true;
+            }
+            else return false;
+        }
+
+        public bool HasBuff(Type t)
+        {
+            foreach (Buff b in CurrentBuffs)
+            {
+                if (b.GetType() == t) return true;
+            }
+            return false;
+        }
+        public bool HasBuff(string t)
+        {
+            foreach (Buff b in CurrentBuffs)
+            {
+                if (b.Name.Equals(t)) return true;
+            }
+            return false;
+        }
+        public bool HasBuff(Buff t)
+        {
+            foreach (Buff b in CurrentBuffs)
+            {
+                if (b.Equals(t)) return true;
+            }
+            return false;
         }
     }
 }

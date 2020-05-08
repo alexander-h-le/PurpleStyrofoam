@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using PurpleStyrofoam.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,24 @@ namespace PurpleStyrofoam.Buffs
     {
         public string Name;
 
+        public string Description;
+
         public int Duration;
 
         public Texture2D Texture;
 
-        public Buff(string name, int dur, Action start = null, Action during = null, Action end = null, Texture2D texture = null)
+        public int Level;
+
+        public Buff(string name, int dur, int lvl = 0, string desc = "", Action start = null, Action during = null, Action end = null, Texture2D texture = null)
         {
-            Name = name;
+            Name = name + " " + GameMathHelper.NumToRomanNumeral(lvl);
             Duration = dur;
             Texture = texture;
             OnStart = start;
             During = during;
             OnEnd = end;
+            Level = lvl;
+            Description = desc;
         }
 
         public Action OnStart;
@@ -31,6 +38,7 @@ namespace PurpleStyrofoam.Buffs
 
         public bool Equals(Buff other)
         {
+            if (GetType() == other.GetType()) return true;
             return Name.Equals(other.Name);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PurpleStyrofoam.Buffs;
+using PurpleStyrofoam.Buffs.CommonBuffs;
 using PurpleStyrofoam.Helpers;
 using PurpleStyrofoam.Rendering;
 using System;
@@ -27,19 +28,8 @@ namespace PurpleStyrofoam.Items.Potions.BuffPotions
         public override void OnInventoryUse()
         {
             float original = Game.PlayerCharacter.terminalVelocity.X;
-            if (Game.PlayerCharacter.Buffs.AddBuff(new Buff(
-                "Speed",
-                Duration,
-                () =>
-                {
-                    Game.PlayerCharacter.terminalVelocity.X = 800;
-                },
-                () => { },
-                () =>
-                {
-                    Game.PlayerCharacter.terminalVelocity.X = original;
-                }
-                ))) Game.PlayerManager.Inventory.DeleteItem(this);
+            if (Game.PlayerCharacter.Buffs.AddBuff(new SpeedBuff(1, GameMathHelper.TimeToFrames(10), Game.PlayerCharacter))) 
+                Game.PlayerManager.Inventory.DeleteItem(this);
         }
 
         public override void Update()

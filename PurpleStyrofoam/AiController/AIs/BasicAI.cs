@@ -27,11 +27,11 @@ namespace PurpleStyrofoam.AiController.AIs
             //Detect Direction
             if (TargetSprite.SpriteRectangle.X < SpriteSource.SpriteRectangle.X && !SpriteSource.West)
             {
-                SpriteSource.velocity.X -= 3;
+                SpriteSource.velocity.X -= SpriteSource.velocity.X > -SpriteSource.terminalVelocity.X ? 3 : 0;
             }
             else if (!SpriteSource.East)
             {
-                SpriteSource.velocity.X += 3;
+                SpriteSource.velocity.X += SpriteSource.velocity.X < SpriteSource.terminalVelocity.X ? 3 : 0;
             }
 
             if (SpriteSource.South && TargetSprite.SpriteRectangle.Bottom < SpriteSource.SpriteRectangle.Y)

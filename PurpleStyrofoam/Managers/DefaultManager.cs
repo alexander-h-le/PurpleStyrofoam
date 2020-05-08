@@ -8,11 +8,14 @@ namespace PurpleStyrofoam.Managers
 {
     class DefaultManager : BaseManager
     {
-
-        public DefaultManager()
+        public DefaultManager(int damage = 0)
         {
             MaxHealth = 100;
             Health = MaxHealth;
+
+            Damage = damage;
         }
+
+        public override int Damage { get; protected set; }
     }
 }

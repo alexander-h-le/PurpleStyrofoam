@@ -24,7 +24,7 @@ E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into 
 
 		Fire = Small damage DOT
 		Ice = Major slow
-		Wind = Large knock back into air
+		Wind = Weaken
 		Earth = Pierces defense
 
 		Fire + Ice = Boom
@@ -34,11 +34,7 @@ E Ability: Hook-shield. Press the ability to shoot out a hook and stick it into 
 		Ice + Earth = Icy Rock
 		Wind + Earth = Sandstorm
 
-		Fire + Fire = Dwarf Star
-		Ice + Ice = Freeze enemies and give them ice thorns dealing damage ot enemies that come into contact.
-		Wind + Wind = Zephyr. BIG WIND
-		Earth + Earth = Rumblers
-Weapons: Wands (Quick), Staff (Moderate), Tomes (Slow)
+Weapons: Wands (Quick) - added, Staff (Moderate) - added, Tomes (Slow) - added
 Q Ability
 	Wand - Prestadigitation? Press the ability to cast an orb, attracting enemies attention. Unique weapons will modify that ability to attack enemies or do other abilities.
 	Staff - CONTROL THE ELEMENTS.  COntinuous beam
@@ -48,7 +44,7 @@ E Ability: Go into ground and reappear farther in direction of cursor depending 
 
 
 |||||||||||||||||||||||| Rogue ||||||||||||||||||||||||||
-Weapons: Throwing (Very quick), Dagger (Quick) - added, Rapier (Moderate-fast) - added
+Weapons: Throwing (Very quick) - added, Dagger (Quick) - added, Rapier (Moderate-fast) - added
 Q Ability
 	Throwing - Flurry of attacks with throwing weapon?
 		Short Q cooldown. Every successful attack adds a damage stack that increases damage for basic attack and dash by __% (0.1 per stack?) for __ seconds until stack cools off
@@ -59,7 +55,7 @@ E Ability: Shadow dash. Join with the shadows and dash towards cursor and throug
 	You are impervious to projectiles and attacks during this period, but cannot cancel dash.
 
 |||||||||||||||||||||||  Manipulator ||||||||||||||||||||||||||||
-Weapons: Throwing (Very Quick), Sword (Quick) - added, Tomes (Slow)
+Weapons: Throwing (Very Quick) - added, Sword (Quick) - added, Tomes (Slow) - added
 Special class with three cursors following them. Selecting different weapons will change left-click
 	Throwing: Cursors become boomerangs doing return dmg. Low damage per hit.
 	Sword: Cursors flutter out a short distance in front of them, creating essentially a longer sword swing.

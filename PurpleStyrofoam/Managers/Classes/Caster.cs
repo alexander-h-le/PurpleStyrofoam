@@ -4,6 +4,7 @@ using PurpleStyrofoam.Rendering;
 using PurpleStyrofoam.Rendering.Projectiles;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace PurpleStyrofoam.Managers.Classes
 {
     public class Caster : GameClass
     {
+        public SpellType CurrentSpellType;
+
         PlayerController SpriteSource;
         CasterEMove t;
         private const double MaxCooldown = 3.0;
@@ -19,6 +22,7 @@ namespace PurpleStyrofoam.Managers.Classes
         public Caster()
         {
             SpriteSource = Game.PlayerCharacter;
+            CurrentSpellType = SpellType.FIRE;
         }
         public override void AddSpriteSource(AnimatedSprite spIN)
         {
@@ -36,8 +40,7 @@ namespace PurpleStyrofoam.Managers.Classes
             {
                 if (CurrentCooldown != MaxCooldown) return;
                 t = new CasterEMove(SpriteSource.SpriteRectangle.Right - (SpriteSource.SpriteRectangle.Width/2), SpriteSource.SpriteRectangle.Top,
-                BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y), MouseHandler.mousePos, 7)
-                );
+                BasicProjectile.GenerateVelocityVector(new Vector2(SpriteSource.SpriteRectangle.Center.X, SpriteSource.SpriteRectangle.Center.Y), MouseHandler.mousePos, 7));
                 // t.Velocity.Y = 0;
                 RenderHandler.allProjectiles.Add(t);
                 CurrentCooldown -= 0.01;
@@ -59,7 +62,8 @@ namespace PurpleStyrofoam.Managers.Classes
 
         public override void RClick()
         {
-            throw new NotImplementedException();
+            CurrentSpellType++;
+            if ((int)CurrentSpellType > 3) CurrentSpellType = 0;
         }
 
         public override void Update()
@@ -69,6 +73,11 @@ namespace PurpleStyrofoam.Managers.Classes
                 if (CurrentCooldown < 0) CurrentCooldown = MaxCooldown;
                 else CurrentCooldown -= 0.016;
             }
+        }
+
+        public enum SpellType
+        {
+            FIRE,ICE,WIND,EARTH
         }
     }
 }

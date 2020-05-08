@@ -77,26 +77,26 @@ namespace PurpleStyrofoam.Rendering
             foreach (MapObject map in FindObjectBuckets(rect))
             {
                 if (RenderHandler.selectedMap.InteractableLayer.Contains(map)) continue;
+
                 if (rect.Intersects(map.MapRectangle))
                 {
                     if ((East || West) && (North || South)) break;
-                    //EAST & WEST
-                    if (rect.Right > map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
+                    if (!East && rect.Right > map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
                     {
                         East = true;
                         continue;
                     }
-                    else if (rect.Left < map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
+                    else if (!West && rect.Left < map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
                     {
                         West = true;
                         continue;
                     }
-                    else if (rect.Top < map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
+                    else if (!North && rect.Top < map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
                     {
                         North = true;
                         continue;
                     }
-                    else if (rect.Bottom > map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
+                    else if (!South && rect.Bottom > map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
                     {
                         South = true;
                         continue;
@@ -160,9 +160,7 @@ namespace PurpleStyrofoam.Rendering
             foreach (int i in ObjectMapper.GetObjectHashId(rect))
             {
                 foreach (MapObject map in ObjectMapper.BucketMap[i])
-                {
                     if (!mapObjects.Contains(map)) mapObjects.Add(map);
-                }
             }
             return mapObjects;
         }
@@ -178,9 +176,7 @@ namespace PurpleStyrofoam.Rendering
             foreach (int i in ObjectMapper.GetObjectHashId(rect))
             {
                 foreach (AnimatedSprite s in ObjectMapper.BucketSprite[i])
-                {
                     if (!sprites.Contains(s)) sprites.Add(s);
-                }
             }
             return sprites;
         }

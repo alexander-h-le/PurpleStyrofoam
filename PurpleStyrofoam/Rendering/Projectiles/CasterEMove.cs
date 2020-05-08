@@ -27,7 +27,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         }
         public override void Draw(SpriteBatch sp)
         {
-            sp.Draw(text, ProjRect, new Rectangle(0,0,text.Width,text.Height), Color.White);
+            sp.Draw(text, ProjRect, text.Bounds, Color.White);
         }
 
         public override void ProjectileAction(AnimatedSprite source, AnimatedSprite target)

@@ -20,22 +20,19 @@ namespace PurpleStyrofoam.AiController
     public class PlayerController : AnimatedSprite
     {
         public bool InAir { get; private set; }
-        private Action ItemMovement;
 
         public PlayerController(PlayerManager manager) 
             : base(PlayerManager.basePlayerSpriteName, 1, 1, 100, 100, new PlayerControlledAI(), manager)
         {
-            ItemMovement = () =>
-            {
-                manager.EquippedWeapon.Sprite.ItemRectangle.X =
-                    SpriteRectangle.Left - manager.EquippedWeapon.Sprite.ItemRectangle.Width;
-            };
         }
 
         public override void Update()
         {
             // Check if player is colliding with something. This will set the directional variables
-            base.DetectCollision();
+            DetectCollision();
+
+            // Update the velocity and position of the player
+            UpdateVelocity();
 
             // Update velocity if there is keyboard input
             CheckKeys();
@@ -44,17 +41,19 @@ namespace PurpleStyrofoam.AiController
             animate.Update();
             if (animate.Finished() && animate.Texture.Name == TextureHelper.Sprites.SmileyWalk) animate.Switch(PlayerManager.jumpingSPlayerSprite, SpriteRectangle, 1, 1);
 
-            // Update the velocity and position of the player
-            UpdateVelocity();
-
             // Update the item position relative to player
             if (Game.PlayerManager.EquippedWeapon != null)
-            {
-                ItemMovement();
-                Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y + (SpriteRectangle.Width/2);
-            }
+                Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.Y = SpriteRectangle.Y + (SpriteRectangle.Width / 2);
 
             damageIndicator.Update(SpriteRectangle);
+        }
+        public override void DetectCollision()
+        {
+            bool[] array = CollisionDetection.DetectCollisionArrayMap(SpriteRectangle);
+            North = array[0];
+            South = array[1];
+            East = array[2];
+            West = array[3];
         }
         private const int moveSpeed = 20;
         private const int jumpSpeed = 1500;
@@ -67,26 +66,13 @@ namespace PurpleStyrofoam.AiController
                 {
                     velocity.X -= velocity.X > -terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
-                    animate.Flipped = true;
-                    if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = true;
-
-                    ItemMovement = () =>
-                    {
-                        Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.X =
-                            SpriteRectangle.Left;
-                    };
+                    if (!Game.PlayerManager.EquippedWeapon.Sprite.Visible) animate.Flipped = true;
                 }
                 if (KeyHelper.CheckHeld(Keys.D))
                 {
                     velocity.X += velocity.X < terminalVelocity.X ? moveSpeed : 0;
                     if (!InAir) animate.Switch(PlayerManager.movingPlayerSprite, SpriteRectangle);
-                    animate.Flipped = false;
-                    if (Game.PlayerManager.EquippedWeapon != null) Game.PlayerManager.EquippedWeapon.Sprite.animate.Flipped = false;
-
-                    ItemMovement = () =>
-                    {
-                        Game.PlayerManager.EquippedWeapon.Sprite.ItemRectangle.X = SpriteRectangle.Right;
-                    };
+                    if (!Game.PlayerManager.EquippedWeapon.Sprite.Visible) animate.Flipped = false;
                 }
                 if (KeyHelper.CheckTap(Keys.Space))
                 {
