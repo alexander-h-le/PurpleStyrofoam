@@ -14,6 +14,7 @@ using PurpleStyrofoam.Rendering.Animations;
 using PurpleStyrofoam.Buffs;
 using PurpleStyrofoam.Rendering.Text;
 using PurpleStyrofoam.Buffs.CommonBuffs;
+using PurpleStyrofoam.Helpers;
 
 namespace PurpleStyrofoam
 {
@@ -60,11 +61,11 @@ namespace PurpleStyrofoam
         public override void Update()
         {
             if (velocity.X != 0 || velocity.Y != 0) DetectCollision();
-            UpdateVelocity();
             if (South) velocity.Y = 0;
             if (North && velocity.Y < 0) velocity.Y = 0;
             if (East && velocity.X > 0) velocity.X = 0;
             if (West && velocity.X < 0) velocity.X = 0;
+            UpdateVelocity();
             AI.NextMove();
             damageIndicator.Update(SpriteRectangle);
         }
@@ -74,6 +75,8 @@ namespace PurpleStyrofoam
             velocity.Y -= gravity;
             if (velocity.Y > terminalVelocity.Y) velocity.Y = terminalVelocity.Y;
             if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
+
+
             SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
             SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
@@ -90,7 +93,7 @@ namespace PurpleStyrofoam
                     else
                     {
                         damageIndicator.NewDamage(amt, Color.Red);
-                        Buffs.AddBuff(new InvincibleBuff(50));
+                        Buffs.AddBuff(new InvincibleBuff(25));
                     }
                 }
                 else if (this != Game.PlayerCharacter) Delete();

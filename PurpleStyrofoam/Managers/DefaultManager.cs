@@ -16,6 +16,6 @@ namespace PurpleStyrofoam.Managers
             Damage = damage;
         }
 
-        public override int Damage { get; protected set; }
+        public override int Damage { get; set; }
     }
 }

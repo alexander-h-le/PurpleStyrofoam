@@ -11,6 +11,6 @@ namespace PurpleStyrofoam.Managers
     {
         public int Health { get; set; }
         public int MaxHealth { get; set; }
-        public abstract int Damage { get; protected set; }
+        public abstract int Damage { get; set; }
     }
 }

@@ -10,29 +10,24 @@ namespace PurpleStyrofoam.Buffs
     public class BuffHandler
     {
         public List<Buff> CurrentBuffs { get; }
-        List<Buff> EndingBuffs;
         public BuffHandler()
         {
             CurrentBuffs = new List<Buff>();
-            EndingBuffs = new List<Buff>();
         }
 
         public void Update()
         {
-            foreach (Buff b in CurrentBuffs)
+            for (int i = 0; i < CurrentBuffs.Count; i++)
             {
+                Buff b = CurrentBuffs[i];
                 b.During?.Invoke();
                 b.Duration--;
-                if (b.Duration <= 0) EndingBuffs.Add(b);
+                if (b.Duration <= 0)
+                {
+                    b.OnEnd?.Invoke();
+                    CurrentBuffs.Remove(b);
+                }
             }
-
-            foreach (Buff b in EndingBuffs)
-            {
-                b.OnEnd?.Invoke();
-                CurrentBuffs.Remove(b);
-            }
-
-            EndingBuffs.Clear();
         }
 
         public bool AddBuff(Buff b)
@@ -45,6 +40,7 @@ namespace PurpleStyrofoam.Buffs
                     if (current.Level < b.Level)
                     {
                         CurrentBuffs[CurrentBuffs.IndexOf(current)] = b;
+                        b.UpdateFrom(current);
                     }
 
                     if (current.Duration < b.Duration) current.Duration = b.Duration;
@@ -63,7 +59,8 @@ namespace PurpleStyrofoam.Buffs
         {
             if (CurrentBuffs.Contains(b))
             {
-                EndingBuffs.Add(b);
+                b.OnEnd?.Invoke();
+                CurrentBuffs.Remove(b);
                 return true;
             }
             else return false;
@@ -73,7 +70,8 @@ namespace PurpleStyrofoam.Buffs
             Buff b = CurrentBuffs.Find((x) => x.Name.Equals(name));
             if (b != null)
             {
-                EndingBuffs.Add(b);
+                b.OnEnd?.Invoke();
+                CurrentBuffs.Remove(b);
                 return true;
             }
             else return false;
@@ -84,7 +82,8 @@ namespace PurpleStyrofoam.Buffs
             Buff b = CurrentBuffs.Find( (x) => x.GetType() == t );
             if (b != null)
             {
-                EndingBuffs.Add(b);
+                b.OnEnd?.Invoke();
+                CurrentBuffs.Remove(b);
                 return true;
             }
             else return false;

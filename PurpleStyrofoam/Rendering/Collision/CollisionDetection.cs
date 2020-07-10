@@ -72,36 +72,29 @@ namespace PurpleStyrofoam.Rendering
             bool West = false;
             bool North = false;
             bool South = false;
-            int CenterX = rect.Right - (rect.Width / 2);
-            int CenterY = rect.Bottom - (rect.Height / 2);
             foreach (MapObject map in FindObjectBuckets(rect))
             {
                 if (RenderHandler.selectedMap.InteractableLayer.Contains(map)) continue;
 
-                if (rect.Intersects(map.MapRectangle))
+                if (!East && rect.Right > map.MapRectangle.Left && rect.Center.X < map.MapRectangle.Left)
                 {
-                    if ((East || West) && (North || South)) break;
-                    if (!East && rect.Right > map.MapRectangle.Left && CenterX < map.MapRectangle.Left)
-                    {
-                        East = true;
-                        continue;
-                    }
-                    else if (!West && rect.Left < map.MapRectangle.Right && CenterX > map.MapRectangle.Right)
-                    {
-                        West = true;
-                        continue;
-                    }
-                    else if (!North && rect.Top < map.MapRectangle.Bottom && CenterY > map.MapRectangle.Top)
+                    East = true;
+                }
+                else if (!West && rect.Left < map.MapRectangle.Right && rect.Center.X > map.MapRectangle.Right)
+                {
+                    West = true;
+                } else if (map.MapRectangle.Left < rect.Right && rect.Left < map.MapRectangle.Right)
+                {
+                    if (!North && rect.Top < map.MapRectangle.Bottom && rect.Center.Y > map.MapRectangle.Top)
                     {
                         North = true;
-                        continue;
                     }
-                    else if (!South && rect.Bottom > map.MapRectangle.Top && CenterY < map.MapRectangle.Bottom)
+                    else if (!South && rect.Bottom > map.MapRectangle.Top && rect.Center.Y < map.MapRectangle.Bottom)
                     {
                         South = true;
-                        continue;
                     }
                 }
+                if ((East || West) && (North || South)) break;
             }
             return new bool[] { North, South, East, West };
         }
@@ -116,7 +109,7 @@ namespace PurpleStyrofoam.Rendering
             foreach (AnimatedSprite sprite in FindSprites(rect))
             {
                 Rectangle SpriteRectangle = sprite.SpriteRectangle;
-                if (rect.Intersects(SpriteRectangle) && sprite != SpriteSource)
+                if (sprite != SpriteSource)
                 {
                     //EAST & WEST
                     if (rect.Right >= SpriteRectangle.Left && CenterX < SpriteRectangle.Left)

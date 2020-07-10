@@ -22,11 +22,11 @@ namespace PurpleStyrofoam.Buffs.CommonBuffs
                     timer = new TimerHelper(
                         GameMathHelper.TimeToFrames(1f - (1f / 20f * (lvl - 1f))),
                         () => {
-                            int bounds = lvl * 100;
+                            int bounds = lvl * 300;
                             int x = rand.Next(-bounds, bounds);
                             int y = rand.Next(-bounds, bounds);
-                            if (y > 0 && target.North) y = 0;
-                            else if (y < 0 && target.South) y = 0;
+                            if (y < 0 && target.North) y = 0;
+                            else if (y > 0 && target.South) y = 0;
 
                             if (x > 0 && target.East) x = 0;
                             else if (x < 0 && target.West) x = 0;

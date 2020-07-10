@@ -6,6 +6,7 @@ using PurpleStyrofoam.Managers.Classes;
 using PurpleStyrofoam.Rendering.Sprites;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,7 +118,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
                         target.Buffs.RemoveBuff(typeof(DefenseReductionBuff));
                         IceEarth(target);
                     }
-                    else target.Buffs.AddBuff(new SlowBuff(GameMathHelper.TimeToFrames(3), 1, target));
+                    else target.Buffs.AddBuff(new SlowBuff(GameMathHelper.TimeToFrames(3), 2, target));
                     break;
 
                 // Wind Attack
@@ -180,7 +181,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             List<AnimatedSprite> sp = CollisionDetection.GetNearby(target.SpriteRectangle, 75);
             foreach (AnimatedSprite i in sp)
             {
-                if (i != Game.PlayerCharacter) i.AddHealth((int)(-(Damage * 1.5)));
+                if (i != Game.PlayerCharacter) i.AddHealthIgnoreInvincibility((int)(-(Damage * 1.5)));
             }
         }
 
@@ -189,7 +190,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             List<AnimatedSprite> sp = CollisionDetection.GetNearby(target.SpriteRectangle, 75);
             foreach (AnimatedSprite i in sp)
             {
-                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new BurningBuff(6, 3, i));
+                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new BurningBuff(GameMathHelper.TimeToFrames(6), 3, i));
             }
         }
 
@@ -203,7 +204,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             List<AnimatedSprite> sp = CollisionDetection.GetNearby(target.SpriteRectangle, 75);
             foreach (AnimatedSprite i in sp)
             {
-                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new FrostbittenBuff(6, 1, i));
+                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new FrostbittenBuff(GameMathHelper.TimeToFrames(6), 1, i));
             }
         }
 
@@ -212,7 +213,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             List<AnimatedSprite> sp = CollisionDetection.GetNearby(target.SpriteRectangle, 75);
             foreach (AnimatedSprite i in sp)
             {
-                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new FrozenBuff(10, i));
+                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new FrozenBuff(GameMathHelper.TimeToFrames(6), i));
             }
         }
 
@@ -221,7 +222,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
             List<AnimatedSprite> sp = CollisionDetection.GetNearby(target.SpriteRectangle, 75);
             foreach (AnimatedSprite i in sp)
             {
-                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new WindyBuff(5, 2 ,i));
+                if (i != Game.PlayerCharacter) i.Buffs.AddBuff(new WindyBuff(GameMathHelper.TimeToFrames(6), 2 ,i));
             }
         }
 

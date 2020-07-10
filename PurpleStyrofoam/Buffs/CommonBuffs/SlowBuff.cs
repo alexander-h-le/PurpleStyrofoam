@@ -14,7 +14,7 @@ namespace PurpleStyrofoam.Buffs.CommonBuffs
         public SlowBuff(int dur, int lvl, AnimatedSprite target) : 
             base("Slow", dur, lvl, "You're heavy", texture: TextureHelper.Blank(Color.DarkBlue))
         {
-            OnStart = () => { target.terminalVelocity.X -= lvl * 20; };
+            OnStart = () => { target.terminalVelocity.X -= lvl * 40; };
             OnEnd = () => { target.terminalVelocity.X = AnimatedSprite.DefaultTerminalVelocity.X; };
         }
     }

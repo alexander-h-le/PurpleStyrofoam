@@ -42,7 +42,7 @@ namespace PurpleStyrofoam.Rendering.Projectiles
         public float Scale = 1.0f;
         public override void Draw(SpriteBatch sp)
         {
-            sp.Draw(text, new Vector2(ProjRect.X, ProjRect.Y), new Rectangle(0, 0, 50, 50), 
+            sp.Draw(text, new Vector2(ProjRect.X, ProjRect.Y), new Rectangle(0, 0, 25, 25), 
                 Color.White, Angle, Origin, Scale, SpriteEffects.None, 1.0f);
         }
 

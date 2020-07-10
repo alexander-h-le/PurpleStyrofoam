@@ -34,6 +34,10 @@ namespace PurpleStyrofoam.AiController
             // Update the velocity and position of the player
             UpdateVelocity();
 
+            // Updates player position
+            SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
+            SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
+
             // Update velocity if there is keyboard input
             CheckKeys();
 
@@ -49,14 +53,19 @@ namespace PurpleStyrofoam.AiController
         }
         public override void DetectCollision()
         {
-            bool[] array = CollisionDetection.DetectCollisionArrayMap(SpriteRectangle);
+            Rectangle rect = new Rectangle(
+                new Point(
+                            SpriteRectangle.X + (int)(velocity.X * Game.GameTimeSeconds),
+                            SpriteRectangle.Y + (int)(velocity.Y * Game.GameTimeSeconds)),
+                new Point(SpriteRectangle.Width, SpriteRectangle.Height)); // Creates the projected rectangle
+
+            bool[] array = CollisionDetection.DetectCollisionArrayMap(rect);
             North = array[0];
             South = array[1];
             East = array[2];
             West = array[3];
         }
         private const int moveSpeed = 20;
-        private const int jumpSpeed = 1500;
         public void CheckKeys()
         {
             if (South) InAir = false;
@@ -79,7 +88,7 @@ namespace PurpleStyrofoam.AiController
                     if (!InAir)
                     {
                         InAir = true;
-                        velocity.Y -= jumpSpeed;
+                        velocity.Y -= terminalVelocity.Y;
                         animate.Switch(TextureHelper.Sprites.SmileyWalk, SpriteRectangle, 4, 4);
                     }
                 }
@@ -101,19 +110,12 @@ namespace PurpleStyrofoam.AiController
 
             if (North && velocity.Y < 0) velocity.Y = 0;
             else if (South && velocity.Y > 0) velocity.Y = 0;
-            else velocity.Y -= velocity.Y < terminalVelocity.Y ?  gravity : 0;
+            else velocity.Y -= velocity.Y < terminalVelocity.Y ? gravity : 0;
 
 
             if (East && velocity.X > 0) velocity.X = 0;
             else if (West && velocity.X < 0) velocity.X = 0;
             else velocity.X -= velocity.X < 0 ? -5 : velocity.X > 0 ? 5 : 0;
-
-            // Check if velocity should change
-            if (velocity.Y < -terminalVelocity.Y) velocity.Y = -terminalVelocity.Y;
-
-            // Add velocity to player speed
-            SpriteRectangle.X += (int)(velocity.X * (float)Game.GameTimeSeconds);
-            SpriteRectangle.Y += (int)(velocity.Y * (float)Game.GameTimeSeconds);
         }
     }
 }

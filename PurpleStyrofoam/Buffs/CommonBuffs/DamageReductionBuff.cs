@@ -12,20 +12,34 @@ namespace PurpleStyrofoam.Buffs.CommonBuffs
 {
     public class DamageReductionBuff : Buff
     {
+        int OriginalDamage;
         public DamageReductionBuff(int dur, int lvl, AnimatedSprite target) : 
             base("Damage Reduction", dur, lvl, "You feel weak", texture: TextureHelper.Blank(Color.Gray))
         {
             OnStart = () => { 
                 if (target == Game.PlayerCharacter)
+                    Game.PlayerManager.EquippedWeapon.Damage = (int)(Game.PlayerManager.EquippedWeapon.Damage * (1 - (0.1 * lvl)));
+                else
                 {
-                    Game.PlayerManager.EquippedWeapon.Damage = (int) (Game.PlayerManager.EquippedWeapon.Damage * 1 - (0.1 * lvl));
+                    OriginalDamage = target.Manager.Damage;
+                    target.Manager.Damage = (int) (target.Manager.Damage * (1 - (0.1 * lvl)));
                 }
             };
 
             OnEnd = () =>
             {
-                Game.PlayerManager.EquippedWeapon.Damage = ((Weapon) Activator.CreateInstance(Game.PlayerManager.EquippedWeapon.GetType())).Damage;
+                if (target == Game.PlayerCharacter) 
+                    Game.PlayerManager.EquippedWeapon.Damage = ((Weapon) Activator.CreateInstance(Game.PlayerManager.EquippedWeapon.GetType())).Damage;
+                else
+                {
+                    target.Manager.Damage = OriginalDamage;
+                }
             };
+        }
+
+        public override void UpdateFrom(Buff b)
+        {
+            OriginalDamage = ((DamageReductionBuff)b).OriginalDamage;
         }
     }
 }

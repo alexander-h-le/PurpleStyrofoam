@@ -32,6 +32,8 @@ namespace PurpleStyrofoam.Buffs
             Description = desc;
         }
 
+        public virtual void UpdateFrom(Buff b) { }
+
         public Action OnStart;
         public Action During;
         public Action OnEnd;

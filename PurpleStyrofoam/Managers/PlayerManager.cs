@@ -32,7 +32,7 @@ namespace PurpleStyrofoam
             }
         }
 
-        public override int Damage { get => 0; protected set { } }
+        public override int Damage { get => 0; set { } }
 
         public static string basePlayerSpriteName = "playerSprite";
         public static string movingPlayerSprite = "playerSpriteMoving";
