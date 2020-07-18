@@ -48,7 +48,14 @@ namespace PurpleStyrofoam.Rendering.Menus.FullScreenMenus.Menus
             foreach (string f in Directory.GetFiles(GameSaveHandler.PathDirectory))
             {
                 GameSave save = GameSaveHandler.RetrieveGameSave(Path.GetFileName(f));
-                string gClass = save.player.Class.GetType().Name;
+                string gClass;
+                try
+                {
+                    gClass = save.player.Class.GetType().Name;
+                } catch (Exception e)
+                {
+                    gClass = "UNKNOWN";
+                }
                 string DisplayText = Path.GetFileName(f) + " : " + gClass;
                 Vector2 DisplaySize = Game.GameContent.Load<SpriteFont>(TextureHelper.Fonts.Default).MeasureString(DisplayText);
                 saves.Add(new MenuItem(new Rectangle(LeftStart, (++i) * YLevel, (int)DisplaySize.X, (int)DisplaySize.Y), text: DisplayText)
